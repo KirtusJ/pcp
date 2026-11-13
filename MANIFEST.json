@@ -1,0 +1,1035 @@
+{
+  "format": "pcp-edition-local-integrity/1.0",
+  "product": "Parrot Council Protocol",
+  "product_version": "1.0",
+  "build": 19,
+  "edition": "ENTERPRISE",
+  "payload_count": 205,
+  "files": [
+    {
+      "path": "ACR_1.0_Implementation.zip",
+      "bytes": 348336,
+      "sha256": "31bd0bcff43d073b0f675aac2dbfbde994cfc751cc8e897767cd55331d0e0647"
+    },
+    {
+      "path": "EDITION.json",
+      "bytes": 3811,
+      "sha256": "daff02e0b34f7cea43dd5a738709831108b9213cff1ebb9c6c82c366be1e5d08"
+    },
+    {
+      "path": "EDITION_GUIDE.md",
+      "bytes": 4536,
+      "sha256": "3ee0267f708d0cc1248fdac8951bb093962ae7a2968b43aee673849c82180f30"
+    },
+    {
+      "path": "EVIDENCE_STATUS.md",
+      "bytes": 6106,
+      "sha256": "d33cda8974f3a248799eabaf279ee528fe33e9318345518871653e8bef85b03a"
+    },
+    {
+      "path": "LICENSE.md",
+      "bytes": 6316,
+      "sha256": "5ea0ffa6f37d4c803d44dffa3b25c7a5b7a22fd34a2083b41399ef3449de7b66"
+    },
+    {
+      "path": "NOTICE.md",
+      "bytes": 3505,
+      "sha256": "0eb494104e98910b8c7f63241fe3709bcf1f835fe17f5d4bf734dfc23c8a1d97"
+    },
+    {
+      "path": "PCP_1.0_Machine/README.md",
+      "bytes": 2894,
+      "sha256": "4e76e9e2c8a12a31dee478b1b4675dcf5f3eb5061e42e4512c4ccda048ebcf7d"
+    },
+    {
+      "path": "PCP_1.0_Machine/design/pcp.design.html",
+      "bytes": 14614,
+      "sha256": "1c736fdb02306862405959b18aeadc22f6d89b886c39b4550406ae3d715ab950"
+    },
+    {
+      "path": "PCP_1.0_Machine/design/pcp.terminal.tsv",
+      "bytes": 453,
+      "sha256": "b0f11eeeeaaed83aea0459bc2244168dbff8605c414a091f897651c15409f1ff"
+    },
+    {
+      "path": "PCP_1.0_Machine/design/pcp.tokens.audit.json",
+      "bytes": 7559,
+      "sha256": "37b0aa02b0ec8d496c6ac92d977bc0e5943a709d3365dcf06401883e44df7542"
+    },
+    {
+      "path": "PCP_1.0_Machine/design/pcp.tokens.css",
+      "bytes": 3166,
+      "sha256": "02642a8b1fff7a9b5a507a001c4c83492e2ebb74442d1ca26598e5e5ed319654"
+    },
+    {
+      "path": "PCP_1.0_Machine/design/pcp.tokens.json",
+      "bytes": 19064,
+      "sha256": "aa6ac11cba9cbc44c09a10bb9820f5e82ab0f20b969cd2e51fa013ed1f30b1bb"
+    },
+    {
+      "path": "PCP_1.0_Machine/design/themes/pcp-core-light.json",
+      "bytes": 154,
+      "sha256": "43bb9ee449a1404bce92fd719e8ee1996230cb5155caa7547d299d0f362b5b0c"
+    },
+    {
+      "path": "PCP_1.0_Machine/design/themes/pcp-core.json",
+      "bytes": 145,
+      "sha256": "62e3469f4de1b905731bec5d914d9c3fa1018546956cb5aa950d67a2f6b95971"
+    },
+    {
+      "path": "PCP_1.0_Machine/design/themes/pcp-cryptography-light.json",
+      "bytes": 162,
+      "sha256": "68b3ee23f51ac5c886d321d86a583f20001170e719b250a229a834fc39c642ae"
+    },
+    {
+      "path": "PCP_1.0_Machine/design/themes/pcp-cryptography.json",
+      "bytes": 153,
+      "sha256": "feaae761f0959e3bcb9cbab04566ff5d686d0c6eadd23a1c8f1036cc728db7bc"
+    },
+    {
+      "path": "PCP_1.0_Machine/design/themes/pcp-engineering-light.json",
+      "bytes": 161,
+      "sha256": "79345ea1fccef90e538eef95b4c2803caa9ff9f77a44ad4f2895a8a96d71eb8e"
+    },
+    {
+      "path": "PCP_1.0_Machine/design/themes/pcp-engineering.json",
+      "bytes": 152,
+      "sha256": "1b82697e81fe81d0dce56fbc06a89538e1ed2afc21d5a8065951bb5635ca54b2"
+    },
+    {
+      "path": "PCP_1.0_Machine/design/themes/pcp-mathematics-light.json",
+      "bytes": 161,
+      "sha256": "e3281ccc4acb0757998dd305a718c8fcf585012ad165e21f3a5670e36b27d201"
+    },
+    {
+      "path": "PCP_1.0_Machine/design/themes/pcp-mathematics.json",
+      "bytes": 152,
+      "sha256": "cfba8a736900f0f0e77175888f3a0371f2c74b686dcc0a01bdc62e928119dc0f"
+    },
+    {
+      "path": "PCP_1.0_Machine/design/themes/pcp-quality-assurance-light.json",
+      "bytes": 167,
+      "sha256": "3817c4777a59e8e2b219edc4245a141037b85041ca7389cc47e7e9ddc5faffa5"
+    },
+    {
+      "path": "PCP_1.0_Machine/design/themes/pcp-quality-assurance.json",
+      "bytes": 158,
+      "sha256": "dfe46d59c0164991c5a86425188ded936aa229c59156c91e9d28035eba525ea4"
+    },
+    {
+      "path": "PCP_1.0_Machine/design/themes/pcp-science-light.json",
+      "bytes": 157,
+      "sha256": "f9e463c0cc210d2bb6c319279b83952f31c504218742fe242809e3d94693ed17"
+    },
+    {
+      "path": "PCP_1.0_Machine/design/themes/pcp-science.json",
+      "bytes": 148,
+      "sha256": "7dd8aea594b8f6959f7023c1837c53244024e22d20f45af906b8b00eb17a1631"
+    },
+    {
+      "path": "PCP_1.0_Machine/design/themes/pcp-statistics-light.json",
+      "bytes": 160,
+      "sha256": "68bdde1c6d9a299a4516273c3ef03976861d24bff7f6358a393ce930a8633654"
+    },
+    {
+      "path": "PCP_1.0_Machine/design/themes/pcp-statistics.json",
+      "bytes": 151,
+      "sha256": "ef65874ab883d5c4c3bdb51fd97cad3a6be83ed0f777f2bcf492906cba3e351f"
+    },
+    {
+      "path": "PCP_1.0_Machine/pcp.machine.json",
+      "bytes": 123943,
+      "sha256": "dbae278538930f195ace540edcaf529f6765481bc17256528fb06f7e7f4eadb7"
+    },
+    {
+      "path": "PCP_1.0_Machine/schemas/edition-profile.schema.json",
+      "bytes": 1529,
+      "sha256": "2c25f44c5896aa8306e79f6e7edab84993856ad94be855ebbff088b4282765e4"
+    },
+    {
+      "path": "PCP_1.0_Machine/schemas/register-event.schema.json",
+      "bytes": 1831,
+      "sha256": "fa3327944123ee0a68774305e6129f11dfeeedbb3f02b4efc34f0ad75a19533d"
+    },
+    {
+      "path": "PCP_1.0_OS/PCP_OS_Overview.md",
+      "bytes": 7578,
+      "sha256": "edb298a2d4fc13fd5725f648469596725d4b87ef31d82abe12e338c7160840b1"
+    },
+    {
+      "path": "PCP_1.0_OS/PCP_OS_Overview.pdf",
+      "bytes": 51099,
+      "sha256": "a921b06336da145b3cb9b40848ae6f23fa3dac822f7c34cb61942743b1324452"
+    },
+    {
+      "path": "PCP_1.0_OS/PCP_OS_Requirements.json",
+      "bytes": 23684,
+      "sha256": "42982059e5e472f284ff85c018dd207e0fc027cb32e1c0005c2dbcd0f1cfb2c1"
+    },
+    {
+      "path": "PCP_1.0_OS/PCP_OS_Specification.md",
+      "bytes": 22730,
+      "sha256": "f6afbb317f7aa7bcbf1ab5f2863ba6ed614f6c4b6b0374fc9a14d2bf2642def7"
+    },
+    {
+      "path": "PCP_1.0_OS/PCP_OS_Specification.pdf",
+      "bytes": 97782,
+      "sha256": "7ed11a5304b69ecd965366719c13623e20dbe06880bd7f8069d00137173b9d24"
+    },
+    {
+      "path": "PCP_1.0_OS/backgrounds/README.md",
+      "bytes": 618,
+      "sha256": "ad581fd6048fa5753016f3d1be82e6bab8773c96949dc1dde575de2e5cabaa51"
+    },
+    {
+      "path": "PCP_1.0_OS/backgrounds/pcp-core.svg",
+      "bytes": 1934,
+      "sha256": "b226c2eb97459ea83a59e2248976f201857c807b0aa4e6c1aff67dce8924be43"
+    },
+    {
+      "path": "PCP_1.0_OS/backgrounds/pcp-cryptography.svg",
+      "bytes": 2070,
+      "sha256": "e903cf3678bae0315aeb8ebbb7664b52736ee442c7dd97e662f2ee4effc419d5"
+    },
+    {
+      "path": "PCP_1.0_OS/backgrounds/pcp-engineering.svg",
+      "bytes": 2225,
+      "sha256": "b95c3d14fb6b943f745afb98bf01710fbcc48796325f505e2bc374a0de266b07"
+    },
+    {
+      "path": "PCP_1.0_OS/backgrounds/pcp-mathematics.svg",
+      "bytes": 2177,
+      "sha256": "8e5d900e0a47a4baf1934d001cb614587c65e8e332944af5e502912c53557552"
+    },
+    {
+      "path": "PCP_1.0_OS/backgrounds/pcp-quality-assurance.svg",
+      "bytes": 2112,
+      "sha256": "19fbdbbb4028d32ae57cf7658e3e128e28708d7d440f632f96753194ae4ce207"
+    },
+    {
+      "path": "PCP_1.0_OS/backgrounds/pcp-science.svg",
+      "bytes": 2077,
+      "sha256": "a70748876c455f3f96f657d006625de80d1fc50ec8192ca27672b6c4cf71ccb4"
+    },
+    {
+      "path": "PCP_1.0_OS/backgrounds/pcp-statistics.svg",
+      "bytes": 2136,
+      "sha256": "272b9dcf241c9290b0b2c3033accb440b865ebed97abbb0376354183fd69563f"
+    },
+    {
+      "path": "PCP_1.0_Plugins/.claude-plugin/marketplace.json",
+      "bytes": 904,
+      "sha256": "5c3e9a72a347eef944e59b5e6bdc12e340703771a4edcc094b24b9c152503448"
+    },
+    {
+      "path": "PCP_1.0_Plugins/README.md",
+      "bytes": 3148,
+      "sha256": "b91529d5a7f17445bb0c300445b99ab00651f287a26c44c248fae8f4021bbcc5"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/.claude-plugin/icon.png",
+      "bytes": 6890,
+      "sha256": "dbdadf0d300f55b08b730c58992d24fea3d389911ac42fcf0ba5385a88a5ef57"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/.claude-plugin/plugin.json",
+      "bytes": 902,
+      "sha256": "32903ab7aa252cb63bad2e58723b6dc8e948b1bc0239961e16acac6c60e231b4"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/NOTICE.md",
+      "bytes": 1434,
+      "sha256": "4c433b20910a96d567da3b0f10e8370f0a5e5c3b1a7b2b3e626636436cc58fc2"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/README.md",
+      "bytes": 3602,
+      "sha256": "e6eaa37f6e45a070a4698e87e0c6cdbf07968e7874af3c9f6e0a379128730346"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/agents/challenger.md",
+      "bytes": 3027,
+      "sha256": "6c7d6fe426273935df892f459b42b4a12976213c711d4a78e1f3d2b6a338ebad"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/agents/checker.md",
+      "bytes": 2279,
+      "sha256": "e624161c00d2002a29efb77cc2799d14a6746d1f4cf9c2c3b58bd99c38261f08"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/agents/record-auditor.md",
+      "bytes": 2137,
+      "sha256": "ed06bd0970601f189df274320f747ae46f135e80a02255084b12900caef2d1b8"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/agents/source-inspector.md",
+      "bytes": 1955,
+      "sha256": "9c9ca92f3bf40b7a3c7d91eb2f6b9d976ade4d1040bf04d9664d1e336d12aa8e"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/edition/EDITION.json",
+      "bytes": 1538,
+      "sha256": "acd058c73b97ea98010cbb371b6aaf9d96b7e96967ac9259da10fa39ec3cfe58"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/edition/edition.md",
+      "bytes": 901,
+      "sha256": "9a7be0473f789288881fad4491a0bca04baad63ae6c015fc37fe991e2cf43769"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/GUIDES/Entry_Card.md",
+      "bytes": 1885,
+      "sha256": "090d970803edbc4e0c39de4848629cef6e81d99813bb389ca309e8eb5a790ba5"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/GUIDES/Integration_Guide.md",
+      "bytes": 19464,
+      "sha256": "26f3aa351de9006c28aed9f7d6045bed2668a26f002aa80319fac792193f27dd"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/GUIDES/Module_Map.md",
+      "bytes": 1309,
+      "sha256": "1be38d5b6d6078f95f6867d949e3513cce5e3c94a24b91c34e090aa33fab7b5e"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/GUIDES/Safety_Handbook.md",
+      "bytes": 19463,
+      "sha256": "42e32c48f769d6857dd9f9333a7e109f999a6c7b74ff1a53422c646ed3c874b4"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/KERNEL.md",
+      "bytes": 19754,
+      "sha256": "01bf42c8c662fa0d9d42e50e40eebd422f50ff8298680bcc71144a339e2e29de"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/KERNEL_CARD.md",
+      "bytes": 1494,
+      "sha256": "b1b1ca33d7b4ec9fce07ac9c9cdee3b3e0b634a814d1696eb6ab8de878edd117"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/MODULES/01_Core/SOURCE/Overview.md",
+      "bytes": 74904,
+      "sha256": "63a1289cd59d582d01de5091dda2f735e37ba78d0d16d25bb2794ef19d68250d"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/MODULES/01_Core/SOURCE/Specification.md",
+      "bytes": 131574,
+      "sha256": "39efd83b4122545455124f20420f212590a06064f391b259e93ea968449e6b7f"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/MODULES/02_Mathematics/SOURCE/Overview.md",
+      "bytes": 17263,
+      "sha256": "75f492021a2ce716a13fbb341637126514b2624b0a6661227ef25baaccae93b8"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/MODULES/02_Mathematics/SOURCE/Specification.md",
+      "bytes": 21330,
+      "sha256": "8c5009a8b6a610fb03ae4fe1e25d4674e0d256c9593885fb03b8159e580463f1"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/MODULES/03_Science/SOURCE/Overview.md",
+      "bytes": 18566,
+      "sha256": "3700bb93bf2b3a572e085229deda136c1299a2325e362650d8a457f25c92cf27"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/MODULES/03_Science/SOURCE/Specification.md",
+      "bytes": 37185,
+      "sha256": "162e664eeedd605250c5edfaa4f1eb1550020b1bd21f5e6ce384a47c1a9783e9"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/MODULES/04_Engineering/SOURCE/Overview.md",
+      "bytes": 29123,
+      "sha256": "2fb67ca503d9d0f8aeff0573001d4a62f5bb745c97c0d67915d7a2bfed853d0d"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/MODULES/04_Engineering/SOURCE/Specification.md",
+      "bytes": 31136,
+      "sha256": "da418ac28d1632755d91f1f7749c4afc90aaa39f54d33be6c9df84d29ee68e6c"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/MODULES/05_Cryptography/SOURCE/Overview.md",
+      "bytes": 19795,
+      "sha256": "978a6a330befc407340b6130c808ed1c90fe9039c9a2623872b91f6fc99b4c2e"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/MODULES/05_Cryptography/SOURCE/Specification.md",
+      "bytes": 28324,
+      "sha256": "e3fa9f15515f19093cb16eeaa254020a05e95b1ee0d3e24657f54180f2d913cc"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/MODULES/06_Statistics/SOURCE/Overview.md",
+      "bytes": 16467,
+      "sha256": "7e86c85f547c21b9475c8f857222d35d099d2d2b97aaab98fcbd2c3a15a0e8b2"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/MODULES/06_Statistics/SOURCE/Specification.md",
+      "bytes": 32565,
+      "sha256": "6769b73c2a26d1f6400caec883925362835668a7d5d997dacfc4f810d51c2b76"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/MODULES/07_Quality_Assurance/SOURCE/Overview.md",
+      "bytes": 15535,
+      "sha256": "bd5906729d0fc36f8b088e680647cefee79b9edeabd412fcacc1a8276e95a3fb"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/MODULES/07_Quality_Assurance/SOURCE/Specification.md",
+      "bytes": 27516,
+      "sha256": "a039818b002cc014dff23e297211692296c7f534f5503f319fdd293af9864f8c"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/NOTICE.md",
+      "bytes": 1828,
+      "sha256": "73d24cecddcef3538d0740dc2790b59dfcb282961322fe504254c0a8f78d33cc"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/README.md",
+      "bytes": 3103,
+      "sha256": "2297c5e5d85e2cc1c163213ac0a925b67bb3f2c5bc21014438f1c5e90c6d4ca9"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/REFERENCE/Clause_Index.csv",
+      "bytes": 57551,
+      "sha256": "0cc92bfd5002b12258a8850b45dcf481a35f25bac5e54de4a333bb216db10909"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/REFERENCE/Defined_Terms.csv",
+      "bytes": 2773,
+      "sha256": "162088f0da0742f2c34e5c6dddff5d9484ab3df28bf1b94ba4e6092a9c8c7491"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/REFERENCE/Implementation_Limits.md",
+      "bytes": 3299,
+      "sha256": "61d1d6b96e019f6e19372aad16456fe089405b260b9272b0e78bfe734ca4da79"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/REFERENCE/Load_Tiers.csv",
+      "bytes": 820,
+      "sha256": "7fbf65610f945ca2a396b2efd51362e7014af782e11cda4bc5cc18b22b55e0a9"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/REFERENCE/Module_Catalog.csv",
+      "bytes": 1694,
+      "sha256": "ddf49a8ac821259aadabf189e1748872910b7ee2d46669dcf7976e8807e9d632"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/REFERENCE/Path_Crosswalk.csv",
+      "bytes": 871,
+      "sha256": "6dc32a3ee7f0878ca3b39212cca64386e4ee20801ed6c22d76e2a15388ffb36d"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/REFERENCE/Selection_Contract.md",
+      "bytes": 1374,
+      "sha256": "872b77500f1c3a6b6c3b572f38a9f0796275c4a204338aff19a6dd33e7c20051"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/RELEASE/Components.json",
+      "bytes": 2417,
+      "sha256": "2a9a12ad5da76a4449da686da19f6f4bb5b56f68e6d98445f81c7fe97e7de6b6"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/RELEASE/Core_Descriptor.json",
+      "bytes": 545,
+      "sha256": "f15686b385002bf597c2625bc18e98a390531a21ce91f64bdb249f2fe04a86a7"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/RELEASE/External_Reference_Points.md",
+      "bytes": 3435,
+      "sha256": "15fb4b0f83002e0c66fcca519c85e57ba3ef874da458edd5ea5ec14425f624c0"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/RELEASE/Known_Limitations.md",
+      "bytes": 7076,
+      "sha256": "1fd95c5eec015ac67d165f333d2e5cbdbfeb713dc767c3ab9ad55eb467ecf949"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/RELEASE/Release_Status.json",
+      "bytes": 631,
+      "sha256": "38dd9fe529328c1b0c015658c4479484269279b5262a8e1aeac67771476cf7f3"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/RELEASE/Source_Provenance.json",
+      "bytes": 6231,
+      "sha256": "79bc5bc58632b182c4a70dbd4387fea0451519cbf773b9649f5ae814467752ae"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/START_HERE.md",
+      "bytes": 3732,
+      "sha256": "53f10a033ca942375067120929ce26a6f34dc9d87dd49311557cedcd49b413d4"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/SUPPLEMENTS/Core_Conditional/Command_Interface.md",
+      "bytes": 12004,
+      "sha256": "001871e7e3ffae3314b37c54cd4d923a83bf62331947e9731a60de0da2a0c68b"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/SUPPLEMENTS/Core_Conditional/Methods_Catalog.md",
+      "bytes": 13690,
+      "sha256": "b80d9b7ee61afa93d761ae51c8f07f5eddfad599ba787ed3baae2230954bf621"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/SUPPLEMENTS/Core_Conditional/Record_Contracts.md",
+      "bytes": 19618,
+      "sha256": "3d64f9908973ce6fb1ef60ad5cea5553e65229fa3ff845bd3e3ecc05bdd70511"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/TEMPLATES/Review_Record.md",
+      "bytes": 2115,
+      "sha256": "ed7de1fbb9484b0222ef8d9664d2d883086619920579ffc92b39714ea68d319d"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/TEMPLATES/Task_Record.md",
+      "bytes": 3476,
+      "sha256": "83835c7c8f1d6c3e7073b0d7d0f6aafd28114eb2ba5b512cc1a168bfa3305bee"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/TEMPLATES/Trace_Reading.md",
+      "bytes": 2200,
+      "sha256": "67b2acb54540e6b1599a1662b5ef2154535d4f16ff81b19019f8e393f42d7726"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/method/TOOLS/acr.py",
+      "bytes": 17078,
+      "sha256": "07cfaefe80438673e1afabc7582c62a1a32d545b5190ed9bd253283b2f8eeac0"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/skills/about/SKILL.md",
+      "bytes": 2609,
+      "sha256": "a01b95651a51033684489e389eb2975791bcc5fadf398e5c164c5b8c082cc8e7"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/skills/clause/SKILL.md",
+      "bytes": 1910,
+      "sha256": "050267115c517ad6fc58e742ecfe59d550812756be5710f340e2d143e59873cf"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/skills/halt/SKILL.md",
+      "bytes": 1128,
+      "sha256": "b4f7f9ba8370cb4d12576060e2f03cb69fe1a01c7d8d254046b25fe402f99409"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/skills/modules/SKILL.md",
+      "bytes": 2377,
+      "sha256": "e91377b4654ac23edd79fd7db2d35831ffd9f570c26d77ff68a46acc55623c73"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/skills/review/SKILL.md",
+      "bytes": 7282,
+      "sha256": "bfd500d61604c4a130b04bd490c1649f4a5380938e7a18918c2fe2859104509a"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/skills/status/SKILL.md",
+      "bytes": 843,
+      "sha256": "67780e15fd9f3d8cd39b533298529c972922de8fc776216c1b453690652afe46"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/themes/pcp-core-light.json",
+      "bytes": 154,
+      "sha256": "43bb9ee449a1404bce92fd719e8ee1996230cb5155caa7547d299d0f362b5b0c"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/themes/pcp-core.json",
+      "bytes": 145,
+      "sha256": "62e3469f4de1b905731bec5d914d9c3fa1018546956cb5aa950d67a2f6b95971"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/themes/pcp-cryptography-light.json",
+      "bytes": 162,
+      "sha256": "68b3ee23f51ac5c886d321d86a583f20001170e719b250a229a834fc39c642ae"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/themes/pcp-cryptography.json",
+      "bytes": 153,
+      "sha256": "feaae761f0959e3bcb9cbab04566ff5d686d0c6eadd23a1c8f1036cc728db7bc"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/themes/pcp-engineering-light.json",
+      "bytes": 161,
+      "sha256": "79345ea1fccef90e538eef95b4c2803caa9ff9f77a44ad4f2895a8a96d71eb8e"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/themes/pcp-engineering.json",
+      "bytes": 152,
+      "sha256": "1b82697e81fe81d0dce56fbc06a89538e1ed2afc21d5a8065951bb5635ca54b2"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/themes/pcp-mathematics-light.json",
+      "bytes": 161,
+      "sha256": "e3281ccc4acb0757998dd305a718c8fcf585012ad165e21f3a5670e36b27d201"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/themes/pcp-mathematics.json",
+      "bytes": 152,
+      "sha256": "cfba8a736900f0f0e77175888f3a0371f2c74b686dcc0a01bdc62e928119dc0f"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/themes/pcp-quality-assurance-light.json",
+      "bytes": 167,
+      "sha256": "3817c4777a59e8e2b219edc4245a141037b85041ca7389cc47e7e9ddc5faffa5"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/themes/pcp-quality-assurance.json",
+      "bytes": 158,
+      "sha256": "dfe46d59c0164991c5a86425188ded936aa229c59156c91e9d28035eba525ea4"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/themes/pcp-science-light.json",
+      "bytes": 157,
+      "sha256": "f9e463c0cc210d2bb6c319279b83952f31c504218742fe242809e3d94693ed17"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/themes/pcp-science.json",
+      "bytes": 148,
+      "sha256": "7dd8aea594b8f6959f7023c1837c53244024e22d20f45af906b8b00eb17a1631"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/themes/pcp-statistics-light.json",
+      "bytes": 160,
+      "sha256": "68bdde1c6d9a299a4516273c3ef03976861d24bff7f6358a393ce930a8633654"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp/themes/pcp-statistics.json",
+      "bytes": 151,
+      "sha256": "ef65874ab883d5c4c3bdb51fd97cad3a6be83ed0f777f2bcf492906cba3e351f"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/.claude-plugin/icon.png",
+      "bytes": 6890,
+      "sha256": "dbdadf0d300f55b08b730c58992d24fea3d389911ac42fcf0ba5385a88a5ef57"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/.claude-plugin/plugin.json",
+      "bytes": 1079,
+      "sha256": "28ec0ad5ef9eb813e4d15551e43478a7ceb21cbcd3e25cceb184203dbb58ad53"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/.mcp.json",
+      "bytes": 209,
+      "sha256": "eae7ca06ac760d1a8a493f4ffe01c4e32e7a621cf11c34203d18649819f71660"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/NOTICE.md",
+      "bytes": 1434,
+      "sha256": "4c433b20910a96d567da3b0f10e8370f0a5e5c3b1a7b2b3e626636436cc58fc2"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/README.md",
+      "bytes": 11356,
+      "sha256": "30321333fcbdf3341e58cb3f70a179b82da02362a9d16bd0e7631d4d55002710"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/agents/challenger.md",
+      "bytes": 3027,
+      "sha256": "6c7d6fe426273935df892f459b42b4a12976213c711d4a78e1f3d2b6a338ebad"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/agents/checker.md",
+      "bytes": 2279,
+      "sha256": "e624161c00d2002a29efb77cc2799d14a6746d1f4cf9c2c3b58bd99c38261f08"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/agents/record-auditor.md",
+      "bytes": 2259,
+      "sha256": "213e7f6894e4a473ba5adb0abd87e21ad7a4dc1686b373d71461ddbeab8f78bc"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/agents/source-inspector.md",
+      "bytes": 1955,
+      "sha256": "9c9ca92f3bf40b7a3c7d91eb2f6b9d976ade4d1040bf04d9664d1e336d12aa8e"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/edition/EDITION.json",
+      "bytes": 1538,
+      "sha256": "acd058c73b97ea98010cbb371b6aaf9d96b7e96967ac9259da10fa39ec3cfe58"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/edition/edition.md",
+      "bytes": 901,
+      "sha256": "9a7be0473f789288881fad4491a0bca04baad63ae6c015fc37fe991e2cf43769"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/hooks/hooks.json",
+      "bytes": 2351,
+      "sha256": "82addf2df929c33c6f978468aa7b00ab8454d5004f089ad3029b44ac47bae6e0"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/GUIDES/Entry_Card.md",
+      "bytes": 1885,
+      "sha256": "090d970803edbc4e0c39de4848629cef6e81d99813bb389ca309e8eb5a790ba5"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/GUIDES/Integration_Guide.md",
+      "bytes": 19464,
+      "sha256": "26f3aa351de9006c28aed9f7d6045bed2668a26f002aa80319fac792193f27dd"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/GUIDES/Module_Map.md",
+      "bytes": 1309,
+      "sha256": "1be38d5b6d6078f95f6867d949e3513cce5e3c94a24b91c34e090aa33fab7b5e"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/GUIDES/Safety_Handbook.md",
+      "bytes": 19463,
+      "sha256": "42e32c48f769d6857dd9f9333a7e109f999a6c7b74ff1a53422c646ed3c874b4"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/KERNEL.md",
+      "bytes": 19754,
+      "sha256": "01bf42c8c662fa0d9d42e50e40eebd422f50ff8298680bcc71144a339e2e29de"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/KERNEL_CARD.md",
+      "bytes": 1494,
+      "sha256": "b1b1ca33d7b4ec9fce07ac9c9cdee3b3e0b634a814d1696eb6ab8de878edd117"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/MODULES/01_Core/SOURCE/Overview.md",
+      "bytes": 74904,
+      "sha256": "63a1289cd59d582d01de5091dda2f735e37ba78d0d16d25bb2794ef19d68250d"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/MODULES/01_Core/SOURCE/Specification.md",
+      "bytes": 131574,
+      "sha256": "39efd83b4122545455124f20420f212590a06064f391b259e93ea968449e6b7f"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/MODULES/02_Mathematics/SOURCE/Overview.md",
+      "bytes": 17263,
+      "sha256": "75f492021a2ce716a13fbb341637126514b2624b0a6661227ef25baaccae93b8"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/MODULES/02_Mathematics/SOURCE/Specification.md",
+      "bytes": 21330,
+      "sha256": "8c5009a8b6a610fb03ae4fe1e25d4674e0d256c9593885fb03b8159e580463f1"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/MODULES/03_Science/SOURCE/Overview.md",
+      "bytes": 18566,
+      "sha256": "3700bb93bf2b3a572e085229deda136c1299a2325e362650d8a457f25c92cf27"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/MODULES/03_Science/SOURCE/Specification.md",
+      "bytes": 37185,
+      "sha256": "162e664eeedd605250c5edfaa4f1eb1550020b1bd21f5e6ce384a47c1a9783e9"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/MODULES/04_Engineering/SOURCE/Overview.md",
+      "bytes": 29123,
+      "sha256": "2fb67ca503d9d0f8aeff0573001d4a62f5bb745c97c0d67915d7a2bfed853d0d"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/MODULES/04_Engineering/SOURCE/Specification.md",
+      "bytes": 31136,
+      "sha256": "da418ac28d1632755d91f1f7749c4afc90aaa39f54d33be6c9df84d29ee68e6c"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/MODULES/05_Cryptography/SOURCE/Overview.md",
+      "bytes": 19795,
+      "sha256": "978a6a330befc407340b6130c808ed1c90fe9039c9a2623872b91f6fc99b4c2e"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/MODULES/05_Cryptography/SOURCE/Specification.md",
+      "bytes": 28324,
+      "sha256": "e3fa9f15515f19093cb16eeaa254020a05e95b1ee0d3e24657f54180f2d913cc"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/MODULES/06_Statistics/SOURCE/Overview.md",
+      "bytes": 16467,
+      "sha256": "7e86c85f547c21b9475c8f857222d35d099d2d2b97aaab98fcbd2c3a15a0e8b2"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/MODULES/06_Statistics/SOURCE/Specification.md",
+      "bytes": 32565,
+      "sha256": "6769b73c2a26d1f6400caec883925362835668a7d5d997dacfc4f810d51c2b76"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/MODULES/07_Quality_Assurance/SOURCE/Overview.md",
+      "bytes": 15535,
+      "sha256": "bd5906729d0fc36f8b088e680647cefee79b9edeabd412fcacc1a8276e95a3fb"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/MODULES/07_Quality_Assurance/SOURCE/Specification.md",
+      "bytes": 27516,
+      "sha256": "a039818b002cc014dff23e297211692296c7f534f5503f319fdd293af9864f8c"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/NOTICE.md",
+      "bytes": 1828,
+      "sha256": "73d24cecddcef3538d0740dc2790b59dfcb282961322fe504254c0a8f78d33cc"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/README.md",
+      "bytes": 3103,
+      "sha256": "2297c5e5d85e2cc1c163213ac0a925b67bb3f2c5bc21014438f1c5e90c6d4ca9"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/REFERENCE/Clause_Index.csv",
+      "bytes": 57551,
+      "sha256": "0cc92bfd5002b12258a8850b45dcf481a35f25bac5e54de4a333bb216db10909"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/REFERENCE/Defined_Terms.csv",
+      "bytes": 2773,
+      "sha256": "162088f0da0742f2c34e5c6dddff5d9484ab3df28bf1b94ba4e6092a9c8c7491"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/REFERENCE/Implementation_Limits.md",
+      "bytes": 3299,
+      "sha256": "61d1d6b96e019f6e19372aad16456fe089405b260b9272b0e78bfe734ca4da79"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/REFERENCE/Load_Tiers.csv",
+      "bytes": 820,
+      "sha256": "7fbf65610f945ca2a396b2efd51362e7014af782e11cda4bc5cc18b22b55e0a9"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/REFERENCE/Module_Catalog.csv",
+      "bytes": 1694,
+      "sha256": "ddf49a8ac821259aadabf189e1748872910b7ee2d46669dcf7976e8807e9d632"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/REFERENCE/Path_Crosswalk.csv",
+      "bytes": 871,
+      "sha256": "6dc32a3ee7f0878ca3b39212cca64386e4ee20801ed6c22d76e2a15388ffb36d"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/REFERENCE/Selection_Contract.md",
+      "bytes": 1374,
+      "sha256": "872b77500f1c3a6b6c3b572f38a9f0796275c4a204338aff19a6dd33e7c20051"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/RELEASE/Components.json",
+      "bytes": 2417,
+      "sha256": "2a9a12ad5da76a4449da686da19f6f4bb5b56f68e6d98445f81c7fe97e7de6b6"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/RELEASE/Core_Descriptor.json",
+      "bytes": 545,
+      "sha256": "f15686b385002bf597c2625bc18e98a390531a21ce91f64bdb249f2fe04a86a7"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/RELEASE/External_Reference_Points.md",
+      "bytes": 3435,
+      "sha256": "15fb4b0f83002e0c66fcca519c85e57ba3ef874da458edd5ea5ec14425f624c0"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/RELEASE/Known_Limitations.md",
+      "bytes": 7076,
+      "sha256": "1fd95c5eec015ac67d165f333d2e5cbdbfeb713dc767c3ab9ad55eb467ecf949"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/RELEASE/Release_Status.json",
+      "bytes": 631,
+      "sha256": "38dd9fe529328c1b0c015658c4479484269279b5262a8e1aeac67771476cf7f3"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/RELEASE/Source_Provenance.json",
+      "bytes": 6231,
+      "sha256": "79bc5bc58632b182c4a70dbd4387fea0451519cbf773b9649f5ae814467752ae"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/START_HERE.md",
+      "bytes": 3732,
+      "sha256": "53f10a033ca942375067120929ce26a6f34dc9d87dd49311557cedcd49b413d4"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/SUPPLEMENTS/Core_Conditional/Command_Interface.md",
+      "bytes": 12004,
+      "sha256": "001871e7e3ffae3314b37c54cd4d923a83bf62331947e9731a60de0da2a0c68b"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/SUPPLEMENTS/Core_Conditional/Methods_Catalog.md",
+      "bytes": 13690,
+      "sha256": "b80d9b7ee61afa93d761ae51c8f07f5eddfad599ba787ed3baae2230954bf621"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/SUPPLEMENTS/Core_Conditional/Record_Contracts.md",
+      "bytes": 19618,
+      "sha256": "3d64f9908973ce6fb1ef60ad5cea5553e65229fa3ff845bd3e3ecc05bdd70511"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/TEMPLATES/Review_Record.md",
+      "bytes": 2115,
+      "sha256": "ed7de1fbb9484b0222ef8d9664d2d883086619920579ffc92b39714ea68d319d"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/TEMPLATES/Task_Record.md",
+      "bytes": 3476,
+      "sha256": "83835c7c8f1d6c3e7073b0d7d0f6aafd28114eb2ba5b512cc1a168bfa3305bee"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/method/TEMPLATES/Trace_Reading.md",
+      "bytes": 2200,
+      "sha256": "67b2acb54540e6b1599a1662b5ef2154535d4f16ff81b19019f8e393f42d7726"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/servers/README.md",
+      "bytes": 1857,
+      "sha256": "772eac7b12c2d1f7eb1aaec1ab90f117d9e4fef1999473d74f957bd5e2dbcf8d"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/servers/linux-aarch64/pcpos",
+      "bytes": 798880,
+      "sha256": "a511c57f57e884a25f3662b213a977d46b6a5730211844fd9d1bc0ee37d70647"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/servers/linux-x86_64/pcpos",
+      "bytes": 926928,
+      "sha256": "5d30c7be3f536b2086e0126851c2180ea7f8db31ed0980096c5edfc9848abd73"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/servers/pcpos",
+      "bytes": 589,
+      "sha256": "94dee7a9c9144f57f8ce3542b6b2a2d3dbf23b94df93a2c49c6d1be180bcc2cf"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/skills/about/SKILL.md",
+      "bytes": 2612,
+      "sha256": "a2ad35440c9ab0734b5ca69995319a3a7d20edd7de6869f7da5b07676cb564df"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/skills/adopt/SKILL.md",
+      "bytes": 1500,
+      "sha256": "ea9b497ff934cf95e98e05458e33efcf41ef25c5092a8090ddd8605a8f1c2dc2"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/skills/clause/SKILL.md",
+      "bytes": 1224,
+      "sha256": "f1d45f39daccae8012e4b51729c2f8e4591082b9ea31d275672e84a04f82b862"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/skills/halt/SKILL.md",
+      "bytes": 1324,
+      "sha256": "1a8110d4e752f45291638eb24b8d838cb60dc2f0de8f7fb857060bb42870d09c"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/skills/modules/SKILL.md",
+      "bytes": 2519,
+      "sha256": "64e09e1b40967a174978b1dd811fa4f30a67c9f61c1c94d4343349d9d125d87b"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/skills/review/SKILL.md",
+      "bytes": 11385,
+      "sha256": "8f6700203f72efa5e6339389ae272f31a6903a5474beed41fbc3b02f5959d212"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/skills/review/events.md",
+      "bytes": 10151,
+      "sha256": "b297fda5642286d058ecb07d9549cdbe966a49d47f22d912e922c550d42d8d79"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/skills/status/SKILL.md",
+      "bytes": 1457,
+      "sha256": "5662f5f4f6a65493f5a20cf5a40efe693d25a19f89391a6056ccfa6e1576763d"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/skills/system/SKILL.md",
+      "bytes": 2390,
+      "sha256": "45abb22b56801b54b58b51c307485a06143ab4eca3677abc0e37124e96b86c79"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/skills/verify/SKILL.md",
+      "bytes": 1263,
+      "sha256": "95244f51deb72a97ee79521725982af26d4845813999a552171c997f0bfd1ef4"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/skills/workspace/SKILL.md",
+      "bytes": 1632,
+      "sha256": "f6493606a1e569ef56a38a4ee52b21b51a4ae75ac2dec156edc52ab859648db6"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/themes/pcp-core-light.json",
+      "bytes": 154,
+      "sha256": "43bb9ee449a1404bce92fd719e8ee1996230cb5155caa7547d299d0f362b5b0c"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/themes/pcp-core.json",
+      "bytes": 145,
+      "sha256": "62e3469f4de1b905731bec5d914d9c3fa1018546956cb5aa950d67a2f6b95971"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/themes/pcp-cryptography-light.json",
+      "bytes": 162,
+      "sha256": "68b3ee23f51ac5c886d321d86a583f20001170e719b250a229a834fc39c642ae"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/themes/pcp-cryptography.json",
+      "bytes": 153,
+      "sha256": "feaae761f0959e3bcb9cbab04566ff5d686d0c6eadd23a1c8f1036cc728db7bc"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/themes/pcp-engineering-light.json",
+      "bytes": 161,
+      "sha256": "79345ea1fccef90e538eef95b4c2803caa9ff9f77a44ad4f2895a8a96d71eb8e"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/themes/pcp-engineering.json",
+      "bytes": 152,
+      "sha256": "1b82697e81fe81d0dce56fbc06a89538e1ed2afc21d5a8065951bb5635ca54b2"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/themes/pcp-mathematics-light.json",
+      "bytes": 161,
+      "sha256": "e3281ccc4acb0757998dd305a718c8fcf585012ad165e21f3a5670e36b27d201"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/themes/pcp-mathematics.json",
+      "bytes": 152,
+      "sha256": "cfba8a736900f0f0e77175888f3a0371f2c74b686dcc0a01bdc62e928119dc0f"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/themes/pcp-quality-assurance-light.json",
+      "bytes": 167,
+      "sha256": "3817c4777a59e8e2b219edc4245a141037b85041ca7389cc47e7e9ddc5faffa5"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/themes/pcp-quality-assurance.json",
+      "bytes": 158,
+      "sha256": "dfe46d59c0164991c5a86425188ded936aa229c59156c91e9d28035eba525ea4"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/themes/pcp-science-light.json",
+      "bytes": 157,
+      "sha256": "f9e463c0cc210d2bb6c319279b83952f31c504218742fe242809e3d94693ed17"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/themes/pcp-science.json",
+      "bytes": 148,
+      "sha256": "7dd8aea594b8f6959f7023c1837c53244024e22d20f45af906b8b00eb17a1631"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/themes/pcp-statistics-light.json",
+      "bytes": 160,
+      "sha256": "68bdde1c6d9a299a4516273c3ef03976861d24bff7f6358a393ce930a8633654"
+    },
+    {
+      "path": "PCP_1.0_Plugins/plugins/pcp-os/themes/pcp-statistics.json",
+      "bytes": 151,
+      "sha256": "ef65874ab883d5c4c3bdb51fd97cad3a6be83ed0f777f2bcf492906cba3e351f"
+    },
+    {
+      "path": "PCP_1.0_Readers.zip",
+      "bytes": 2190362,
+      "sha256": "db182ee4d1dbca8ce61e8a2f0e304e6b514e3416c63a32596ccb635287141e34"
+    },
+    {
+      "path": "PRICING.md",
+      "bytes": 2240,
+      "sha256": "1daacace9a32d2f936a713c17eec74e16356a6009392ce35324188fd84db854d"
+    },
+    {
+      "path": "README.md",
+      "bytes": 7471,
+      "sha256": "d8673aac67941d04a89dcf41d4473b54b6ca836a8ba050b5ee2d339ef7832fab"
+    },
+    {
+      "path": "THIRD_PARTY_LICENSES.md",
+      "bytes": 23292,
+      "sha256": "338bb6422d55b6995c6fe7072180b7bd929af0843dd6bcb63ecd8c641c927e45"
+    },
+    {
+      "path": "verify_edition.py",
+      "bytes": 13110,
+      "sha256": "fe4ab8e93bc60cf748051f3291115a80878e4baa031890d1c0f43823e5ee7668"
+    }
+  ]
+}

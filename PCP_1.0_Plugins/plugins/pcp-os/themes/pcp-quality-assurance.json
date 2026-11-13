@@ -1,0 +1,9 @@
+{
+ "name": "PCP Quality Assurance",
+ "base": "dark",
+ "overrides": {
+  "claude": "#708F3C",
+  "promptBorder": "#708F3C",
+  "briefLabelClaude": "#708F3C"
+ }
+}

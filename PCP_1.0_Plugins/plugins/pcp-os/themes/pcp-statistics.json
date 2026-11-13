@@ -1,0 +1,9 @@
+{
+ "name": "PCP Statistics",
+ "base": "dark",
+ "overrides": {
+  "claude": "#7686A1",
+  "promptBorder": "#7686A1",
+  "briefLabelClaude": "#7686A1"
+ }
+}

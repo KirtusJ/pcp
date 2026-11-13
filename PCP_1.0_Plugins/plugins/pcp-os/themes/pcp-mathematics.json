@@ -1,0 +1,9 @@
+{
+ "name": "PCP Mathematics",
+ "base": "dark",
+ "overrides": {
+  "claude": "#C46982",
+  "promptBorder": "#C46982",
+  "briefLabelClaude": "#C46982"
+ }
+}

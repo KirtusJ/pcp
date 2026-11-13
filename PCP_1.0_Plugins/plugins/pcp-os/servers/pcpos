@@ -1,0 +1,20 @@
+#!/bin/sh
+# Start the pcpos program built for this system, if one is here.
+d=$(dirname "$0")
+p="$d/$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m)/pcpos"
+if [ -x "$p" ]; then
+  exec "$p" "$@"
+fi
+if [ -f "$p" ]; then
+  # The program is here and may not be run: the archive was extracted without its permissions.
+  echo "pcpos: $p is not executable. Run: chmod +x "$d/pcpos" "$p"" >&2
+  if [ "$1" = "hook" ]; then
+    exit 1
+  fi
+  exit 126
+fi
+if [ "$1" = "hook" ]; then
+  exit 0
+fi
+echo "pcpos: no program built for $(uname -s) $(uname -m) is in $d (see README.md there)" >&2
+exit 127

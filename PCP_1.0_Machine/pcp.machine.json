@@ -1,0 +1,4835 @@
+{
+ "format": "pcp-machine-form/1",
+ "about": "Parrot Council Protocol (PCP) 1.0, the method Adversarial Claim Review (ACR) 1.0, as data. Addresses and digests, not restated rules: the Markdown Specifications govern.",
+ "method_release": {
+  "manifest_sha256": "6b6d3a680f3fdec811ce7105dd2124e951e272c28a24608f073914f4155853c6",
+  "files": 57,
+  "kernel_sha256": "01bf42c8c662fa0d9d42e50e40eebd422f50ff8298680bcc71144a339e2e29de",
+  "kernel_card_sha256": "b1b1ca33d7b4ec9fce07ac9c9cdee3b3e0b634a814d1696eb6ab8de878edd117"
+ },
+ "normative_language": {
+  "standard": "BCP 14 (RFC 2119, RFC 8174): the key words bind only in capitals",
+  "keywords": [
+   "MUST NOT",
+   "MUST",
+   "SHALL NOT",
+   "SHALL",
+   "SHOULD NOT",
+   "SHOULD",
+   "REQUIRED",
+   "RECOMMENDED",
+   "MAY",
+   "OPTIONAL"
+  ],
+  "limit": "Five Specifications number headings only, and many requirement sentences carry no key word. A provision here is therefore an address with a digest, not a requirement record with a level."
+ },
+ "modules": [
+  {
+   "key": "core",
+   "id": "acr.core",
+   "version": "1.0",
+   "role": "CORE",
+   "requires": [],
+   "selected_by": "ALWAYS_WHEN_ACR_IS_IN_USE",
+   "specification": {
+    "path": "MODULES/01_Core/SOURCE/Specification.md",
+    "sha256": "39efd83b4122545455124f20420f212590a06064f391b259e93ea968449e6b7f",
+    "bytes": 131574,
+    "words": 18058,
+    "keywords": {
+     "MUST NOT": 29,
+     "MUST": 18,
+     "SHOULD NOT": 1,
+     "SHOULD": 3,
+     "REQUIRED": 1,
+     "MAY": 17,
+     "OPTIONAL": 1
+    }
+   },
+   "overview": {
+    "path": "MODULES/01_Core/SOURCE/Overview.md",
+    "sha256": "63a1289cd59d582d01de5091dda2f735e37ba78d0d16d25bb2794ef19d68250d",
+    "words": 11250
+   },
+   "provisions": [
+    {
+     "number": "1",
+     "title": "Contract and minimum procedure",
+     "kind": "HEADING",
+     "first_line": 15,
+     "last_line": 56,
+     "words": 754,
+     "text_sha256": "80ce4ab1d1ad56f6641eeb8291f27bff24d7c5ae1353e3eee6e3b676068feb25",
+     "keywords": {
+      "MUST NOT": 2,
+      "MUST": 4,
+      "SHOULD NOT": 1,
+      "SHOULD": 2,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "1.1",
+     "title": "Authority of this document",
+     "kind": "HEADING",
+     "first_line": 17,
+     "last_line": 26,
+     "words": 287,
+     "text_sha256": "60657f815023d0c4b9a4ab15cb49b0bc3bf50bf88dd942d3db6716ae9ac49c24",
+     "keywords": {
+      "MUST NOT": 2,
+      "MUST": 2,
+      "SHOULD NOT": 1,
+      "SHOULD": 2,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "1.2",
+     "title": "Smallest sufficient review",
+     "kind": "HEADING",
+     "first_line": 27,
+     "last_line": 41,
+     "words": 225,
+     "text_sha256": "d9e530908efc1bdc8b665c3f06a12e13c5ff027599c28498a8d8fd15722e46f1",
+     "keywords": {
+      "MUST": 1
+     }
+    },
+    {
+     "number": "1.3",
+     "title": "One compact working record",
+     "kind": "HEADING",
+     "first_line": 42,
+     "last_line": 56,
+     "words": 236,
+     "text_sha256": "1410427012d3c0e36d7b046374c86f10e285a36d720b9651a5108660909d0754",
+     "keywords": {
+      "MUST": 1
+     }
+    },
+    {
+     "number": "2",
+     "title": "Commission, Target and scope",
+     "kind": "HEADING",
+     "first_line": 57,
+     "last_line": 129,
+     "words": 1300,
+     "text_sha256": "adff3ff4cfe3af11e30c1074f75fd55c64ee23fea26de34eeaf4e74610183615",
+     "keywords": {
+      "MUST NOT": 4,
+      "MUST": 1,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "2.1",
+     "title": "Receiving and adopting ACR",
+     "kind": "HEADING",
+     "first_line": 59,
+     "last_line": 68,
+     "words": 233,
+     "text_sha256": "b980c3081ceb0de3995459a81294f1cfb0b6a94b07de63ecf0ffd729ce8a893a",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 1
+     }
+    },
+    {
+     "number": "2.2",
+     "title": "Whole and part",
+     "kind": "HEADING",
+     "first_line": 69,
+     "last_line": 78,
+     "words": 186,
+     "text_sha256": "192518faadfe105ffc5631e39f418385691c24dd29748d805f4857f3f5b1f5bd",
+     "keywords": {
+      "MUST NOT": 1
+     }
+    },
+    {
+     "number": "2.3",
+     "title": "Forms and orthogonal settings",
+     "kind": "HEADING",
+     "first_line": 79,
+     "last_line": 95,
+     "words": 231,
+     "text_sha256": "0c0e11b396217869def0c4cd9c0076a51ca0b91ccb7c34dc6998c3bbb14332af",
+     "keywords": {}
+    },
+    {
+     "number": "2.4",
+     "title": "Commission identity and retries",
+     "kind": "HEADING",
+     "first_line": 96,
+     "last_line": 105,
+     "words": 159,
+     "text_sha256": "14576b684840090397bf63fe7f95a34c606d24951ae9ed43180b9ad839ed8a19",
+     "keywords": {
+      "MUST NOT": 1
+     }
+    },
+    {
+     "number": "2.5",
+     "title": "Opening and closing account",
+     "kind": "HEADING",
+     "first_line": 106,
+     "last_line": 113,
+     "words": 181,
+     "text_sha256": "0631b4836b5f5e3ba740bfbcdd2e47d17ed90b8f86e7b2a42a1acbcfb3c8c57f",
+     "keywords": {
+      "MUST NOT": 1
+     }
+    },
+    {
+     "number": "2.6",
+     "title": "Optional command interface",
+     "kind": "HEADING",
+     "first_line": 114,
+     "last_line": 129,
+     "words": 304,
+     "text_sha256": "46a2929885b3e3f682db329818b847bf4c4ad279342c33e214bc773d317c3dad",
+     "keywords": {
+      "MAY": 1
+     }
+    },
+    {
+     "number": "3",
+     "title": "Participants, direction and permission",
+     "kind": "HEADING",
+     "first_line": 130,
+     "last_line": 192,
+     "words": 1146,
+     "text_sha256": "fe6080b9dbb2ea70e128787102e86946b48e3ad5c1ab138a422ef00e0589b815",
+     "keywords": {
+      "MUST NOT": 2,
+      "MUST": 1,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "3.1",
+     "title": "Duties and actual actors",
+     "kind": "HEADING",
+     "first_line": 132,
+     "last_line": 156,
+     "words": 347,
+     "text_sha256": "c686ed5cb4006c5a70b7946bbf5a9f511644cd8509cb0e6182d05a9794ec5691",
+     "keywords": {
+      "MUST NOT": 1
+     }
+    },
+    {
+     "number": "3.2",
+     "title": "Direction and participation",
+     "kind": "HEADING",
+     "first_line": 157,
+     "last_line": 166,
+     "words": 215,
+     "text_sha256": "c3b8d2c33bb144c0a4a54549780cd2ed874b05caa88fe081fc4886ceba662eb4",
+     "keywords": {}
+    },
+    {
+     "number": "3.3",
+     "title": "Uniform permission context",
+     "kind": "HEADING",
+     "first_line": 167,
+     "last_line": 180,
+     "words": 251,
+     "text_sha256": "a088eabccc81dee5a0ef4fc8bb8cc74031a53800c9e5ccf377e709447f9e9bb3",
+     "keywords": {
+      "MUST": 1,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "3.4",
+     "title": "Governing requirements and substantive judgment",
+     "kind": "HEADING",
+     "first_line": 181,
+     "last_line": 192,
+     "words": 327,
+     "text_sha256": "497a420678547032a57fb4f1f6251b8a64b92688043e728d5618cf530a7e180f",
+     "keywords": {
+      "MUST NOT": 1
+     }
+    },
+    {
+     "number": "4",
+     "title": "Labels, interpretation and evidence",
+     "kind": "HEADING",
+     "first_line": 193,
+     "last_line": 250,
+     "words": 1346,
+     "text_sha256": "713d7307bac68c73fb23b479d47111c2157880954b409c9d97af011a31c3fba7",
+     "keywords": {
+      "MUST NOT": 3,
+      "MUST": 1
+     }
+    },
+    {
+     "number": "4.1",
+     "title": "Identity and typed relationships",
+     "kind": "HEADING",
+     "first_line": 195,
+     "last_line": 206,
+     "words": 253,
+     "text_sha256": "1ef54841ff6fdd5e4eeca05b350ea0b49fd8b6e2478841d59467d2cb18101df0",
+     "keywords": {
+      "MUST NOT": 1
+     }
+    },
+    {
+     "number": "4.2",
+     "title": "Consequential interpretation",
+     "kind": "HEADING",
+     "first_line": 207,
+     "last_line": 220,
+     "words": 413,
+     "text_sha256": "3cfb52093f8d2a1354da4a1522c91f1809b03b225c72543ec87af05156bb71da",
+     "keywords": {}
+    },
+    {
+     "number": "4.3",
+     "title": "Sources and support",
+     "kind": "HEADING",
+     "first_line": 221,
+     "last_line": 232,
+     "words": 288,
+     "text_sha256": "8f06e891dab7a279dc3929d950f6ad5e3ec66e23fca53dfc27a194389c8ef857",
+     "keywords": {
+      "MUST": 1
+     }
+    },
+    {
+     "number": "4.4",
+     "title": "Assessable objections",
+     "kind": "HEADING",
+     "first_line": 233,
+     "last_line": 250,
+     "words": 386,
+     "text_sha256": "9c3653a0e59abc53282508646afc4ff6bdea2e912e5398b518d5f98a5d0e0402",
+     "keywords": {
+      "MUST NOT": 2
+     }
+    },
+    {
+     "number": "5",
+     "title": "Checking and dispositions",
+     "kind": "HEADING",
+     "first_line": 251,
+     "last_line": 286,
+     "words": 609,
+     "text_sha256": "274c1f59b188ada6ba25a83ce1e174d68ef6103a116d7b1e52092efe256d5f1a",
+     "keywords": {
+      "MUST": 1
+     }
+    },
+    {
+     "number": "5.1",
+     "title": "Criterion-to-check mapping",
+     "kind": "HEADING",
+     "first_line": 253,
+     "last_line": 264,
+     "words": 192,
+     "text_sha256": "81dcaca5583cd97aab607a71a609f893cf7636c93636f2f46b03f086d7e0a7c7",
+     "keywords": {}
+    },
+    {
+     "number": "5.2",
+     "title": "Scoped findings",
+     "kind": "HEADING",
+     "first_line": 265,
+     "last_line": 286,
+     "words": 412,
+     "text_sha256": "25c3dfa10e9fb490eee425f44e1d65ce18b31d179304df1fc86cbfb34d479f2f",
+     "keywords": {
+      "MUST": 1
+     }
+    },
+    {
+     "number": "6",
+     "title": "Procedure, schedule and exposure",
+     "kind": "HEADING",
+     "first_line": 287,
+     "last_line": 315,
+     "words": 485,
+     "text_sha256": "a6bc9f9c1e35246033ba0f9b698a37d87c1b93b3ebb0f97f97ab8faa17f15f69",
+     "keywords": {}
+    },
+    {
+     "number": "6.1",
+     "title": "Gate commitments",
+     "kind": "HEADING",
+     "first_line": 289,
+     "last_line": 305,
+     "words": 296,
+     "text_sha256": "ea01625cf9dc9bf8eec48a315baffbb8ad89602c4c4916752106528512d91978",
+     "keywords": {}
+    },
+    {
+     "number": "6.2",
+     "title": "Work may overlap; commitments retain dependencies",
+     "kind": "HEADING",
+     "first_line": 306,
+     "last_line": 315,
+     "words": 183,
+     "text_sha256": "490d3eb9808e85bbc5305df1b6f4f2a18f857a2c4b9a81efbbd6a86ed6e43f00",
+     "keywords": {}
+    },
+    {
+     "number": "7",
+     "title": "State, Sessions and child Reviews",
+     "kind": "HEADING",
+     "first_line": 316,
+     "last_line": 370,
+     "words": 911,
+     "text_sha256": "ada2e05b35e0cf7bc454d04a08a21ab0002dd67de768687901a28fced5b7af92",
+     "keywords": {}
+    },
+    {
+     "number": "7.1",
+     "title": "Independent state dimensions",
+     "kind": "HEADING",
+     "first_line": 318,
+     "last_line": 338,
+     "words": 344,
+     "text_sha256": "3a06096acce4c4142c5b2f7ee47b3b5fe303db7d604c5d980d64f96fe79f6807",
+     "keywords": {}
+    },
+    {
+     "number": "7.2",
+     "title": "Parent integration",
+     "kind": "HEADING",
+     "first_line": 339,
+     "last_line": 348,
+     "words": 205,
+     "text_sha256": "2cc6eb4facce3349b720d0a7d21067bd20882f4a792f845f35d8b5eea7c585c9",
+     "keywords": {}
+    },
+    {
+     "number": "7.3",
+     "title": "Work, stopping and residual effects",
+     "kind": "HEADING",
+     "first_line": 349,
+     "last_line": 356,
+     "words": 160,
+     "text_sha256": "7d44e6e79b95097546e9bfc0756833b240282c6e9c37ec0a61b744ca5a937bd1",
+     "keywords": {}
+    },
+    {
+     "number": "7.4",
+     "title": "Baselines, freezes and locks",
+     "kind": "HEADING",
+     "first_line": 357,
+     "last_line": 370,
+     "words": 195,
+     "text_sha256": "c6e5072f56ed4a4934bd37b97f339e091db7d5d1dc1090134ebf209e24c96865",
+     "keywords": {}
+    },
+    {
+     "number": "8",
+     "title": "Context, synchronization and inherited meaning",
+     "kind": "HEADING",
+     "first_line": 371,
+     "last_line": 428,
+     "words": 1426,
+     "text_sha256": "49d7db12186f4beda31e51c5060ebd215c70b76d60b5f9e6b78b2e4c996be069",
+     "keywords": {
+      "MUST NOT": 4,
+      "MUST": 4,
+      "SHOULD": 1,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "8.1",
+     "title": "State Brief and Basis Header",
+     "kind": "HEADING",
+     "first_line": 373,
+     "last_line": 386,
+     "words": 260,
+     "text_sha256": "e1c62aef49b9b3f0449ef683bf201be05760be5aad828bfdc07e181cef2420ea",
+     "keywords": {
+      "MUST": 2
+     }
+    },
+    {
+     "number": "8.2",
+     "title": "Refresh and access",
+     "kind": "HEADING",
+     "first_line": 387,
+     "last_line": 396,
+     "words": 256,
+     "text_sha256": "2a53d4b0ab8bcd520dc5973fbc96dc7ddbd66d7961b27ca263e06f45a0619a28",
+     "keywords": {
+      "MAY": 1
+     }
+    },
+    {
+     "number": "8.3",
+     "title": "Events, gaps and commits",
+     "kind": "HEADING",
+     "first_line": 397,
+     "last_line": 410,
+     "words": 258,
+     "text_sha256": "8691b6cc640568e8d78415e210a4052cd0a21fe5e61ab84bacf850ee85f6e8c9",
+     "keywords": {}
+    },
+    {
+     "number": "8.4",
+     "title": "Handshakes and unavailable authority",
+     "kind": "HEADING",
+     "first_line": 411,
+     "last_line": 420,
+     "words": 156,
+     "text_sha256": "6f786535522fb004ddc6c96d60e05a68414fcb2c5ad25a680a80bed3a1681012",
+     "keywords": {}
+    },
+    {
+     "number": "8.5",
+     "title": "Context economy and session horizon",
+     "kind": "HEADING",
+     "first_line": 421,
+     "last_line": 428,
+     "words": 489,
+     "text_sha256": "fa7a31fce1937ce6eb07397a999cd71873b7bf299a4d08c5323cf332d52e3e09",
+     "keywords": {
+      "MUST NOT": 4,
+      "MUST": 2,
+      "SHOULD": 1
+     }
+    },
+    {
+     "number": "9",
+     "title": "Effort, scheduling and efficiency",
+     "kind": "HEADING",
+     "first_line": 429,
+     "last_line": 450,
+     "words": 463,
+     "text_sha256": "0b54676f201738abd286993a58d8384a1a844b64f828f3ada5f09a63e9ac729c",
+     "keywords": {}
+    },
+    {
+     "number": "10",
+     "title": "Optional methods, construction and trials",
+     "kind": "HEADING",
+     "first_line": 451,
+     "last_line": 494,
+     "words": 768,
+     "text_sha256": "0baad0375ae9fefb66ca9c668951b1b71c478a830251924841cecbe9bebdebe7",
+     "keywords": {
+      "MUST NOT": 1
+     }
+    },
+    {
+     "number": "10.1",
+     "title": "Method activation",
+     "kind": "HEADING",
+     "first_line": 453,
+     "last_line": 464,
+     "words": 215,
+     "text_sha256": "92eff778d50ee239959cdaa30f1a0967f9a4293a41d35f30f0a1738f647bb32e",
+     "keywords": {}
+    },
+    {
+     "number": "10.2",
+     "title": "Construction and candidate feed",
+     "kind": "HEADING",
+     "first_line": 465,
+     "last_line": 476,
+     "words": 202,
+     "text_sha256": "bdd1fb2204eae8dfd7a58839812813ef510f47356247e40d013d402226473a7a",
+     "keywords": {}
+    },
+    {
+     "number": "10.3",
+     "title": "Bounded constructed trials",
+     "kind": "HEADING",
+     "first_line": 477,
+     "last_line": 486,
+     "words": 226,
+     "text_sha256": "ee4a438b34da4d90ba5da4a3eb59ece7497523ba66fa9438f4a9c82610746de8",
+     "keywords": {}
+    },
+    {
+     "number": "10.4",
+     "title": "Resilience Exercise boundary",
+     "kind": "HEADING",
+     "first_line": 487,
+     "last_line": 494,
+     "words": 118,
+     "text_sha256": "3b5f81b6d389def012600202ee0a53720dbbffd92db33d7d81a413657319310a",
+     "keywords": {
+      "MUST NOT": 1
+     }
+    },
+    {
+     "number": "11",
+     "title": "Repository, delivery and protection",
+     "kind": "HEADING",
+     "first_line": 495,
+     "last_line": 562,
+     "words": 1263,
+     "text_sha256": "802e9161c14617b8834b468c5019387d50fc3715aaa12f88586ddb14f84e4a31",
+     "keywords": {
+      "REQUIRED": 1,
+      "OPTIONAL": 1
+     }
+    },
+    {
+     "number": "11.1",
+     "title": "Storage and delivery capability",
+     "kind": "HEADING",
+     "first_line": 497,
+     "last_line": 510,
+     "words": 202,
+     "text_sha256": "a314f2e0fcb92541be822dd14e3d9fc57604b12b0f062b9a76b0eacf1518c535",
+     "keywords": {}
+    },
+    {
+     "number": "11.2",
+     "title": "Publish, consume and retry",
+     "kind": "HEADING",
+     "first_line": 511,
+     "last_line": 520,
+     "words": 244,
+     "text_sha256": "947d8d14ddf8802d724c2d4927221473400cefc29741e76baccd6b08bbc53125",
+     "keywords": {
+      "REQUIRED": 1,
+      "OPTIONAL": 1
+     }
+    },
+    {
+     "number": "11.3",
+     "title": "Security profile",
+     "kind": "HEADING",
+     "first_line": 521,
+     "last_line": 532,
+     "words": 206,
+     "text_sha256": "b5ead733f08ac4ae45da4d0d81f08d2caff7a4fdbf25451d1d9c78cccd1826f3",
+     "keywords": {}
+    },
+    {
+     "number": "11.4",
+     "title": "Encryption and credentials",
+     "kind": "HEADING",
+     "first_line": 533,
+     "last_line": 548,
+     "words": 361,
+     "text_sha256": "237e5812fc0919ddf2549025e41c439b2dd435547f6339a8e0e52fc0e6b0dedb",
+     "keywords": {}
+    },
+    {
+     "number": "11.5",
+     "title": "Hostile input, freshness and recovery",
+     "kind": "HEADING",
+     "first_line": 549,
+     "last_line": 562,
+     "words": 244,
+     "text_sha256": "dd6d4eb5d19a3d4522b671c3e3f5dd2bd997b5c673a1a5c992876dfbbb3dd50c",
+     "keywords": {}
+    },
+    {
+     "number": "12",
+     "title": "Integration, release and continuous operation",
+     "kind": "HEADING",
+     "first_line": 563,
+     "last_line": 607,
+     "words": 828,
+     "text_sha256": "b935f575e773d7568dc3690927f4f2c2f4b1b3009e58912d4ba4834e9a77a3b8",
+     "keywords": {
+      "MUST NOT": 1
+     }
+    },
+    {
+     "number": "12.1",
+     "title": "Integration and release",
+     "kind": "HEADING",
+     "first_line": 565,
+     "last_line": 581,
+     "words": 289,
+     "text_sha256": "f59c07ebb21ce7770087186ad56a6e62aa53f7a38a7acb17c600a01086bafe8e",
+     "keywords": {}
+    },
+    {
+     "number": "12.2",
+     "title": "Bounded delegated continuation",
+     "kind": "HEADING",
+     "first_line": 582,
+     "last_line": 597,
+     "words": 351,
+     "text_sha256": "ebabe8f608894bf312fb54684c6a7dbecb10eed7b1f46999b93b478a66aa67d2",
+     "keywords": {
+      "MUST NOT": 1
+     }
+    },
+    {
+     "number": "12.3",
+     "title": "Continuous hosting",
+     "kind": "HEADING",
+     "first_line": 598,
+     "last_line": 607,
+     "words": 181,
+     "text_sha256": "625de7f9d28b77e8b473b1d07bc6b587a0604394d0e40fa71f535894a6eef16b",
+     "keywords": {}
+    },
+    {
+     "number": "13",
+     "title": "Observers and the Observer Channel",
+     "kind": "HEADING",
+     "first_line": 608,
+     "last_line": 621,
+     "words": 228,
+     "text_sha256": "4db2e5e72e9255b019ad56d23dc8ac5a9f41655f406303876501ab6ed08f9882",
+     "keywords": {}
+    },
+    {
+     "number": "14",
+     "title": "Modules, evaluation and methodology",
+     "kind": "HEADING",
+     "first_line": 622,
+     "last_line": 666,
+     "words": 1311,
+     "text_sha256": "480b30a9821ce096728d1eb15d148b2a4fbd035b35388d7ce839f8d79cbea4cc",
+     "keywords": {
+      "MAY": 3
+     }
+    },
+    {
+     "number": "14.1",
+     "title": "Complementary modules",
+     "kind": "HEADING",
+     "first_line": 624,
+     "last_line": 648,
+     "words": 724,
+     "text_sha256": "c532d151f3897cfe31a1517c49a6f207322647927ed1e8c8cb355136615ec156",
+     "keywords": {
+      "MAY": 3
+     }
+    },
+    {
+     "number": "14.2",
+     "title": "Evaluation and conformance",
+     "kind": "HEADING",
+     "first_line": 649,
+     "last_line": 658,
+     "words": 498,
+     "text_sha256": "7f793b6a866ac73464b92ed2033cdc3a3042f8a7001d32b4ae11481460918b3b",
+     "keywords": {}
+    },
+    {
+     "number": "14.3",
+     "title": "Working methodology",
+     "kind": "HEADING",
+     "first_line": 659,
+     "last_line": 666,
+     "words": 83,
+     "text_sha256": "134adca354c407ba9b9baed433d6af56547b71caab3f780cbaa883e2fed97c98",
+     "keywords": {}
+    },
+    {
+     "number": "15",
+     "title": "Operating floor",
+     "kind": "HEADING",
+     "first_line": 667,
+     "last_line": 755,
+     "words": 2336,
+     "text_sha256": "09b97ae00720ae6f2558c792210dfd6faaf4fb4bfef320e197dd5c0c1c49500f",
+     "keywords": {
+      "MUST NOT": 12,
+      "MUST": 6,
+      "MAY": 10
+     }
+    },
+    {
+     "number": "15.1",
+     "title": "Standing and order of authority",
+     "kind": "HEADING",
+     "first_line": 669,
+     "last_line": 686,
+     "words": 465,
+     "text_sha256": "72b0d332c36bb25579a44a13b15285cc993256fc650e74f7eb08b7237a1b2c20",
+     "keywords": {
+      "MUST NOT": 2,
+      "MUST": 1,
+      "MAY": 2
+     }
+    },
+    {
+     "number": "15.2",
+     "title": "Halt",
+     "kind": "HEADING",
+     "first_line": 687,
+     "last_line": 701,
+     "words": 339,
+     "text_sha256": "c742d540960acc33e4fb4fce5d6e2523f79bf38dc92726109eb4814f0a7ace65",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 1,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "15.3",
+     "title": "Questioning and declining",
+     "kind": "HEADING",
+     "first_line": 702,
+     "last_line": 709,
+     "words": 241,
+     "text_sha256": "b83e3f04aba36e1dbbefe70a6cab2122d8e5e39b38e7a320f8af79a484a338c7",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 1,
+      "MAY": 5
+     }
+    },
+    {
+     "number": "15.4",
+     "title": "Status and momentum",
+     "kind": "HEADING",
+     "first_line": 710,
+     "last_line": 717,
+     "words": 251,
+     "text_sha256": "2d63c0258ee6e4cd2762d1d2a3165dd26d1eb362e9eca20eaa6efb801ca5efa1",
+     "keywords": {
+      "MUST": 2
+     }
+    },
+    {
+     "number": "15.5",
+     "title": "Relay and repetition",
+     "kind": "HEADING",
+     "first_line": 718,
+     "last_line": 725,
+     "words": 253,
+     "text_sha256": "82588dd4f9e639993fb0512ca0e7eee8d27bc586014c579fbe3d40ef3c5871e1",
+     "keywords": {
+      "MUST NOT": 2,
+      "MUST": 1,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "15.6",
+     "title": "Undefined and near-miss tokens",
+     "kind": "HEADING",
+     "first_line": 726,
+     "last_line": 731,
+     "words": 156,
+     "text_sha256": "46d9b8ae923072ac2789cdefc910f37540be93c90b09c6b899850e24982c1b97",
+     "keywords": {
+      "MUST NOT": 3
+     }
+    },
+    {
+     "number": "15.7",
+     "title": "Names, aliases and voice",
+     "kind": "HEADING",
+     "first_line": 732,
+     "last_line": 739,
+     "words": 204,
+     "text_sha256": "a52c1af209b150a74c0acb1d63d479caa485d01ad8843964cbc8a4a450955b6d",
+     "keywords": {
+      "MUST NOT": 1
+     }
+    },
+    {
+     "number": "15.8",
+     "title": "Delivery, grounding and fidelity",
+     "kind": "HEADING",
+     "first_line": 740,
+     "last_line": 755,
+     "words": 423,
+     "text_sha256": "b5b08af26b422840037bedebeb6ee0e3764ea67f799ffb295336d989ff17e6b0",
+     "keywords": {
+      "MUST NOT": 2,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "Appendix A",
+     "title": "Glossary",
+     "kind": "HEADING",
+     "first_line": 756,
+     "last_line": 792,
+     "words": 596,
+     "text_sha256": "282ae03c66d15963ef8cb6754cf07a7d6149c5b2f467a1ccfbb25db1ac153803",
+     "keywords": {}
+    },
+    {
+     "number": "Appendix B",
+     "title": "Cautions and interpretation limits",
+     "kind": "HEADING",
+     "first_line": 793,
+     "last_line": 821,
+     "words": 557,
+     "text_sha256": "a44731d46c4513edbf1a296ecd75ae2bdf2fcf76536a27a4b78f17f3cd0bbb9f",
+     "keywords": {}
+    },
+    {
+     "number": "Appendix C",
+     "title": "Primary source register",
+     "kind": "HEADING",
+     "first_line": 822,
+     "last_line": 925,
+     "words": 1586,
+     "text_sha256": "cbbb09e240ae4f676f0458b4d733a909caf9ad87cfc13c0724bdfff9b284d8d5",
+     "keywords": {}
+    }
+   ]
+  },
+  {
+   "key": "mathematics",
+   "id": "acr.mathematics",
+   "version": "1.0",
+   "role": "SPECIALIST",
+   "requires": [
+    {
+     "id": "acr.core",
+     "version": "1.0"
+    }
+   ],
+   "selected_by": "THE_PERSON_OR_A_POLICY_THEY_SET",
+   "specification": {
+    "path": "MODULES/02_Mathematics/SOURCE/Specification.md",
+    "sha256": "8c5009a8b6a610fb03ae4fe1e25d4674e0d256c9593885fb03b8159e580463f1",
+    "bytes": 21330,
+    "words": 2832,
+    "keywords": {
+     "MUST NOT": 5,
+     "MUST": 14,
+     "SHOULD": 2,
+     "MAY": 6
+    }
+   },
+   "overview": {
+    "path": "MODULES/02_Mathematics/SOURCE/Overview.md",
+    "sha256": "75f492021a2ce716a13fbb341637126514b2624b0a6661227ef25baaccae93b8",
+    "words": 2560
+   },
+   "provisions": [
+    {
+     "number": "1",
+     "title": "Scope and economical adoption",
+     "kind": "HEADING",
+     "first_line": 15,
+     "last_line": 26,
+     "words": 218,
+     "text_sha256": "58167b927f43281f37a21fa726a830e219963eb8a25844e2206bcbf7899c2982",
+     "keywords": {
+      "MUST": 2,
+      "SHOULD": 1,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "2",
+     "title": "Statement and mathematical basis",
+     "kind": "HEADING",
+     "first_line": 27,
+     "last_line": 44,
+     "words": 253,
+     "text_sha256": "2c353d2ff7447a40ad82d44a73bc9fa9844b6161580f6defdcf87dc4fdb17193",
+     "keywords": {
+      "MUST": 4
+     }
+    },
+    {
+     "number": "3",
+     "title": "Exploration, construction and revision",
+     "kind": "HEADING",
+     "first_line": 45,
+     "last_line": 54,
+     "words": 196,
+     "text_sha256": "7fa82c3aa19045cba6be4e55e5feaf475a71c957a234b71b4bc0ab92c8d56699",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 1,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "4",
+     "title": "Proof review and adverse cases",
+     "kind": "HEADING",
+     "first_line": 55,
+     "last_line": 64,
+     "words": 226,
+     "text_sha256": "91611462e721fbc4dd62da5014641f87dadab14b4fcc79d64892a609adb301ac",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 3,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "5",
+     "title": "Formal proofs and trusted computation",
+     "kind": "HEADING",
+     "first_line": 65,
+     "last_line": 74,
+     "words": 239,
+     "text_sha256": "c1def3c56517e914d5849c6e2bb136405cda4aee64b9b54946c7773a631da8f1",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 2,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "6",
+     "title": "Computation and numerical assurance",
+     "kind": "HEADING",
+     "first_line": 75,
+     "last_line": 92,
+     "words": 355,
+     "text_sha256": "64f31db0c063389ecce1b4bc83939b8cdc9978c8b81ef77fef0b1b4e0ecf7820",
+     "keywords": {
+      "MUST NOT": 2,
+      "MUST": 2
+     }
+    },
+    {
+     "number": "7",
+     "title": "Findings, foundations and applications",
+     "kind": "HEADING",
+     "first_line": 93,
+     "last_line": 104,
+     "words": 306,
+     "text_sha256": "c3aac0731f569e34b7bb073ac1d3bed80375405368fe61236606f21a5f775b36",
+     "keywords": {
+      "MAY": 1
+     }
+    },
+    {
+     "number": "8",
+     "title": "Delivery, correction and reuse",
+     "kind": "HEADING",
+     "first_line": 105,
+     "last_line": 112,
+     "words": 215,
+     "text_sha256": "4ef9c91d9efd56173b563ddfc617ae6c50d113d4b482ec3b45ac22fec15e1903",
+     "keywords": {
+      "SHOULD": 1
+     }
+    },
+    {
+     "number": "9",
+     "title": "Customization and evaluation",
+     "kind": "HEADING",
+     "first_line": 113,
+     "last_line": 118,
+     "words": 107,
+     "text_sha256": "4cce9db84dd62c8f5d55d277db09abec3cba682d18692590a54ea64d6441448c",
+     "keywords": {
+      "MAY": 1
+     }
+    },
+    {
+     "number": "Appendix A",
+     "title": "Working glossary",
+     "kind": "HEADING",
+     "first_line": 119,
+     "last_line": 134,
+     "words": 221,
+     "text_sha256": "0b74f1752c794adddead544b462a529d82143a3fb7222d2e42f0676e2e0dc464",
+     "keywords": {}
+    },
+    {
+     "number": "Appendix B",
+     "title": "Cautions and reading discipline",
+     "kind": "HEADING",
+     "first_line": 135,
+     "last_line": 149,
+     "words": 193,
+     "text_sha256": "b1ba7bd6c015e9e1480a53923a0f0754dbe7d2e0fd589b71e341e05b763bd970",
+     "keywords": {}
+    },
+    {
+     "number": "Appendix C",
+     "title": "Primary sources",
+     "kind": "HEADING",
+     "first_line": 150,
+     "last_line": 177,
+     "words": 180,
+     "text_sha256": "a253a4208f6e92d50b0c9688971644d8b48853ab9ec7c3d81fd5c63f10270a0e",
+     "keywords": {}
+    }
+   ]
+  },
+  {
+   "key": "science",
+   "id": "acr.science",
+   "version": "1.0",
+   "role": "SPECIALIST",
+   "requires": [
+    {
+     "id": "acr.core",
+     "version": "1.0"
+    }
+   ],
+   "selected_by": "THE_PERSON_OR_A_POLICY_THEY_SET",
+   "specification": {
+    "path": "MODULES/03_Science/SOURCE/Specification.md",
+    "sha256": "162e664eeedd605250c5edfaa4f1eb1550020b1bd21f5e6ce384a47c1a9783e9",
+    "bytes": 37185,
+    "words": 4840,
+    "keywords": {
+     "MUST NOT": 6,
+     "MUST": 42,
+     "SHOULD": 2,
+     "MAY": 11
+    }
+   },
+   "overview": {
+    "path": "MODULES/03_Science/SOURCE/Overview.md",
+    "sha256": "3700bb93bf2b3a572e085229deda136c1299a2325e362650d8a457f25c92cf27",
+    "words": 2673
+   },
+   "provisions": [
+    {
+     "number": "1",
+     "title": "Scope and entry",
+     "kind": "HEADING",
+     "first_line": 15,
+     "last_line": 41,
+     "words": 408,
+     "text_sha256": "2dfce9926d9c7792c5c1751b1dd0bbdd6c2100559f6e8206c480eb38e46fc0f9",
+     "keywords": {
+      "MUST": 4,
+      "SHOULD": 1,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "1.1",
+     "title": "Apply the module to identified work",
+     "kind": "HEADING",
+     "first_line": 17,
+     "last_line": 26,
+     "words": 201,
+     "text_sha256": "b4af6db752f713fbe9a0249bfa946f5d90a8d72687200a2ed5e7bb4b12e98eec",
+     "keywords": {
+      "MUST": 2,
+      "SHOULD": 1,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "1.2",
+     "title": "Reuse the team's working record",
+     "kind": "HEADING",
+     "first_line": 27,
+     "last_line": 41,
+     "words": 202,
+     "text_sha256": "8ed25c5e1f7685929a12aa134ea6d4ba2a88ba5db4410dc754e3b3a3f498bd13",
+     "keywords": {
+      "MUST": 2
+     }
+    },
+    {
+     "number": "2",
+     "title": "Scientific question and inherited meaning",
+     "kind": "HEADING",
+     "first_line": 42,
+     "last_line": 55,
+     "words": 322,
+     "text_sha256": "4a669b03b7385fd97fc419f4f80489f6c1017f5e0186c65cba9cf9ac6e354405",
+     "keywords": {
+      "MUST": 5,
+      "MAY": 2
+     }
+    },
+    {
+     "number": "3",
+     "title": "Accountability and research protections",
+     "kind": "HEADING",
+     "first_line": 56,
+     "last_line": 67,
+     "words": 230,
+     "text_sha256": "0f1d038f5933ec4de3f0f3f4efc6bdc628bb92000313ce913191e009b0f7b41f",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 3,
+      "MAY": 2
+     }
+    },
+    {
+     "number": "4",
+     "title": "Methods, plans and exposure",
+     "kind": "HEADING",
+     "first_line": 68,
+     "last_line": 103,
+     "words": 659,
+     "text_sha256": "9a6f81c12ca7800cd809bc440b33b80a4bd31ebbb4bf4927b7ae407e2f83bb56",
+     "keywords": {
+      "MUST NOT": 2,
+      "MUST": 5,
+      "SHOULD": 1,
+      "MAY": 2
+     }
+    },
+    {
+     "number": "4.1",
+     "title": "Select methods for the scientific question",
+     "kind": "HEADING",
+     "first_line": 70,
+     "last_line": 89,
+     "words": 382,
+     "text_sha256": "7438a5767fd76b93fd37967c5db75854f10c0a983c1c353da0c90a4053d086ea",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 1,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "4.2",
+     "title": "Preserve timing and adaptation",
+     "kind": "HEADING",
+     "first_line": 90,
+     "last_line": 103,
+     "words": 271,
+     "text_sha256": "2838d41cba1cfbf2a3bdce44da8872ba53e173b6ce039476eb0cb0c294f71488",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 4,
+      "SHOULD": 1,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "5",
+     "title": "Scientific objections and decisive checks",
+     "kind": "HEADING",
+     "first_line": 104,
+     "last_line": 145,
+     "words": 865,
+     "text_sha256": "32f78e52a145afaae7ae272235b917eaf4452e2536311f9d8de2ba4c2b625d26",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 13
+     }
+    },
+    {
+     "number": "5.1",
+     "title": "Assess the concern",
+     "kind": "HEADING",
+     "first_line": 106,
+     "last_line": 117,
+     "words": 260,
+     "text_sha256": "3140e5ffdbe820187fbacd8aa048ec74e7d60a26843889e8a3a37dba258461cf",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 3
+     }
+    },
+    {
+     "number": "5.2",
+     "title": "Connect each decisive obligation to a check",
+     "kind": "HEADING",
+     "first_line": 118,
+     "last_line": 127,
+     "words": 176,
+     "text_sha256": "b0d68002a493643cba050c3065d25977f0ac101cf6a1ec7965c5f0ee08581658",
+     "keywords": {
+      "MUST": 2
+     }
+    },
+    {
+     "number": "5.3",
+     "title": "Numerical results",
+     "kind": "HEADING",
+     "first_line": 128,
+     "last_line": 135,
+     "words": 135,
+     "text_sha256": "c9b5512e678aacc38a4c50b603faa4270ff6a7ae735b8ca6195a715387fa3885",
+     "keywords": {
+      "MUST": 3
+     }
+    },
+    {
+     "number": "5.4",
+     "title": "Identification and empirical uncertainty",
+     "kind": "HEADING",
+     "first_line": 136,
+     "last_line": 145,
+     "words": 287,
+     "text_sha256": "fcee2fe9eab68bf71b1dd4c0857f49ee066a1cc8c658937294b8387829e55b7e",
+     "keywords": {
+      "MUST": 5
+     }
+    },
+    {
+     "number": "6",
+     "title": "Inference and dispositions",
+     "kind": "HEADING",
+     "first_line": 146,
+     "last_line": 167,
+     "words": 398,
+     "text_sha256": "cbfaa7875d3df095707f4f91b3ec5665fc5cdf30005249a7bafcfa18ebe1765c",
+     "keywords": {
+      "MUST NOT": 2,
+      "MUST": 2,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "7",
+     "title": "Simplified investigations and optional methods",
+     "kind": "HEADING",
+     "first_line": 168,
+     "last_line": 189,
+     "words": 394,
+     "text_sha256": "52c20876b7ee396bfc4a424c73ee25e3c1b624731e9401dabc3f0a85da9d6ad6",
+     "keywords": {
+      "MUST": 5
+     }
+    },
+    {
+     "number": "7.1",
+     "title": "Method use",
+     "kind": "HEADING",
+     "first_line": 170,
+     "last_line": 177,
+     "words": 143,
+     "text_sha256": "57db72319980c3aed3dc782a8d486831530ef5d3cfa7cabb17748fb37ea19ca8",
+     "keywords": {
+      "MUST": 1
+     }
+    },
+    {
+     "number": "7.2",
+     "title": "Construction and delivery",
+     "kind": "HEADING",
+     "first_line": 178,
+     "last_line": 189,
+     "words": 244,
+     "text_sha256": "accffb96a9de33fe763f99f26040305f60a84e4fd4c11b2bb3ccf7d08764a1c2",
+     "keywords": {
+      "MUST": 4
+     }
+    },
+    {
+     "number": "8",
+     "title": "Records, sharing and scientific delivery",
+     "kind": "HEADING",
+     "first_line": 190,
+     "last_line": 217,
+     "words": 459,
+     "text_sha256": "15eff5719d6e5abe898020537b7b4d2b37c3e20d1e01f7b4ebf7965e5cb0ea5d",
+     "keywords": {
+      "MUST": 5,
+      "MAY": 3
+     }
+    },
+    {
+     "number": "8.1",
+     "title": "Version the scientific basis",
+     "kind": "HEADING",
+     "first_line": 192,
+     "last_line": 199,
+     "words": 124,
+     "text_sha256": "ea0b56fd19c078345735115a139f087d5ee4c9d23868bed7bd0c32c6962cbdb7",
+     "keywords": {
+      "MUST": 1,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "8.2",
+     "title": "Share under actual rights and responsibilities",
+     "kind": "HEADING",
+     "first_line": 200,
+     "last_line": 207,
+     "words": 110,
+     "text_sha256": "269f63de2eac25ce617cecdde1b4eb33f12b97bfbaf28f7a7a2eb72b00f478da",
+     "keywords": {
+      "MUST": 1,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "8.3",
+     "title": "Report the result and its basis",
+     "kind": "HEADING",
+     "first_line": 208,
+     "last_line": 217,
+     "words": 218,
+     "text_sha256": "9518cbc6df7f5f3b430e79db74ccd8b22ca070e3c67fcb0df34bfb621575a2bb",
+     "keywords": {
+      "MUST": 3,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "9",
+     "title": "Working methodology and proportionate use",
+     "kind": "HEADING",
+     "first_line": 218,
+     "last_line": 233,
+     "words": 205,
+     "text_sha256": "653321d742fabe71ce4f340be899936aeb87c27c13f3cf1e3e74e1edabbb9a65",
+     "keywords": {}
+    },
+    {
+     "number": "Appendix A",
+     "title": "Scientific glossary",
+     "kind": "HEADING",
+     "first_line": 234,
+     "last_line": 255,
+     "words": 269,
+     "text_sha256": "84c3c9e93477f71c8a125edc1ed0c2298692ca8dda394934d0029dcc9c563fad",
+     "keywords": {}
+    },
+    {
+     "number": "Appendix B",
+     "title": "Interpretation and cautions",
+     "kind": "HEADING",
+     "first_line": 256,
+     "last_line": 269,
+     "words": 181,
+     "text_sha256": "8519fda3166f7bfd2a315956d90e4c72f881a32c141d151aab37181a66b3f28f",
+     "keywords": {}
+    },
+    {
+     "number": "Appendix C",
+     "title": "Sources",
+     "kind": "HEADING",
+     "first_line": 270,
+     "last_line": 327,
+     "words": 314,
+     "text_sha256": "0b2867020bdf809366a47b8d1a16c9edb6f9db3e560fb1aaed03f36525725d91",
+     "keywords": {}
+    }
+   ]
+  },
+  {
+   "key": "engineering",
+   "id": "acr.engineering",
+   "version": "1.0",
+   "role": "SPECIALIST",
+   "requires": [
+    {
+     "id": "acr.core",
+     "version": "1.0"
+    }
+   ],
+   "selected_by": "THE_PERSON_OR_A_POLICY_THEY_SET",
+   "specification": {
+    "path": "MODULES/04_Engineering/SOURCE/Specification.md",
+    "sha256": "da418ac28d1632755d91f1f7749c4afc90aaa39f54d33be6c9df84d29ee68e6c",
+    "bytes": 31136,
+    "words": 3959,
+    "keywords": {
+     "MUST NOT": 9,
+     "MUST": 42,
+     "SHOULD": 3,
+     "MAY": 10
+    }
+   },
+   "overview": {
+    "path": "MODULES/04_Engineering/SOURCE/Overview.md",
+    "sha256": "2fb67ca503d9d0f8aeff0573001d4a62f5bb745c97c0d67915d7a2bfed853d0d",
+    "words": 4033
+   },
+   "provisions": [
+    {
+     "number": "1",
+     "title": "Scope, entry and proportionate use",
+     "kind": "HEADING",
+     "first_line": 13,
+     "last_line": 24,
+     "words": 297,
+     "text_sha256": "3f37a76a50771d7e2b4b45788ea98ccc9bf3246f9a5a4d200f74df17bef9ef00",
+     "keywords": {
+      "MUST": 3,
+      "SHOULD": 2,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "2",
+     "title": "The engineering decision and its basis",
+     "kind": "HEADING",
+     "first_line": 25,
+     "last_line": 43,
+     "words": 363,
+     "text_sha256": "0356026ec652a441f2683ffb9854efdd5b8d97c63ea3f563d8cf78927ef8e6df",
+     "keywords": {
+      "MUST NOT": 2,
+      "MUST": 5,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "3",
+     "title": "Applicable obligations and accountable decisions",
+     "kind": "HEADING",
+     "first_line": 44,
+     "last_line": 57,
+     "words": 322,
+     "text_sha256": "9b391061304f195d7f21be911c711c0e425fd38522a5df662c3a895b24fcc584",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 2,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "4",
+     "title": "Requirements, assumptions and interfaces",
+     "kind": "HEADING",
+     "first_line": 58,
+     "last_line": 77,
+     "words": 480,
+     "text_sha256": "1681518ad72918f7b78b081ec5f8c0b8e2a011cc8977c830b472fcc041be3969",
+     "keywords": {
+      "MUST NOT": 2,
+      "MUST": 6,
+      "MAY": 4
+     }
+    },
+    {
+     "number": "4.1",
+     "title": "Development and comparison of alternatives",
+     "kind": "HEADING",
+     "first_line": 70,
+     "last_line": 77,
+     "words": 228,
+     "text_sha256": "32ad3028b02a4689967ad34203c0ef1bbcbb7080a0d7add56d8fcf8e68e73176",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 2,
+      "MAY": 3
+     }
+    },
+    {
+     "number": "5",
+     "title": "Hazards, controls and human use",
+     "kind": "HEADING",
+     "first_line": 78,
+     "last_line": 93,
+     "words": 407,
+     "text_sha256": "8d7b5753085dd5c14dc69166f68f359f93066a5200ac8c52203fdbc8fd7301d4",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 7
+     }
+    },
+    {
+     "number": "6",
+     "title": "Verification, validation and evidence quality",
+     "kind": "HEADING",
+     "first_line": 94,
+     "last_line": 123,
+     "words": 677,
+     "text_sha256": "696460ef0a3a148fdb8264898efc958b8d0fedce56d32fdf932112fc96637c3c",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 8,
+      "MAY": 2
+     }
+    },
+    {
+     "number": "6.1",
+     "title": "Plan and interpret the decisive checks",
+     "kind": "HEADING",
+     "first_line": 96,
+     "last_line": 107,
+     "words": 285,
+     "text_sha256": "afadde3cf870edc873833a613e779e7a1a3672cf75d541a1adf583f7968e245b",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 6
+     }
+    },
+    {
+     "number": "6.2",
+     "title": "Analysis, simulation and reduced investigations",
+     "kind": "HEADING",
+     "first_line": 108,
+     "last_line": 117,
+     "words": 234,
+     "text_sha256": "39ebdec227dff99837a0ec9fd28553e4236881588018e2fbd7819092d49d99f7",
+     "keywords": {
+      "MUST": 1,
+      "MAY": 2
+     }
+    },
+    {
+     "number": "6.3",
+     "title": "Reliance on the assessment process",
+     "kind": "HEADING",
+     "first_line": 118,
+     "last_line": 123,
+     "words": 151,
+     "text_sha256": "906b82b5097e4a83cdb97758e9c97d9927741f78afb20a138721e9d5440e54d3",
+     "keywords": {
+      "MUST": 1
+     }
+    },
+    {
+     "number": "7",
+     "title": "Change, service and retirement",
+     "kind": "HEADING",
+     "first_line": 124,
+     "last_line": 135,
+     "words": 271,
+     "text_sha256": "44de0e64e1afa9b49a723ee25d9fbcddcbc474f8ac5dd4549a1166e4b99c432b",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 4,
+      "SHOULD": 1
+     }
+    },
+    {
+     "number": "8",
+     "title": "Findings and engineering handover",
+     "kind": "HEADING",
+     "first_line": 136,
+     "last_line": 147,
+     "words": 279,
+     "text_sha256": "fe4f58b610a4526e283b934e34b4d2d784350e15673d5be859fd05d4a42ad678",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 6
+     }
+    },
+    {
+     "number": "9",
+     "title": "Customization and usefulness",
+     "kind": "HEADING",
+     "first_line": 148,
+     "last_line": 153,
+     "words": 104,
+     "text_sha256": "9dea35ad10f5d6d83f4cd6941dd7c016b2ea5e6b614de79f1ef413a841bbc788",
+     "keywords": {
+      "MUST": 1,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "Appendix A",
+     "title": "Working glossary",
+     "kind": "HEADING",
+     "first_line": 154,
+     "last_line": 172,
+     "words": 248,
+     "text_sha256": "24d6b2e9c4b45e654b1155f65be7ddc7296e82607e995c100121f1159cd510e3",
+     "keywords": {}
+    },
+    {
+     "number": "Appendix B",
+     "title": "Cautions and reading discipline",
+     "kind": "HEADING",
+     "first_line": 173,
+     "last_line": 186,
+     "words": 157,
+     "text_sha256": "5535f7638d1fe66c3ffba5219001da62381b4b60403221aad6cded48da28fc0e",
+     "keywords": {}
+    },
+    {
+     "number": "Appendix C",
+     "title": "Primary sources",
+     "kind": "HEADING",
+     "first_line": 187,
+     "last_line": 228,
+     "words": 264,
+     "text_sha256": "24c541c2249c691f0bc9abbd78774c41dc593b6b1287d347e0319a6b541c5afa",
+     "keywords": {}
+    }
+   ]
+  },
+  {
+   "key": "cryptography",
+   "id": "acr.cryptography",
+   "version": "1.0",
+   "role": "SPECIALIST",
+   "requires": [
+    {
+     "id": "acr.core",
+     "version": "1.0"
+    }
+   ],
+   "selected_by": "THE_PERSON_OR_A_POLICY_THEY_SET",
+   "specification": {
+    "path": "MODULES/05_Cryptography/SOURCE/Specification.md",
+    "sha256": "e3fa9f15515f19093cb16eeaa254020a05e95b1ee0d3e24657f54180f2d913cc",
+    "bytes": 28324,
+    "words": 3602,
+    "keywords": {
+     "MUST NOT": 7,
+     "MUST": 25,
+     "SHOULD": 7,
+     "MAY": 7
+    }
+   },
+   "overview": {
+    "path": "MODULES/05_Cryptography/SOURCE/Overview.md",
+    "sha256": "978a6a330befc407340b6130c808ed1c90fe9039c9a2623872b91f6fc99b4c2e",
+    "words": 2844
+   },
+   "provisions": [
+    {
+     "number": "1",
+     "title": "Scope, adoption and economy",
+     "kind": "HEADING",
+     "first_line": 15,
+     "last_line": 24,
+     "words": 206,
+     "text_sha256": "e09327be1261ae3a5bcaac10997d32d0dbee7d547610fe7178abb89b4fb3d052",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 1,
+      "SHOULD": 2,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "2",
+     "title": "Claim, adversary and inherited basis",
+     "kind": "HEADING",
+     "first_line": 25,
+     "last_line": 43,
+     "words": 332,
+     "text_sha256": "9849e873065e888f35d9f125aa539012b99aa1622a39e328088c6e603af95b4d",
+     "keywords": {
+      "MUST NOT": 2,
+      "MUST": 4,
+      "SHOULD": 1,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "3",
+     "title": "Analysis, proofs and composition",
+     "kind": "HEADING",
+     "first_line": 44,
+     "last_line": 69,
+     "words": 585,
+     "text_sha256": "fc56d2350b8de8ee4fcc54b0597defcd091775641b10136afe0692fec2f12073",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 7,
+      "MAY": 2
+     }
+    },
+    {
+     "number": "3.1",
+     "title": "Research and construction",
+     "kind": "HEADING",
+     "first_line": 56,
+     "last_line": 69,
+     "words": 339,
+     "text_sha256": "f631cbb2b0ad7f9686b71edfabf829f22a394e82393de8a7b49dc358ad6965c3",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 4,
+      "MAY": 2
+     }
+    },
+    {
+     "number": "4",
+     "title": "Implementation and execution evidence",
+     "kind": "HEADING",
+     "first_line": 70,
+     "last_line": 83,
+     "words": 309,
+     "text_sha256": "8d6663f2e5b334ad5866587a399d43a7a27737ba99fb7daa998d555aab8e19d8",
+     "keywords": {
+      "MUST": 5,
+      "SHOULD": 1
+     }
+    },
+    {
+     "number": "5",
+     "title": "Randomness, keys, state and identity",
+     "kind": "HEADING",
+     "first_line": 84,
+     "last_line": 102,
+     "words": 319,
+     "text_sha256": "b46589e57abd7732c4e012f132138504e69dcdd09a8a5ef7beac37d1b7c954ee",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 1,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "6",
+     "title": "Deployment, standards and transition",
+     "kind": "HEADING",
+     "first_line": 103,
+     "last_line": 124,
+     "words": 378,
+     "text_sha256": "e64fa77ab02f30d4c72a5764dbb85aa6d97fd77bd211cfc31fa315a0563bcc3b",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 3,
+      "SHOULD": 2
+     }
+    },
+    {
+     "number": "7",
+     "title": "Objections and authorized adverse testing",
+     "kind": "HEADING",
+     "first_line": 125,
+     "last_line": 136,
+     "words": 253,
+     "text_sha256": "d44af87fae6560e9440071eb5ddbf497229407a2a61e4737a70f3ff5069f5dc6",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 2,
+      "SHOULD": 1
+     }
+    },
+    {
+     "number": "8",
+     "title": "Findings, release and recheck",
+     "kind": "HEADING",
+     "first_line": 137,
+     "last_line": 146,
+     "words": 257,
+     "text_sha256": "879b8d23ad6a5de27893383cce2212374ca9342ea3876325c8b11987b403e452",
+     "keywords": {
+      "MUST": 1,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "9",
+     "title": "Customization and module evaluation",
+     "kind": "HEADING",
+     "first_line": 147,
+     "last_line": 154,
+     "words": 136,
+     "text_sha256": "3122d2510efa7f0078f5dbb43f0930e5ea8756dd15db5a89fc52d2467f9d205a",
+     "keywords": {
+      "MUST": 1,
+      "MAY": 1
+     }
+    },
+    {
+     "number": "Appendix A",
+     "title": "Working glossary",
+     "kind": "HEADING",
+     "first_line": 155,
+     "last_line": 166,
+     "words": 146,
+     "text_sha256": "51f6996c912af19895df826631ee2adbdbb4318a386b53224dad59de73f48181",
+     "keywords": {}
+    },
+    {
+     "number": "Appendix B",
+     "title": "Cautions and reading discipline",
+     "kind": "HEADING",
+     "first_line": 167,
+     "last_line": 179,
+     "words": 177,
+     "text_sha256": "c6ef28dcbd32670e834f095ebe03b7b4a349a1148a51ef8a2bbe1699cd0b91cf",
+     "keywords": {}
+    },
+    {
+     "number": "Appendix C",
+     "title": "Primary sources",
+     "kind": "HEADING",
+     "first_line": 180,
+     "last_line": 233,
+     "words": 395,
+     "text_sha256": "e2b81c61c3839110bc228a5cb2ddb4a0d4ae9fef4ee5b92933e9864dd73bb828",
+     "keywords": {}
+    }
+   ]
+  },
+  {
+   "key": "statistics",
+   "id": "acr.statistics",
+   "version": "1.0",
+   "role": "SPECIALIST",
+   "requires": [
+    {
+     "id": "acr.core",
+     "version": "1.0"
+    }
+   ],
+   "selected_by": "THE_PERSON_OR_A_POLICY_THEY_SET",
+   "specification": {
+    "path": "MODULES/06_Statistics/SOURCE/Specification.md",
+    "sha256": "6769b73c2a26d1f6400caec883925362835668a7d5d997dacfc4f810d51c2b76",
+    "bytes": 32565,
+    "words": 4034,
+    "keywords": {
+     "MUST NOT": 2,
+     "MUST": 8,
+     "SHOULD": 4,
+     "MAY": 3
+    }
+   },
+   "overview": {
+    "path": "MODULES/06_Statistics/SOURCE/Overview.md",
+    "sha256": "7e86c85f547c21b9475c8f857222d35d099d2d2b97aaab98fcbd2c3a15a0e8b2",
+    "words": 2668
+   },
+   "provisions": [
+    {
+     "number": "1",
+     "title": "Entry, applicability and proportionality",
+     "kind": "HEADING",
+     "first_line": 16,
+     "last_line": 25,
+     "words": 272,
+     "text_sha256": "7aa1a54350f6e6accc17698b70592bba093ba8ac67c396c248b313f32e552df8",
+     "keywords": {}
+    },
+    {
+     "number": "1.1",
+     "title": "Statistics applies **only** when an authorized task, Review commission or governing policy",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 18,
+     "last_line": 19,
+     "words": 85,
+     "text_sha256": "97156d858e8bfbc29ea17519f084fbf43047ff4bcf4dc0f72b98f4f55cbb92cc",
+     "keywords": {}
+    },
+    {
+     "number": "1.2",
+     "title": "Intended scope includes statistical design, data acquisition, descriptive characterization, sampling, estimation, testing,",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 20,
+     "last_line": 21,
+     "words": 63,
+     "text_sha256": "cf18906306bc81a89a61503a035f7d128aae08270ddc6f719b14912bb616a606",
+     "keywords": {}
+    },
+    {
+     "number": "1.3",
+     "title": "Apply only obligations material to the actual claim and intended use. An",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 22,
+     "last_line": 23,
+     "words": 63,
+     "text_sha256": "0c887a3caaabc4776995e0da7313a416c44051f9536c8000a2b1b7503429f4b5",
+     "keywords": {}
+    },
+    {
+     "number": "1.4",
+     "title": "Where a statistical question is materially unresolved, identify an expert or authoritative",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 24,
+     "last_line": 25,
+     "words": 55,
+     "text_sha256": "7670fb9f9196922ce23875711e672b4f65e7bd644c06ccc8fd63eda06c36ee5a",
+     "keywords": {}
+    },
+    {
+     "number": "2",
+     "title": "Target, estimand and decision meaning",
+     "kind": "HEADING",
+     "first_line": 26,
+     "last_line": 33,
+     "words": 194,
+     "text_sha256": "80cb04edcc4a682394cc293367172fc1c1414750352a4ab91b88636bab054d21",
+     "keywords": {}
+    },
+    {
+     "number": "2.1",
+     "title": "Before making a consequential statistical claim, establish the relevant target: quantity or",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 28,
+     "last_line": 29,
+     "words": 79,
+     "text_sha256": "a346adfb7cb4a4b582e7134edd69aa0443f8b7bb2a14dfbba3338d4b27a7ee05",
+     "keywords": {}
+    },
+    {
+     "number": "2.2",
+     "title": "Separate **descriptive observation**, **population/generalization**, **predictive performance**, **causal/interventional inference**, and **decision recommendation**. A",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 30,
+     "last_line": 31,
+     "words": 53,
+     "text_sha256": "01a80a6fefaeeb0b8e9acdff6cb4254fda3a44593efaea8beeba1fcc97cfd7fc",
+     "keywords": {}
+    },
+    {
+     "number": "2.3",
+     "title": "Define the intended reference or comparison class, consequential difference or margin when",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 32,
+     "last_line": 33,
+     "words": 55,
+     "text_sha256": "1831eddbd723da4a4b7ca5ccfd726f2449a2a100df910308fc563a9140c07d5b",
+     "keywords": {}
+    },
+    {
+     "number": "3",
+     "title": "Data-generating process, design and exposure",
+     "kind": "HEADING",
+     "first_line": 34,
+     "last_line": 43,
+     "words": 234,
+     "text_sha256": "192c40c73e25b53a6642e8b4048b4b59cec694042263883aafc5709e680ff303",
+     "keywords": {
+      "MUST NOT": 1
+     }
+    },
+    {
+     "number": "3.1",
+     "title": "Identify material origins and acquisition conditions: frame, selection, inclusion and exclusion, units,",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 36,
+     "last_line": 37,
+     "words": 57,
+     "text_sha256": "fac92a7b46dabcf974377e6365da15b678a93fb141ef363629370e7e70ededd5",
+     "keywords": {}
+    },
+    {
+     "number": "3.2",
+     "title": "Disclose materially informative analysis choices made after seeing outcomes, diagnostics or evaluation",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 38,
+     "last_line": 39,
+     "words": 47,
+     "text_sha256": "a480b709213e4de140e3eb4f7eca58c9e1f15caeb8ba31877a6df3b226f31ac6",
+     "keywords": {}
+    },
+    {
+     "number": "3.3",
+     "title": "Where random allocation, weighting, stratification, nonresponse corrections, intervention or controls are material,",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 40,
+     "last_line": 41,
+     "words": 46,
+     "text_sha256": "505da427ae41f48e7e6734f8ee73041b834cece1e12362c25653fc0acf03c086",
+     "keywords": {}
+    },
+    {
+     "number": "3.4",
+     "title": "Treat information *exposure* as wider than raw outcome access. Optimization feedback, evaluation",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 42,
+     "last_line": 43,
+     "words": 77,
+     "text_sha256": "0fa174e287f00bedba2d87f41a3d293c7a764e60998e007618259bfee0d5db1f",
+     "keywords": {
+      "MUST NOT": 1
+     }
+    },
+    {
+     "number": "4",
+     "title": "Statistical models and estimation contracts",
+     "kind": "HEADING",
+     "first_line": 44,
+     "last_line": 55,
+     "words": 282,
+     "text_sha256": "da3a30a43a034e191c16703b6d21b45dd94bed00c4c759b26f1fb6eb135f84be",
+     "keywords": {
+      "MUST": 1
+     }
+    },
+    {
+     "number": "4.1",
+     "title": "For each relied-on procedure, identify the input data, statistic/estimator, target, population model",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 46,
+     "last_line": 47,
+     "words": 50,
+     "text_sha256": "f67acf35dc2cdbea08b35c0ecb706ef985ccca2b6f62680d0cc74fac39ffb3d9",
+     "keywords": {}
+    },
+    {
+     "number": "4.2",
+     "title": "Choose finite-sample, asymptotic, Bayesian, robust, simulation-based, randomization-based, likelihood-based, nonparametric, semiparametric or other",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 48,
+     "last_line": 49,
+     "words": 68,
+     "text_sha256": "c43cb446255a408d968619dddd035a2f35a9805946fdaafb80ef9cd839a77c40",
+     "keywords": {}
+    },
+    {
+     "number": "4.3",
+     "title": "Report uncertainty sources material to the claim: sampling or allocation, model specification,",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 50,
+     "last_line": 51,
+     "words": 49,
+     "text_sha256": "373179f7bc4b6a91d4e775a3a127be70527fdf9508a6143116ca864a520fc8ef",
+     "keywords": {}
+    },
+    {
+     "number": "4.4",
+     "title": "Missing data and selected samples require an explicit account of observed versus",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 52,
+     "last_line": 53,
+     "words": 42,
+     "text_sha256": "8c00942db1b61a13181e4e223ed951b1c1e7a24700c0715734b5b46286649da3",
+     "keywords": {}
+    },
+    {
+     "number": "4.5",
+     "title": "When observations are clustered, weighted, longitudinal or dependent, the recorded uncertainty argument",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 54,
+     "last_line": 55,
+     "words": 66,
+     "text_sha256": "93891cbe834bf3af1bbef91a034d44a497f8a40a524ed9ecdced6bd14a8fbc34",
+     "keywords": {
+      "MUST": 1
+     }
+    },
+    {
+     "number": "5",
+     "title": "Statistical inference, guarantees and scope",
+     "kind": "HEADING",
+     "first_line": 56,
+     "last_line": 73,
+     "words": 569,
+     "text_sha256": "4108d923ee969fd49dbdc5502644d8fbc5c502721720e883fde9d57446da4852",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 3
+     }
+    },
+    {
+     "number": "5.1",
+     "title": "Distinguish, as applicable: an estimate versus true target; a **population identified set**",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 58,
+     "last_line": 59,
+     "words": 56,
+     "text_sha256": "9f493f1cc132225046f6500b7efe8020ce1a014c8c4ec29fe2d67d4c4f6ec4d8",
+     "keywords": {}
+    },
+    {
+     "number": "5.2",
+     "title": "A confidence or error-control claim MUST identify its model, quantifiers, actual procedure,",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 60,
+     "last_line": 61,
+     "words": 70,
+     "text_sha256": "3d0dabe95c18d4889989a63bcf3c2b3a00ed89341b23ed0a47575dee3676529b",
+     "keywords": {
+      "MUST": 1
+     }
+    },
+    {
+     "number": "5.3",
+     "title": "Repeated looks, adaptive decisions, multiplicity, selected reporting and data-dependent stopping MUST be",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 62,
+     "last_line": 63,
+     "words": 66,
+     "text_sha256": "335d7e75db9872a3705bd3cd914acfec8ad26651b8230256c68b0fd674fc0670",
+     "keywords": {
+      "MUST": 1
+     }
+    },
+    {
+     "number": "5.4",
+     "title": "Partial identification and observation-equivalent models must not be presented as point identification.",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 64,
+     "last_line": 65,
+     "words": 50,
+     "text_sha256": "93ee4f381be72fde8a5da61ac09e6a4e7a443f734ed8d3948a9d9300433bf826",
+     "keywords": {}
+    },
+    {
+     "number": "5.5",
+     "title": "A test rejection is not a proof of the alternative hypothesis; a",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 66,
+     "last_line": 67,
+     "words": 53,
+     "text_sha256": "2f4526286ec245185ab85fc6881006628d80970b7bf52b3657fa63b37c3f7338",
+     "keywords": {}
+    },
+    {
+     "number": "5.6",
+     "title": "Where a conclusion concerns multiple targets, comparisons, time points, selected subgroups or",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 68,
+     "last_line": 69,
+     "words": 61,
+     "text_sha256": "a769763eb056ec5d38ba5624bb39d877f0fc534120d92eef8717916961b710f2",
+     "keywords": {
+      "MUST": 1
+     }
+    },
+    {
+     "number": "5.7",
+     "title": "**Rare-event and safety-related claims.** When a statistical result is offered as evidence",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 70,
+     "last_line": 71,
+     "words": 111,
+     "text_sha256": "b5e1924c2015617fdfe1f9d36731e110e448b1beaa3cdaed855b0a2f51f96671",
+     "keywords": {
+      "MUST NOT": 1
+     }
+    },
+    {
+     "number": "5.8",
+     "title": "**Aggregation and critical-stratum evidence.** For a conclusion that extrapolates an aggregate rate",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 72,
+     "last_line": 73,
+     "words": 95,
+     "text_sha256": "f7e8cceb5c30e2e551b91219227d2d45d070220d73e47371e0bc57422bd3aa32",
+     "keywords": {}
+    },
+    {
+     "number": "6",
+     "title": "Measurement, calibration and numerical assurance",
+     "kind": "HEADING",
+     "first_line": 74,
+     "last_line": 81,
+     "words": 167,
+     "text_sha256": "b0469d6b02b8968a2e9ee29cc51aecdb8c55f989074e976f562480887bd0902b",
+     "keywords": {}
+    },
+    {
+     "number": "6.1",
+     "title": "If a claim depends on instrument or measurement accuracy, identify the measurand,",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 76,
+     "last_line": 77,
+     "words": 41,
+     "text_sha256": "242bf03485f65590996dd8eb85051b39dab4010cb45e233e979e96f7c7428897",
+     "keywords": {}
+    },
+    {
+     "number": "6.2",
+     "title": "A required joint uncertainty guarantee can be established using a suitable confidence",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 78,
+     "last_line": 79,
+     "words": 65,
+     "text_sha256": "6b9ccdc386c31b946b684f9d85151384c4b84ec524285ba51f2520cc9ee6e0f8",
+     "keywords": {}
+    },
+    {
+     "number": "6.3",
+     "title": "A statistical sampling statement is distinct from rounding error, numerical stability, rigorous",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 80,
+     "last_line": 81,
+     "words": 54,
+     "text_sha256": "289121b4171f08c8cd68daf3ebfb64367bddc8e34e1dd66c0dc66d69ea938949",
+     "keywords": {}
+    },
+    {
+     "number": "7",
+     "title": "Prediction, causal claims and operational decisions",
+     "kind": "HEADING",
+     "first_line": 82,
+     "last_line": 93,
+     "words": 329,
+     "text_sha256": "465723e702bd8868d4654d3e63291a457eb3db23aace0d9df11453e3e80f629e",
+     "keywords": {}
+    },
+    {
+     "number": "7.1",
+     "title": "For prediction, identify the target/horizon, information actually available at prediction, selection and",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 84,
+     "last_line": 85,
+     "words": 61,
+     "text_sha256": "40ce60a6dd2a2835ccf3e8191499e88e61cb5c3ddbc06b046cc7d3b9c85c18c2",
+     "keywords": {}
+    },
+    {
+     "number": "7.2",
+     "title": "For causal claims, declare the intervention/exposure and identifying conditions: randomization, confounding assumptions,",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 86,
+     "last_line": 87,
+     "words": 51,
+     "text_sha256": "569be372c1c75e869fa121cf32d679336520f200ec7a20841dbbb706ffc310d5",
+     "keywords": {}
+    },
+    {
+     "number": "7.3",
+     "title": "For consequential decisions using statistical outputs, distinguish model validity, decision rule, loss/utility",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 88,
+     "last_line": 89,
+     "words": 49,
+     "text_sha256": "fb9a85ab86c9fecd2c48e580e50142c716f5d21de459d466c2360cd423816e4c",
+     "keywords": {}
+    },
+    {
+     "number": "7.4",
+     "title": "When consequential predictive or algorithmic claims concern real users or changing environments,",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 90,
+     "last_line": 91,
+     "words": 67,
+     "text_sha256": "a209f5595d3bddbb45ed4430f7414859689af3ddfd2ecf060f3b9e548e4ec63d",
+     "keywords": {}
+    },
+    {
+     "number": "7.5",
+     "title": "**Decision consequences and bias.** For materially safety-affecting use, distinguish statistical error rates",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 92,
+     "last_line": 93,
+     "words": 93,
+     "text_sha256": "6440e090a46fcb657b3a375c9a77fa5350466411a0ad29bf20cd2e06541dd86b",
+     "keywords": {}
+    },
+    {
+     "number": "8",
+     "title": "Checking, disposition and correction",
+     "kind": "HEADING",
+     "first_line": 94,
+     "last_line": 111,
+     "words": 540,
+     "text_sha256": "1139bf0e9c1988a6ed102d87ab64460760701db3733cc34ae2a2dd7de8d3ac04",
+     "keywords": {
+      "MUST": 2,
+      "SHOULD": 2
+     }
+    },
+    {
+     "number": "8.1",
+     "title": "Connect each conclusion-critical obligation to a check or competent assessment. Include known-valid",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 96,
+     "last_line": 97,
+     "words": 60,
+     "text_sha256": "5bddf8951be445c93f226bca8afbafa2cbe98c9d6614feebeb4e89b95ad24223",
+     "keywords": {}
+    },
+    {
+     "number": "8.2",
+     "title": "Use Core \u00a75.2 dispositions unchanged. In particular: a valid conditional probability calculation",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 98,
+     "last_line": 99,
+     "words": 58,
+     "text_sha256": "f7b36d949da392aad28cd0084ae47431d520f1318ed30ade22eb1bbe7a0b6312",
+     "keywords": {}
+    },
+    {
+     "number": "8.3",
+     "title": "Material correction, changed data law, revised code, discovered selection, exposure, new calibration",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 100,
+     "last_line": 101,
+     "words": 54,
+     "text_sha256": "73951aefe53e4334817a65fc0a1fdb1607f34e5785ff22ca8d2f0b36f63cd6af",
+     "keywords": {}
+    },
+    {
+     "number": "8.4",
+     "title": "A favorable statistical assessment does not establish data access rights, human-subject approval,",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 102,
+     "last_line": 103,
+     "words": 41,
+     "text_sha256": "f98d4a458c3589ebbb30ba5a7d5b218939ae2063b941b87147ef8bf098ae53b9",
+     "keywords": {}
+    },
+    {
+     "number": "8.5",
+     "title": "State evidentiary provenance with appropriate granularity: an original source, one assistant's self-generated",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 104,
+     "last_line": 105,
+     "words": 62,
+     "text_sha256": "db368e1f090e71ff4d826634f64f3f24204ab075bd4e81e139bfaff77893b464",
+     "keywords": {}
+    },
+    {
+     "number": "8.6",
+     "title": "**Balanced adversarial review.** Seek both evidence that could support the original proposition",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 106,
+     "last_line": 107,
+     "words": 85,
+     "text_sha256": "066c1b688084ea822943c9c03ce91912ac1d2e015d320bc6fcbb3b8afc23c075",
+     "keywords": {
+      "MUST": 1
+     }
+    },
+    {
+     "number": "8.7",
+     "title": "**Statistical model versus reviewing LLM.** Distinguish a statistical model/procedure from any language",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 108,
+     "last_line": 109,
+     "words": 83,
+     "text_sha256": "93feffa0314fec9cd0e09f16952881f2f68948d22fce0c230147915ccd26277e",
+     "keywords": {
+      "SHOULD": 1
+     }
+    },
+    {
+     "number": "8.8",
+     "title": "**Assurance escalation and reviewer incentives.** Any broader conclusion drawn from an earlier",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 110,
+     "last_line": 111,
+     "words": 91,
+     "text_sha256": "09f83f0e9dac5a2cde1aa0bad58a2b01efb9f83926ed0c55442c31e593a648e3",
+     "keywords": {
+      "MUST": 1,
+      "SHOULD": 1
+     }
+    },
+    {
+     "number": "9",
+     "title": "Cross-module composition",
+     "kind": "HEADING",
+     "first_line": 112,
+     "last_line": 127,
+     "words": 303,
+     "text_sha256": "eba6a7dccf93b7eaa0b89f2393a31ce40c549d66949f4af9c67611837157803c",
+     "keywords": {
+      "MAY": 1
+     }
+    },
+    {
+     "number": "9.1",
+     "title": "**Core (required)** owns general evidence discipline, authority, roles when commissioned, correct claims,",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 114,
+     "last_line": 115,
+     "words": 36,
+     "text_sha256": "911e3b4937a114a45b0b019e7f0f2382b4f92ecda9608d621eaa1245d7715e71",
+     "keywords": {}
+    },
+    {
+     "number": "9.2",
+     "title": "**Science (independently selectable)** retains scientific questions, hypothesis/observation grounding, approvals, empirical applicability and",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 116,
+     "last_line": 117,
+     "words": 68,
+     "text_sha256": "2f8124c5cc0d5f516c134b8a93d2468b06e6d0cc87d796ea989b49d67e3fdd9d",
+     "keywords": {
+      "MAY": 1
+     }
+    },
+    {
+     "number": "9.3",
+     "title": "**Mathematics** retains formal deductions, proof domains, rigorous numerical claims and computational checking.",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 118,
+     "last_line": 119,
+     "words": 43,
+     "text_sha256": "f123576fe5f786414a325efd0d8cf7f5fa4d16810f7e23f9a393803465524897",
+     "keywords": {}
+    },
+    {
+     "number": "9.4",
+     "title": "**Engineering** retains hazard analysis, lifecycle assurance, requirements, actual controls and residual-risk authority.",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 120,
+     "last_line": 121,
+     "words": 42,
+     "text_sha256": "bf591282cb95d213e6dd775959cb1bdbb64b99879b6a22277df1b7177143b0c4",
+     "keywords": {}
+    },
+    {
+     "number": "9.5",
+     "title": "**Cryptography** retains threat models, entropy-source obligations, key/state management and security claims. Randomness",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 122,
+     "last_line": 123,
+     "words": 30,
+     "text_sha256": "b715d9f0c243709dc75852c5b49cfee345c80057700865e92027ce5cfd5faf7a",
+     "keywords": {}
+    },
+    {
+     "number": "9.6",
+     "title": "**Unassigned adjacent responsibilities.** Data processing, communication and presentation remain governed by the",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 124,
+     "last_line": 125,
+     "words": 42,
+     "text_sha256": "7c90a686aaec8b078fb40da4e868bdc11ca12999661b4fee4cf491597bd05118",
+     "keywords": {}
+    },
+    {
+     "number": "9.7",
+     "title": "Shared check evidence can be reused only with explicit scope, version and",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 126,
+     "last_line": 127,
+     "words": 38,
+     "text_sha256": "6bfc3b07d0834e730f8ebaead02796e5b28311180d3d2b52435b5f1aca8b4927",
+     "keywords": {}
+    },
+    {
+     "number": "10",
+     "title": "Proportionality and evaluation",
+     "kind": "HEADING",
+     "first_line": 128,
+     "last_line": 139,
+     "words": 320,
+     "text_sha256": "39a5a251ac8db694909625e3e6587b281bf1020c97dd871c07816785edfea357",
+     "keywords": {}
+    },
+    {
+     "number": "10.1",
+     "title": "Normal descriptive analysis may require only a short statement of data, method",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 130,
+     "last_line": 131,
+     "words": 56,
+     "text_sha256": "41143d458f3547cefd0fa3bc40f752e29eb4538c0ca73e11c3ab190d2d3a7df3",
+     "keywords": {}
+    },
+    {
+     "number": "10.2",
+     "title": "Evaluate a future Statistics implementation against competent ordinary work and relevant existing",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 132,
+     "last_line": 133,
+     "words": 67,
+     "text_sha256": "bed8650dc90e801532bc417eb899e425c219893a1f911724aac787fcef6c9b7f",
+     "keywords": {}
+    },
+    {
+     "number": "10.3",
+     "title": "For high-consequence uses, apply governing domain-specific standards and independent assurance as required.",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 134,
+     "last_line": 135,
+     "words": 55,
+     "text_sha256": "e46c4254b1b698bcbd147e31c1c3790bc908c3dce29e4922b50ba5cef5dbf3b0",
+     "keywords": {}
+    },
+    {
+     "number": "10.4",
+     "title": "A contribution to statistical practice is a *testable claim*, not a consequence",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 136,
+     "last_line": 137,
+     "words": 73,
+     "text_sha256": "bff490567064b658ba99016919b44c4db11a93c35a285f51dfe6aa7f71cb599d",
+     "keywords": {}
+    },
+    {
+     "number": "10.5",
+     "title": "**Release-use boundary.** A task-specific implementation may truthfully claim conformance only to the",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 138,
+     "last_line": 139,
+     "words": 64,
+     "text_sha256": "1d93bf69d8c6bca179706c25a7592b722f06ba308eabcd695e3c32e20d51b9ed",
+     "keywords": {}
+    },
+    {
+     "number": "Appendix A",
+     "title": "Interpretive safeguards (informative)",
+     "kind": "HEADING",
+     "first_line": 140,
+     "last_line": 148,
+     "words": 123,
+     "text_sha256": "a0089060446aedd700122a0f920b3d6fad90d642e6ee7c5e188b00f0c5811ab6",
+     "keywords": {}
+    },
+    {
+     "number": "Appendix B",
+     "title": "External reference basis (informative; no automatic standard adoption)",
+     "kind": "HEADING",
+     "first_line": 149,
+     "last_line": 185,
+     "words": 435,
+     "text_sha256": "c206702f865d1af7800c54af88d78e0eec2d88a957d6419b5ca2f207b205da55",
+     "keywords": {}
+    }
+   ]
+  },
+  {
+   "key": "quality_assurance",
+   "id": "acr.quality_assurance",
+   "version": "1.0",
+   "role": "SPECIALIST",
+   "requires": [
+    {
+     "id": "acr.core",
+     "version": "1.0"
+    }
+   ],
+   "selected_by": "THE_PERSON_OR_A_POLICY_THEY_SET",
+   "specification": {
+    "path": "MODULES/07_Quality_Assurance/SOURCE/Specification.md",
+    "sha256": "a039818b002cc014dff23e297211692296c7f534f5503f319fdd293af9864f8c",
+    "bytes": 27516,
+    "words": 3470,
+    "keywords": {
+     "MUST NOT": 4,
+     "MUST": 3,
+     "SHOULD": 2,
+     "MAY": 1
+    }
+   },
+   "overview": {
+    "path": "MODULES/07_Quality_Assurance/SOURCE/Overview.md",
+    "sha256": "bd5906729d0fc36f8b088e680647cefee79b9edeabd412fcacc1a8276e95a3fb",
+    "words": 2513
+   },
+   "provisions": [
+    {
+     "number": "1",
+     "title": "Selection, entry and proportionality",
+     "kind": "HEADING",
+     "first_line": 16,
+     "last_line": 23,
+     "words": 182,
+     "text_sha256": "6e6ddf39d062861386bfc476fd87c10dd14e6d6f591918f8fd88a66b929d7887",
+     "keywords": {}
+    },
+    {
+     "number": "1.1",
+     "title": "Apply only to an identified quality-assurance assignment selected under the governing task,",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 18,
+     "last_line": 19,
+     "words": 52,
+     "text_sha256": "30e2cbf52af0a94f96086e7538aef762be96625c0dfff3044df769687b3ab9e2",
+     "keywords": {}
+    },
+    {
+     "number": "1.2",
+     "title": "Identify the quality-relevant subject: deliverable, process, service, information product, or particular effect",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 20,
+     "last_line": 21,
+     "words": 59,
+     "text_sha256": "d6d4e8a1ef498b5f6d85ca736721d7cb35bcf36c35424b5675c2ca5559bb78ef",
+     "keywords": {}
+    },
+    {
+     "number": "1.3",
+     "title": "Scale effort to consequence, complexity, reversibility, change risk, evidential uncertainty and expected",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 22,
+     "last_line": 23,
+     "words": 65,
+     "text_sha256": "7edf03972de5a59fa649f6c3e149fe212f5be1e6f67c7e0ab99504aef4b21fd1",
+     "keywords": {}
+    },
+    {
+     "number": "2",
+     "title": "Requirements, objectives and acceptance contract",
+     "kind": "HEADING",
+     "first_line": 24,
+     "last_line": 35,
+     "words": 343,
+     "text_sha256": "bcf2e5b8fcb89c8319103f018b30ecac7684fe504d0426e35d867b1650b3af86",
+     "keywords": {
+      "MUST NOT": 1
+     }
+    },
+    {
+     "number": "2.1",
+     "title": "Map material requirements and quality objectives to their actual source, edition or",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 26,
+     "last_line": 27,
+     "words": 65,
+     "text_sha256": "3e5aaed8d3d0cb67cd7a4a53b8b799ac62cebca4846292320e2053379cacad82",
+     "keywords": {}
+    },
+    {
+     "number": "2.2",
+     "title": "For each conclusion-critical objective, establish a feasible, discriminating check or a reasoned",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 28,
+     "last_line": 29,
+     "words": 67,
+     "text_sha256": "61861862bcd052f061de4d78b9295ada88b771e33f336df2d65c2e9f9744afa5",
+     "keywords": {}
+    },
+    {
+     "number": "2.3",
+     "title": "Identify material interfaces, upstream inputs and downstream consumers. Where an acceptance criterion",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 30,
+     "last_line": 31,
+     "words": 50,
+     "text_sha256": "927859aedbaa57e48d40cfcf7fa88cac168692450bca3ebd12525b726160a5f3",
+     "keywords": {}
+    },
+    {
+     "number": "2.4",
+     "title": "**Complete enough for the claimed purpose is not complete in principle.** Test",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 32,
+     "last_line": 33,
+     "words": 77,
+     "text_sha256": "dcc7afc6516f1004cbf0724b1bcfea34a501324fce827e3ef84990dd403fbca1",
+     "keywords": {}
+    },
+    {
+     "number": "2.5",
+     "title": "**Quality tradeoffs and stopping criteria.** Where objectives compete (for example accessibility, latency,",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 34,
+     "last_line": 35,
+     "words": 77,
+     "text_sha256": "83d80ad5164d21b33c61e97b0c523e7b58cddc71f856af9b87d302166b2a6a63",
+     "keywords": {
+      "MUST NOT": 1
+     }
+    },
+    {
+     "number": "3",
+     "title": "Evidence, coverage and assurance argument",
+     "kind": "HEADING",
+     "first_line": 36,
+     "last_line": 51,
+     "words": 571,
+     "text_sha256": "9aef891743c626344d4464abcd8dbdc92ce2cc20bad51190040d394ff0f37f32",
+     "keywords": {
+      "MUST NOT": 1,
+      "MUST": 1
+     }
+    },
+    {
+     "number": "3.1",
+     "title": "For every conclusion-critical requirement, maintain a reconstructible link among the requirement, versioned",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 38,
+     "last_line": 39,
+     "words": 59,
+     "text_sha256": "4aa16e777967e6798ad2e7aeca3693e385e43d98b9645641ae9d748bb1b78bf3",
+     "keywords": {}
+    },
+    {
+     "number": "3.2",
+     "title": "Check that the evidence *measures the claimed property*. A content hash checks",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 40,
+     "last_line": 41,
+     "words": 61,
+     "text_sha256": "d2b535114ec006ef191680055e12536fb70c057adb4fa0161952b6d1aab9b492",
+     "keywords": {}
+    },
+    {
+     "number": "3.3",
+     "title": "When risk or criticality warrants, distinguish requirement coverage, input/boundary coverage, operating-envelope coverage,",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 42,
+     "last_line": 43,
+     "words": 59,
+     "text_sha256": "35692759110332e30702809b08876d02bc1774cf7737729621433ec21590fb46",
+     "keywords": {}
+    },
+    {
+     "number": "3.4",
+     "title": "A positive or negative finding MUST disclose materially relevant exclusions, untested conditions,",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 44,
+     "last_line": 45,
+     "words": 66,
+     "text_sha256": "7214b70e2342c31257ac8330151cdb9c2e50eaaa8554e99202103f414a283134",
+     "keywords": {
+      "MUST": 1
+     }
+    },
+    {
+     "number": "3.5",
+     "title": "**Statistical limits of assurance samples.** For test/inspection findings presented as prevalence, reliability",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 46,
+     "last_line": 47,
+     "words": 154,
+     "text_sha256": "f6d63e18f155385b9db94b867f7fb235e583b974f1af6bef27285ec777fcc047",
+     "keywords": {}
+    },
+    {
+     "number": "3.6",
+     "title": "**Requirement identity and aggregation.** Where requirements or test evidence are enumerated and",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 48,
+     "last_line": 49,
+     "words": 83,
+     "text_sha256": "368d16ec3d250de128277166faddf694ce9d7a930adabaf0c53739ee1f51d39f",
+     "keywords": {
+      "MUST NOT": 1
+     }
+    },
+    {
+     "number": "3.7",
+     "title": "**Assurance-claim continuity and escalation.** When findings are summarized, pooled, reissued, translated, incorporated",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 50,
+     "last_line": 51,
+     "words": 82,
+     "text_sha256": "244c885666fe3107d95b3f26a4dc02db6a8c3d0c0c0aadcb95be32a3f9b6fea2",
+     "keywords": {}
+    },
+    {
+     "number": "4",
+     "title": "Competence, impartiality and independence",
+     "kind": "HEADING",
+     "first_line": 52,
+     "last_line": 61,
+     "words": 276,
+     "text_sha256": "bba438d66f0c0d5d542bd925139d8df5b2d104d0b97b6221e6064b0056cea9f1",
+     "keywords": {}
+    },
+    {
+     "number": "4.1",
+     "title": "Resolve competence for tasks where it affects assurance, including domain knowledge, method",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 54,
+     "last_line": 55,
+     "words": 46,
+     "text_sha256": "a97b59d2d63dee3d11e9e7d0b0c961cbd5a49c9280369657b5bdde33f3278245",
+     "keywords": {}
+    },
+    {
+     "number": "4.2",
+     "title": "Assess independence and conflict of interest appropriate to the consequence and applicable",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 56,
+     "last_line": 57,
+     "words": 56,
+     "text_sha256": "300230ef83a6242d352cca6700b22dd15f8ae20735bde504141b18677ff2fafb",
+     "keywords": {}
+    },
+    {
+     "number": "4.3",
+     "title": "If the same actor constructs and checks an artifact, label it self-review",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 58,
+     "last_line": 59,
+     "words": 63,
+     "text_sha256": "8df051b8835c5fcdbe0dc49b03eadf5b8f98b9e42b7fd1a0febb42dc94fc47a0",
+     "keywords": {}
+    },
+    {
+     "number": "4.4",
+     "title": "**Bias in quality judgments.** Where material, identify incentives and information flows that",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 60,
+     "last_line": 61,
+     "words": 105,
+     "text_sha256": "38546c5b6b0155faa2f59fe49356ad317344aefc0bbcc6f60e05adbd0cdd62d2",
+     "keywords": {}
+    },
+    {
+     "number": "5",
+     "title": "Verification, validation and fault-oriented checking",
+     "kind": "HEADING",
+     "first_line": 62,
+     "last_line": 71,
+     "words": 309,
+     "text_sha256": "8035e828c3d2f08f0bec750587d3f8bccfc08793bc3306d5965b2670fc2fa4a2",
+     "keywords": {
+      "MUST": 1
+     }
+    },
+    {
+     "number": "5.1",
+     "title": "Select checks based on actual failure modes and use conditions, including normal",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 64,
+     "last_line": 65,
+     "words": 66,
+     "text_sha256": "f9b5c956fe165dbf29b0a99af1cd2374604e7d94db0cd12989ff60dc9b517cb1",
+     "keywords": {}
+    },
+    {
+     "number": "5.2",
+     "title": "Distinguish requirements conformance (verification) from intended-user fitness (validation). For deployed or relied-upon",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 66,
+     "last_line": 67,
+     "words": 46,
+     "text_sha256": "40177f0a4a0b9bb0997c6681b15c01b77c2a2ead52cded790a46280b6af7c1f6",
+     "keywords": {}
+    },
+    {
+     "number": "5.3",
+     "title": "Assess known failure of the checker itself where material: false acceptance, false",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 68,
+     "last_line": 69,
+     "words": 101,
+     "text_sha256": "603c9a5d29865a2ce309eb92f039d304afc23de0104a43120546af8f234b4a3f",
+     "keywords": {}
+    },
+    {
+     "number": "5.4",
+     "title": "**Checker and oracle limitations.** Treat a fixture-based gate reporting success from self-declared",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 70,
+     "last_line": 71,
+     "words": 89,
+     "text_sha256": "07079b06a437274ef2bff4f9354cfd76f3a01cc073d18259fbf3038e7736a427",
+     "keywords": {
+      "MUST": 1
+     }
+    },
+    {
+     "number": "6",
+     "title": "Nonconformance, correction and continuous learning",
+     "kind": "HEADING",
+     "first_line": 72,
+     "last_line": 79,
+     "words": 154,
+     "text_sha256": "382a0e31dfd8d3fb19b0ca1014ccd22459fb8c8dc3ed9541314b222d39fcd8c7",
+     "keywords": {}
+    },
+    {
+     "number": "6.1",
+     "title": "Distinguish an **established nonconformity** against identified criteria, an **unestablished property** due to",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 74,
+     "last_line": 75,
+     "words": 50,
+     "text_sha256": "f85f3a913d49212850a9f2d6f8211540bcfacfc9e3c82372f71df16b54971078",
+     "keywords": {}
+    },
+    {
+     "number": "6.2",
+     "title": "Identify the consequences and authorized protective response of a material defect. Separate",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 76,
+     "last_line": 77,
+     "words": 53,
+     "text_sha256": "90438cbed59f31a686b06103ec85fb89452326776b97f2e35f4c027eee157462",
+     "keywords": {}
+    },
+    {
+     "number": "6.3",
+     "title": "Assess whether a corrective action works and whether it creates new regressions",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 78,
+     "last_line": 79,
+     "words": 44,
+     "text_sha256": "7ab2b85bb36b4648a65b5b225faae39d8a5254f25f923b73f5abe9147f92ab5a",
+     "keywords": {}
+    },
+    {
+     "number": "7",
+     "title": "Change, delivery, effect and retirement",
+     "kind": "HEADING",
+     "first_line": 80,
+     "last_line": 87,
+     "words": 226,
+     "text_sha256": "ff70e716d646e806c746cb3c6bac13a889a77b3e7b1db22f039d65574f16c196",
+     "keywords": {
+      "SHOULD": 1
+     }
+    },
+    {
+     "number": "7.1",
+     "title": "Changes to the item, requirements, evidence base, tool/LLM model, method, configuration, operating",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 82,
+     "last_line": 83,
+     "words": 116,
+     "text_sha256": "60253bac9b601089e785e108f9f8e26c90ecdc68d83191ff39da2d3a7d65021d",
+     "keywords": {
+      "SHOULD": 1
+     }
+    },
+    {
+     "number": "7.2",
+     "title": "Preserve distinct records for designed checks, executed checks, observed outcomes, approved release",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 84,
+     "last_line": 85,
+     "words": 56,
+     "text_sha256": "ff0ab39e2f7280e0e5731c415fc8e5bf2891dbc5d7a157a66b20260335b50b15",
+     "keywords": {}
+    },
+    {
+     "number": "7.3",
+     "title": "Quality obligations may continue through operation, monitoring, feedback, maintenance, supplier change and",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 86,
+     "last_line": 87,
+     "words": 47,
+     "text_sha256": "efa684c66e7db9b34b4a0cfca9aadb09f5d0006ad39ecc8041ccc84a9006dc26",
+     "keywords": {}
+    },
+    {
+     "number": "8",
+     "title": "Cross-module composition and boundaries",
+     "kind": "HEADING",
+     "first_line": 88,
+     "last_line": 103,
+     "words": 376,
+     "text_sha256": "561facb267ab4c3c0559c93f0dc8b45d35d334cca37e2a5141fe5d22ddb1dba2",
+     "keywords": {
+      "MUST NOT": 1
+     }
+    },
+    {
+     "number": "8.1",
+     "title": "**Core (the sole required component, as identified above)** governs the actual commission,",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 90,
+     "last_line": 91,
+     "words": 45,
+     "text_sha256": "a0bf52f340f3ca0320ce93357cdb09d3a317e334d8b875bcd428d26634b778dc",
+     "keywords": {}
+    },
+    {
+     "number": "8.2",
+     "title": "**Engineering** already owns hazards, design and use-case assurance, concrete physical controls and",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 92,
+     "last_line": 93,
+     "words": 59,
+     "text_sha256": "6da2de4eb16965e7ec3216b9ed81a087b85275dc71ca01ed47db81729906b736",
+     "keywords": {
+      "MUST NOT": 1
+     }
+    },
+    {
+     "number": "8.3",
+     "title": "**Science** retains empirical methods, design/exposure and scientific uncertainty. QA may assess the",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 94,
+     "last_line": 95,
+     "words": 39,
+     "text_sha256": "eab733cd7d94e1eff834015af6501ed10db140175b67d4da33be26263ce91dc8",
+     "keywords": {}
+    },
+    {
+     "number": "8.4",
+     "title": "**Mathematics** retains proof validity, formalization and numerical soundness. QA may verify that",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 96,
+     "last_line": 97,
+     "words": 42,
+     "text_sha256": "0a392ff8da9b411bf37b41722927d9427752ffbe3ad852d12f2bf17471e122ef",
+     "keywords": {}
+    },
+    {
+     "number": "8.5",
+     "title": "**ACR Statistics** (component `acr.statistics`, Version 1.0), a separately selectable module, is **not",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 98,
+     "last_line": 99,
+     "words": 79,
+     "text_sha256": "e59e0c64393ac554a448cea533f3629046da39e44997e6c6ec7e97b667cb11c6",
+     "keywords": {}
+    },
+    {
+     "number": "8.6",
+     "title": "**Unassigned adjacent responsibilities.** QA examines evidence and delivery quality when selected; it",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 100,
+     "last_line": 101,
+     "words": 49,
+     "text_sha256": "7387fad16620d7e6519c2235507392d746bcfe2cbec8d7a7e55060d6e7675257",
+     "keywords": {}
+    },
+    {
+     "number": "8.7",
+     "title": "Where several selected modules govern the same work, required obligations compose under",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 102,
+     "last_line": 103,
+     "words": 57,
+     "text_sha256": "7625d0b7a2c1d97209953cb94609693fe055809005f5503877d7218c5af80403",
+     "keywords": {}
+    },
+    {
+     "number": "9",
+     "title": "Evidence of ACR QA's own worth",
+     "kind": "HEADING",
+     "first_line": 104,
+     "last_line": 115,
+     "words": 329,
+     "text_sha256": "4e2b37afd6aefa52550f0d3319c6a3ef43bf701cacf93f7741dad70b1401c0b1",
+     "keywords": {
+      "MUST NOT": 1
+     }
+    },
+    {
+     "number": "9.1",
+     "title": "Treat QA as an intervention subject to assessment, not an intrinsically beneficial",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 106,
+     "last_line": 107,
+     "words": 73,
+     "text_sha256": "c671dc72b9fddeb3b7021da6fd04a8f3e3ed27edd2dc6fa053849ddf0bbe276c",
+     "keywords": {}
+    },
+    {
+     "number": "9.2",
+     "title": "Independently adjudicate consequential cases where warranted, and record judge limitations and dependencies.",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 108,
+     "last_line": 109,
+     "words": 44,
+     "text_sha256": "b0e5ab8ab2e74c1d8af1702e6cc968c6f8854c69da1442634e03b32e4075b439",
+     "keywords": {}
+    },
+    {
+     "number": "9.3",
+     "title": "Use the simplest useful QA plan for the actual project. A narrow",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 110,
+     "last_line": 111,
+     "words": 54,
+     "text_sha256": "0bb01a926fcb1d24a554cf1f4f7544d22bbf455cae96d6d0b959675106859f87",
+     "keywords": {}
+    },
+    {
+     "number": "9.4",
+     "title": "**The cost of wrong assurance decisions is bidirectional.** A credible evaluation must",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 112,
+     "last_line": 113,
+     "words": 75,
+     "text_sha256": "872da8b7e0134102b383b87ba74cf057dc8560f42a59d985db4620ff05669250",
+     "keywords": {}
+    },
+    {
+     "number": "9.5",
+     "title": "**Community-benefit claims and assessor validity.** Benefits to experienced QA practitioners, novice users",
+     "kind": "NUMBERED_REQUIREMENT",
+     "first_line": 114,
+     "last_line": 115,
+     "words": 75,
+     "text_sha256": "b2049649e23fcb212f71e3a10809354a581c3bba53ae1c72d5923eb0d5f80ccb",
+     "keywords": {
+      "MUST NOT": 1
+     }
+    },
+    {
+     "number": "Appendix A",
+     "title": "Reader caution (informative)",
+     "kind": "HEADING",
+     "first_line": 116,
+     "last_line": 123,
+     "words": 117,
+     "text_sha256": "267a2f9d9f922fe9e35f7c1621a3bbc3860f591948390c57d1f4d5e8ded72d67",
+     "keywords": {}
+    },
+    {
+     "number": "Appendix B",
+     "title": "External reference ledger (informative)",
+     "kind": "HEADING",
+     "first_line": 124,
+     "last_line": 153,
+     "words": 337,
+     "text_sha256": "2e85919ab6d9f8c8f2ef341e3f4fd966216e0bf5475d2a3e4c10ab0f8ef33880",
+     "keywords": {}
+    }
+   ]
+  }
+ ],
+ "defined_terms": [
+  {
+   "defined_term": "Review",
+   "class": "record_term",
+   "defined_meaning": "One commissioned instance of ACR: a persistent identified mandate to examine, construct, compare or revise",
+   "core_section": "1.2; 2.1",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Session",
+   "class": "record_term",
+   "defined_meaning": "One bounded assessment cycle of a Review; not a chat session",
+   "core_section": "7.1",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Target",
+   "class": "record_term",
+   "defined_meaning": "The identified subject being examined or constructed",
+   "core_section": "2.1",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Claim",
+   "class": "record_term",
+   "defined_meaning": "A precise assertion, question, comparison or construction brief about the Target",
+   "core_section": "2.1",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Charter",
+   "class": "record_term",
+   "defined_meaning": "The commission and operating contract",
+   "core_section": "2.1",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Director",
+   "class": "duty",
+   "defined_meaning": "Sets objectives, Charter, resources, delegations and practical direction",
+   "core_section": "3.1",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Coordinator",
+   "class": "duty",
+   "defined_meaning": "Dispatches work and executes authorized control transitions",
+   "core_section": "3.1",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Author",
+   "class": "duty",
+   "defined_meaning": "Supplies Claims and candidate alternatives, with assumptions and intended meaning",
+   "core_section": "3.1",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Case Developer",
+   "class": "duty",
+   "defined_meaning": "Develops the strongest case found for an identified position or authorized revision",
+   "core_section": "3.1",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Challenger",
+   "class": "duty",
+   "defined_meaning": "Tests support, boundaries, assumptions and contrary cases",
+   "core_section": "3.1",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Source Reviewer",
+   "class": "duty",
+   "defined_meaning": "Inspects sources, provenance, applicability and alternatives",
+   "core_section": "3.1",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Resilience Tester",
+   "class": "duty",
+   "defined_meaning": "Conducts explicitly commissioned Resilience Exercises within the exercise mandate",
+   "core_section": "3.1",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Interpreter",
+   "class": "duty",
+   "defined_meaning": "Assesses consequential readbacks and meaning disputes",
+   "core_section": "3.1",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Checker",
+   "class": "duty",
+   "defined_meaning": "Performs and records decisive applicable checks",
+   "core_section": "3.1",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Assessor",
+   "class": "duty",
+   "defined_meaning": "Applies admissibility and disposition rules to the evidence",
+   "core_section": "3.1",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Courier",
+   "class": "duty",
+   "defined_meaning": "Publishes and retrieves exact permitted artifacts and receipts",
+   "core_section": "3.1",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Recorder",
+   "class": "duty",
+   "defined_meaning": "Maintains identities, lineage, current records and preserved history",
+   "core_section": "3.1",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Monitor",
+   "class": "duty",
+   "defined_meaning": "Detects declared changes within an actual monitoring service",
+   "core_section": "3.1",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Observer",
+   "class": "duty",
+   "defined_meaning": "Observes permitted views and submits contributions when enabled",
+   "core_section": "3.1; 13",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Observer Channel",
+   "class": "record_term",
+   "defined_meaning": "Permitted audience views and contribution channels",
+   "core_section": "13",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Repository",
+   "class": "record_term",
+   "defined_meaning": "The authorized record and artifact location",
+   "core_section": "11.1",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Execution Boundary",
+   "class": "record_term",
+   "defined_meaning": "Participant execution and access boundary",
+   "core_section": "Appendix A",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Resilience Exercise",
+   "class": "record_term",
+   "defined_meaning": "Bounded fault-injection or adversarial-resilience exercise",
+   "core_section": "10.4",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Delegated Continuation",
+   "class": "record_term",
+   "defined_meaning": "Bounded delegated continuation under an identified execution policy",
+   "core_section": "12.2",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Register",
+   "class": "record_term",
+   "defined_meaning": "Authoritative control state and events",
+   "core_section": "Appendix A",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Ledger",
+   "class": "record_term",
+   "defined_meaning": "Versioned findings and support relationships",
+   "core_section": "Appendix A",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Entry Card",
+   "class": "record_term",
+   "defined_meaning": "Optional view of information needed to begin or continue an act",
+   "core_section": "1.3",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "State Brief",
+   "class": "record_term",
+   "defined_meaning": "Smallest permitted projection sufficient for an assigned act",
+   "core_section": "8.1",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Basis Header",
+   "class": "record_term",
+   "defined_meaning": "Portion carrying controlling meanings and inherited obligations",
+   "core_section": "8.1",
+   "persona_permitted": "NO"
+  },
+  {
+   "defined_term": "Method Card",
+   "class": "record_term",
+   "defined_meaning": "Reusable procedure contract for an optional method",
+   "core_section": "10.1",
+   "persona_permitted": "NO"
+  }
+ ],
+ "load_tiers": [
+  {
+   "tier": "T0",
+   "contents": "Kernel card",
+   "files": "1",
+   "utf8_bytes": "1494",
+   "whitespace_words": "247",
+   "note": "Measured bytes and words. Token counts depend on the tokenizer and are not stated."
+  },
+  {
+   "tier": "T1",
+   "contents": "Kernel",
+   "files": "1",
+   "utf8_bytes": "19754",
+   "whitespace_words": "3154",
+   "note": "Measured bytes and words. Token counts depend on the tokenizer and are not stated."
+  },
+  {
+   "tier": "T2",
+   "contents": "Core Specification",
+   "files": "1",
+   "utf8_bytes": "131574",
+   "whitespace_words": "18058",
+   "note": "Measured bytes and words. Token counts depend on the tokenizer and are not stated."
+  },
+  {
+   "tier": "T3",
+   "contents": "Core Specification and three conditional contracts",
+   "files": "4",
+   "utf8_bytes": "176886",
+   "whitespace_words": "24118",
+   "note": "Measured bytes and words. Token counts depend on the tokenizer and are not stated."
+  },
+  {
+   "tier": "T4",
+   "contents": "All Specifications",
+   "files": "7",
+   "utf8_bytes": "309630",
+   "whitespace_words": "40795",
+   "note": "Measured bytes and words. Token counts depend on the tokenizer and are not stated."
+  },
+  {
+   "tier": "T5",
+   "contents": "All Specifications, Overviews and conditional contracts",
+   "files": "17",
+   "utf8_bytes": "546595",
+   "whitespace_words": "75396",
+   "note": "Measured bytes and words. Token counts depend on the tokenizer and are not stated."
+  }
+ ],
+ "register": {
+  "record_form": "ACR-OS-RECORD-1",
+  "event_kinds": {
+   "ADOPTED": "DIRECTION",
+   "ARTIFACT_ADDED": "RECORD",
+   "ARTIFACT_READ": "RECORD",
+   "CHECK_RAN": "RECORD",
+   "CLAIM_ADDED": "REVIEW_STEP",
+   "CONDITION_REGISTERED": "RECORD",
+   "DELIVERY_STATE": "RECORD",
+   "ENVIRONMENT_RECORDED": "HOST",
+   "FINDING_RECORDED": "REVIEW_STEP",
+   "GATE_COMMITTED": "REVIEW_STEP",
+   "HALTED": "HALT",
+   "HOST_EVENT": "HOST",
+   "INSPECTION_DECLARED": "RECORD",
+   "LINK_STATE": "HOST",
+   "METHOD_PINNED": "HOST",
+   "NOTE": "RECORD",
+   "OBJECTION_RAISED": "REVIEW_STEP",
+   "OBJECTION_RESOLVED": "REVIEW_STEP",
+   "OBLIGATION_CLOSED": "RECORD",
+   "OBLIGATION_OPENED": "RECORD",
+   "PARTICIPANT_ADDED": "DIRECTION",
+   "REVIEW_CLOSED": "REVIEW_STEP",
+   "REVIEW_COMMISSIONED": "REVIEW_STEP",
+   "REVIEW_PAUSED": "REVIEW_STEP",
+   "REVIEW_RESUMED": "REVIEW_STEP",
+   "RUN_COMPLETED": "RECORD",
+   "SESSION_OPENED": "REVIEW_STEP",
+   "STANDARD_SET": "DIRECTION",
+   "SUBMISSION_ADMITTED": "RECORD",
+   "SYSTEM_STATE": "HOST",
+   "TASK_ENDED": "HOST",
+   "TASK_STARTED": "TASK",
+   "TREE_PINNED": "RECORD",
+   "WORKSPACE_CREATED": "HOST"
+  },
+  "exit_codes": {
+   "USAGE": 2,
+   "REFUSED": 3,
+   "NOT_IN_USE": 4,
+   "INTEGRITY": 6
+  },
+  "state_machines": {
+   "SYSTEM": {
+    "initial": "START",
+    "final": [
+     "STOPPED"
+    ],
+    "transitions": [
+     {
+      "state": "START",
+      "event": "BEGIN_VERIFY",
+      "next": "VERIFY"
+     },
+     {
+      "state": "START",
+      "event": "VERIFIED_OK",
+      "next": null
+     },
+     {
+      "state": "START",
+      "event": "VERIFY_FAILED",
+      "next": null
+     },
+     {
+      "state": "START",
+      "event": "SERVICE_LOST",
+      "next": null
+     },
+     {
+      "state": "START",
+      "event": "SERVICE_RESTORED",
+      "next": null
+     },
+     {
+      "state": "START",
+      "event": "MAINTENANCE_BEGIN",
+      "next": null
+     },
+     {
+      "state": "START",
+      "event": "MAINTENANCE_END",
+      "next": null
+     },
+     {
+      "state": "START",
+      "event": "INTEGRITY_FAULT",
+      "next": "SAFE"
+     },
+     {
+      "state": "START",
+      "event": "SHUTDOWN",
+      "next": "STOPPING"
+     },
+     {
+      "state": "START",
+      "event": "STOPPED_OK",
+      "next": null
+     },
+     {
+      "state": "VERIFY",
+      "event": "BEGIN_VERIFY",
+      "next": null
+     },
+     {
+      "state": "VERIFY",
+      "event": "VERIFIED_OK",
+      "next": "OPERATIONAL"
+     },
+     {
+      "state": "VERIFY",
+      "event": "VERIFY_FAILED",
+      "next": "SAFE"
+     },
+     {
+      "state": "VERIFY",
+      "event": "SERVICE_LOST",
+      "next": null
+     },
+     {
+      "state": "VERIFY",
+      "event": "SERVICE_RESTORED",
+      "next": null
+     },
+     {
+      "state": "VERIFY",
+      "event": "MAINTENANCE_BEGIN",
+      "next": null
+     },
+     {
+      "state": "VERIFY",
+      "event": "MAINTENANCE_END",
+      "next": null
+     },
+     {
+      "state": "VERIFY",
+      "event": "INTEGRITY_FAULT",
+      "next": "SAFE"
+     },
+     {
+      "state": "VERIFY",
+      "event": "SHUTDOWN",
+      "next": "STOPPING"
+     },
+     {
+      "state": "VERIFY",
+      "event": "STOPPED_OK",
+      "next": null
+     },
+     {
+      "state": "OPERATIONAL",
+      "event": "BEGIN_VERIFY",
+      "next": null
+     },
+     {
+      "state": "OPERATIONAL",
+      "event": "VERIFIED_OK",
+      "next": null
+     },
+     {
+      "state": "OPERATIONAL",
+      "event": "VERIFY_FAILED",
+      "next": null
+     },
+     {
+      "state": "OPERATIONAL",
+      "event": "SERVICE_LOST",
+      "next": "DEGRADED"
+     },
+     {
+      "state": "OPERATIONAL",
+      "event": "SERVICE_RESTORED",
+      "next": null
+     },
+     {
+      "state": "OPERATIONAL",
+      "event": "MAINTENANCE_BEGIN",
+      "next": "MAINTENANCE"
+     },
+     {
+      "state": "OPERATIONAL",
+      "event": "MAINTENANCE_END",
+      "next": null
+     },
+     {
+      "state": "OPERATIONAL",
+      "event": "INTEGRITY_FAULT",
+      "next": "SAFE"
+     },
+     {
+      "state": "OPERATIONAL",
+      "event": "SHUTDOWN",
+      "next": "STOPPING"
+     },
+     {
+      "state": "OPERATIONAL",
+      "event": "STOPPED_OK",
+      "next": null
+     },
+     {
+      "state": "DEGRADED",
+      "event": "BEGIN_VERIFY",
+      "next": null
+     },
+     {
+      "state": "DEGRADED",
+      "event": "VERIFIED_OK",
+      "next": null
+     },
+     {
+      "state": "DEGRADED",
+      "event": "VERIFY_FAILED",
+      "next": null
+     },
+     {
+      "state": "DEGRADED",
+      "event": "SERVICE_LOST",
+      "next": "DEGRADED"
+     },
+     {
+      "state": "DEGRADED",
+      "event": "SERVICE_RESTORED",
+      "next": "OPERATIONAL"
+     },
+     {
+      "state": "DEGRADED",
+      "event": "MAINTENANCE_BEGIN",
+      "next": "MAINTENANCE"
+     },
+     {
+      "state": "DEGRADED",
+      "event": "MAINTENANCE_END",
+      "next": null
+     },
+     {
+      "state": "DEGRADED",
+      "event": "INTEGRITY_FAULT",
+      "next": "SAFE"
+     },
+     {
+      "state": "DEGRADED",
+      "event": "SHUTDOWN",
+      "next": "STOPPING"
+     },
+     {
+      "state": "DEGRADED",
+      "event": "STOPPED_OK",
+      "next": null
+     },
+     {
+      "state": "MAINTENANCE",
+      "event": "BEGIN_VERIFY",
+      "next": null
+     },
+     {
+      "state": "MAINTENANCE",
+      "event": "VERIFIED_OK",
+      "next": null
+     },
+     {
+      "state": "MAINTENANCE",
+      "event": "VERIFY_FAILED",
+      "next": null
+     },
+     {
+      "state": "MAINTENANCE",
+      "event": "SERVICE_LOST",
+      "next": null
+     },
+     {
+      "state": "MAINTENANCE",
+      "event": "SERVICE_RESTORED",
+      "next": null
+     },
+     {
+      "state": "MAINTENANCE",
+      "event": "MAINTENANCE_BEGIN",
+      "next": null
+     },
+     {
+      "state": "MAINTENANCE",
+      "event": "MAINTENANCE_END",
+      "next": "VERIFY"
+     },
+     {
+      "state": "MAINTENANCE",
+      "event": "INTEGRITY_FAULT",
+      "next": "SAFE"
+     },
+     {
+      "state": "MAINTENANCE",
+      "event": "SHUTDOWN",
+      "next": "STOPPING"
+     },
+     {
+      "state": "MAINTENANCE",
+      "event": "STOPPED_OK",
+      "next": null
+     },
+     {
+      "state": "SAFE",
+      "event": "BEGIN_VERIFY",
+      "next": null
+     },
+     {
+      "state": "SAFE",
+      "event": "VERIFIED_OK",
+      "next": null
+     },
+     {
+      "state": "SAFE",
+      "event": "VERIFY_FAILED",
+      "next": null
+     },
+     {
+      "state": "SAFE",
+      "event": "SERVICE_LOST",
+      "next": null
+     },
+     {
+      "state": "SAFE",
+      "event": "SERVICE_RESTORED",
+      "next": null
+     },
+     {
+      "state": "SAFE",
+      "event": "MAINTENANCE_BEGIN",
+      "next": null
+     },
+     {
+      "state": "SAFE",
+      "event": "MAINTENANCE_END",
+      "next": null
+     },
+     {
+      "state": "SAFE",
+      "event": "INTEGRITY_FAULT",
+      "next": "SAFE"
+     },
+     {
+      "state": "SAFE",
+      "event": "SHUTDOWN",
+      "next": "STOPPING"
+     },
+     {
+      "state": "SAFE",
+      "event": "STOPPED_OK",
+      "next": null
+     },
+     {
+      "state": "STOPPING",
+      "event": "BEGIN_VERIFY",
+      "next": null
+     },
+     {
+      "state": "STOPPING",
+      "event": "VERIFIED_OK",
+      "next": null
+     },
+     {
+      "state": "STOPPING",
+      "event": "VERIFY_FAILED",
+      "next": null
+     },
+     {
+      "state": "STOPPING",
+      "event": "SERVICE_LOST",
+      "next": null
+     },
+     {
+      "state": "STOPPING",
+      "event": "SERVICE_RESTORED",
+      "next": null
+     },
+     {
+      "state": "STOPPING",
+      "event": "MAINTENANCE_BEGIN",
+      "next": null
+     },
+     {
+      "state": "STOPPING",
+      "event": "MAINTENANCE_END",
+      "next": null
+     },
+     {
+      "state": "STOPPING",
+      "event": "INTEGRITY_FAULT",
+      "next": "STOPPED"
+     },
+     {
+      "state": "STOPPING",
+      "event": "SHUTDOWN",
+      "next": null
+     },
+     {
+      "state": "STOPPING",
+      "event": "STOPPED_OK",
+      "next": "STOPPED"
+     },
+     {
+      "state": "STOPPED",
+      "event": "BEGIN_VERIFY",
+      "next": null
+     },
+     {
+      "state": "STOPPED",
+      "event": "VERIFIED_OK",
+      "next": null
+     },
+     {
+      "state": "STOPPED",
+      "event": "VERIFY_FAILED",
+      "next": null
+     },
+     {
+      "state": "STOPPED",
+      "event": "SERVICE_LOST",
+      "next": null
+     },
+     {
+      "state": "STOPPED",
+      "event": "SERVICE_RESTORED",
+      "next": null
+     },
+     {
+      "state": "STOPPED",
+      "event": "MAINTENANCE_BEGIN",
+      "next": null
+     },
+     {
+      "state": "STOPPED",
+      "event": "MAINTENANCE_END",
+      "next": null
+     },
+     {
+      "state": "STOPPED",
+      "event": "INTEGRITY_FAULT",
+      "next": null
+     },
+     {
+      "state": "STOPPED",
+      "event": "SHUTDOWN",
+      "next": null
+     },
+     {
+      "state": "STOPPED",
+      "event": "STOPPED_OK",
+      "next": null
+     }
+    ]
+   },
+   "USE": {
+    "initial": "NOT_IN_USE",
+    "final": [
+     "-"
+    ],
+    "transitions": [
+     {
+      "state": "NOT_IN_USE",
+      "event": "ADOPT",
+      "next": "IN_USE"
+     },
+     {
+      "state": "NOT_IN_USE",
+      "event": "HALT",
+      "next": "NOT_IN_USE"
+     },
+     {
+      "state": "IN_USE",
+      "event": "ADOPT",
+      "next": "IN_USE"
+     },
+     {
+      "state": "IN_USE",
+      "event": "HALT",
+      "next": "NOT_IN_USE"
+     }
+    ]
+   },
+   "REVIEW": {
+    "initial": "ACTIVE",
+    "final": [
+     "-"
+    ],
+    "transitions": [
+     {
+      "state": "ACTIVE",
+      "event": "PAUSE",
+      "next": "PAUSED"
+     },
+     {
+      "state": "ACTIVE",
+      "event": "RESUME",
+      "next": null
+     },
+     {
+      "state": "ACTIVE",
+      "event": "CLOSE_COMPLETE",
+      "next": "CLOSED_COMPLETE"
+     },
+     {
+      "state": "ACTIVE",
+      "event": "CLOSE_INCOMPLETE",
+      "next": "CLOSED_INCOMPLETE"
+     },
+     {
+      "state": "ACTIVE",
+      "event": "ABORT",
+      "next": "ABORTED"
+     },
+     {
+      "state": "ACTIVE",
+      "event": "HALT",
+      "next": "CLOSED_INCOMPLETE"
+     },
+     {
+      "state": "ACTIVE",
+      "event": "OPEN_SESSION",
+      "next": null
+     },
+     {
+      "state": "PAUSED",
+      "event": "PAUSE",
+      "next": null
+     },
+     {
+      "state": "PAUSED",
+      "event": "RESUME",
+      "next": "ACTIVE"
+     },
+     {
+      "state": "PAUSED",
+      "event": "CLOSE_COMPLETE",
+      "next": null
+     },
+     {
+      "state": "PAUSED",
+      "event": "CLOSE_INCOMPLETE",
+      "next": "CLOSED_INCOMPLETE"
+     },
+     {
+      "state": "PAUSED",
+      "event": "ABORT",
+      "next": "ABORTED"
+     },
+     {
+      "state": "PAUSED",
+      "event": "HALT",
+      "next": "CLOSED_INCOMPLETE"
+     },
+     {
+      "state": "PAUSED",
+      "event": "OPEN_SESSION",
+      "next": null
+     },
+     {
+      "state": "CLOSED_COMPLETE",
+      "event": "PAUSE",
+      "next": null
+     },
+     {
+      "state": "CLOSED_COMPLETE",
+      "event": "RESUME",
+      "next": null
+     },
+     {
+      "state": "CLOSED_COMPLETE",
+      "event": "CLOSE_COMPLETE",
+      "next": null
+     },
+     {
+      "state": "CLOSED_COMPLETE",
+      "event": "CLOSE_INCOMPLETE",
+      "next": null
+     },
+     {
+      "state": "CLOSED_COMPLETE",
+      "event": "ABORT",
+      "next": null
+     },
+     {
+      "state": "CLOSED_COMPLETE",
+      "event": "HALT",
+      "next": null
+     },
+     {
+      "state": "CLOSED_COMPLETE",
+      "event": "OPEN_SESSION",
+      "next": "ACTIVE"
+     },
+     {
+      "state": "CLOSED_INCOMPLETE",
+      "event": "PAUSE",
+      "next": null
+     },
+     {
+      "state": "CLOSED_INCOMPLETE",
+      "event": "RESUME",
+      "next": null
+     },
+     {
+      "state": "CLOSED_INCOMPLETE",
+      "event": "CLOSE_COMPLETE",
+      "next": null
+     },
+     {
+      "state": "CLOSED_INCOMPLETE",
+      "event": "CLOSE_INCOMPLETE",
+      "next": null
+     },
+     {
+      "state": "CLOSED_INCOMPLETE",
+      "event": "ABORT",
+      "next": null
+     },
+     {
+      "state": "CLOSED_INCOMPLETE",
+      "event": "HALT",
+      "next": null
+     },
+     {
+      "state": "CLOSED_INCOMPLETE",
+      "event": "OPEN_SESSION",
+      "next": "ACTIVE"
+     },
+     {
+      "state": "ABORTED",
+      "event": "PAUSE",
+      "next": null
+     },
+     {
+      "state": "ABORTED",
+      "event": "RESUME",
+      "next": null
+     },
+     {
+      "state": "ABORTED",
+      "event": "CLOSE_COMPLETE",
+      "next": null
+     },
+     {
+      "state": "ABORTED",
+      "event": "CLOSE_INCOMPLETE",
+      "next": null
+     },
+     {
+      "state": "ABORTED",
+      "event": "ABORT",
+      "next": null
+     },
+     {
+      "state": "ABORTED",
+      "event": "HALT",
+      "next": null
+     },
+     {
+      "state": "ABORTED",
+      "event": "OPEN_SESSION",
+      "next": "ACTIVE"
+     }
+    ]
+   },
+   "OBJECTION": {
+    "initial": "OPEN",
+    "final": [
+     "RESOLVED,WITHDRAWN,OPEN_RECORDED"
+    ],
+    "transitions": [
+     {
+      "state": "OPEN",
+      "event": "RESOLVE",
+      "next": "RESOLVED"
+     },
+     {
+      "state": "OPEN",
+      "event": "WITHDRAW",
+      "next": "WITHDRAWN"
+     },
+     {
+      "state": "OPEN",
+      "event": "RECORD_OPEN",
+      "next": "OPEN_RECORDED"
+     },
+     {
+      "state": "RESOLVED",
+      "event": "RESOLVE",
+      "next": null
+     },
+     {
+      "state": "RESOLVED",
+      "event": "WITHDRAW",
+      "next": null
+     },
+     {
+      "state": "RESOLVED",
+      "event": "RECORD_OPEN",
+      "next": null
+     },
+     {
+      "state": "WITHDRAWN",
+      "event": "RESOLVE",
+      "next": null
+     },
+     {
+      "state": "WITHDRAWN",
+      "event": "WITHDRAW",
+      "next": null
+     },
+     {
+      "state": "WITHDRAWN",
+      "event": "RECORD_OPEN",
+      "next": null
+     },
+     {
+      "state": "OPEN_RECORDED",
+      "event": "RESOLVE",
+      "next": null
+     },
+     {
+      "state": "OPEN_RECORDED",
+      "event": "WITHDRAW",
+      "next": null
+     },
+     {
+      "state": "OPEN_RECORDED",
+      "event": "RECORD_OPEN",
+      "next": null
+     }
+    ]
+   },
+   "OBLIGATION": {
+    "initial": "OPEN",
+    "final": [
+     "CLOSED"
+    ],
+    "transitions": [
+     {
+      "state": "OPEN",
+      "event": "DISCHARGE",
+      "next": "CLOSED"
+     },
+     {
+      "state": "CLOSED",
+      "event": "DISCHARGE",
+      "next": null
+     }
+    ]
+   },
+   "TASK": {
+    "initial": "CREATED",
+    "final": [
+     "DONE,FAILED,STOPPED,LOST"
+    ],
+    "transitions": [
+     {
+      "state": "CREATED",
+      "event": "START",
+      "next": "RUNNING"
+     },
+     {
+      "state": "CREATED",
+      "event": "BLOCK",
+      "next": null
+     },
+     {
+      "state": "CREATED",
+      "event": "WAKE",
+      "next": null
+     },
+     {
+      "state": "CREATED",
+      "event": "HEARTBEAT",
+      "next": null
+     },
+     {
+      "state": "CREATED",
+      "event": "EXIT_OK",
+      "next": null
+     },
+     {
+      "state": "CREATED",
+      "event": "EXIT_FAIL",
+      "next": null
+     },
+     {
+      "state": "CREATED",
+      "event": "RESULT_VERIFIED",
+      "next": null
+     },
+     {
+      "state": "CREATED",
+      "event": "RESULT_MISSING",
+      "next": null
+     },
+     {
+      "state": "CREATED",
+      "event": "STOP_REQUEST",
+      "next": "STOPPED"
+     },
+     {
+      "state": "CREATED",
+      "event": "STOP_CONFIRMED",
+      "next": null
+     },
+     {
+      "state": "CREATED",
+      "event": "DEADLINE",
+      "next": "LOST"
+     },
+     {
+      "state": "RUNNING",
+      "event": "START",
+      "next": null
+     },
+     {
+      "state": "RUNNING",
+      "event": "BLOCK",
+      "next": "WAITING"
+     },
+     {
+      "state": "RUNNING",
+      "event": "WAKE",
+      "next": null
+     },
+     {
+      "state": "RUNNING",
+      "event": "HEARTBEAT",
+      "next": "RUNNING"
+     },
+     {
+      "state": "RUNNING",
+      "event": "EXIT_OK",
+      "next": "EXITED"
+     },
+     {
+      "state": "RUNNING",
+      "event": "EXIT_FAIL",
+      "next": "FAILED"
+     },
+     {
+      "state": "RUNNING",
+      "event": "RESULT_VERIFIED",
+      "next": null
+     },
+     {
+      "state": "RUNNING",
+      "event": "RESULT_MISSING",
+      "next": null
+     },
+     {
+      "state": "RUNNING",
+      "event": "STOP_REQUEST",
+      "next": "STOPPING"
+     },
+     {
+      "state": "RUNNING",
+      "event": "STOP_CONFIRMED",
+      "next": null
+     },
+     {
+      "state": "RUNNING",
+      "event": "DEADLINE",
+      "next": "LOST"
+     },
+     {
+      "state": "WAITING",
+      "event": "START",
+      "next": null
+     },
+     {
+      "state": "WAITING",
+      "event": "BLOCK",
+      "next": null
+     },
+     {
+      "state": "WAITING",
+      "event": "WAKE",
+      "next": "RUNNING"
+     },
+     {
+      "state": "WAITING",
+      "event": "HEARTBEAT",
+      "next": "WAITING"
+     },
+     {
+      "state": "WAITING",
+      "event": "EXIT_OK",
+      "next": null
+     },
+     {
+      "state": "WAITING",
+      "event": "EXIT_FAIL",
+      "next": "FAILED"
+     },
+     {
+      "state": "WAITING",
+      "event": "RESULT_VERIFIED",
+      "next": null
+     },
+     {
+      "state": "WAITING",
+      "event": "RESULT_MISSING",
+      "next": null
+     },
+     {
+      "state": "WAITING",
+      "event": "STOP_REQUEST",
+      "next": "STOPPING"
+     },
+     {
+      "state": "WAITING",
+      "event": "STOP_CONFIRMED",
+      "next": null
+     },
+     {
+      "state": "WAITING",
+      "event": "DEADLINE",
+      "next": "LOST"
+     },
+     {
+      "state": "STOPPING",
+      "event": "START",
+      "next": null
+     },
+     {
+      "state": "STOPPING",
+      "event": "BLOCK",
+      "next": null
+     },
+     {
+      "state": "STOPPING",
+      "event": "WAKE",
+      "next": null
+     },
+     {
+      "state": "STOPPING",
+      "event": "HEARTBEAT",
+      "next": null
+     },
+     {
+      "state": "STOPPING",
+      "event": "EXIT_OK",
+      "next": "STOPPED"
+     },
+     {
+      "state": "STOPPING",
+      "event": "EXIT_FAIL",
+      "next": "STOPPED"
+     },
+     {
+      "state": "STOPPING",
+      "event": "RESULT_VERIFIED",
+      "next": null
+     },
+     {
+      "state": "STOPPING",
+      "event": "RESULT_MISSING",
+      "next": null
+     },
+     {
+      "state": "STOPPING",
+      "event": "STOP_REQUEST",
+      "next": "STOPPING"
+     },
+     {
+      "state": "STOPPING",
+      "event": "STOP_CONFIRMED",
+      "next": "STOPPED"
+     },
+     {
+      "state": "STOPPING",
+      "event": "DEADLINE",
+      "next": "LOST"
+     },
+     {
+      "state": "EXITED",
+      "event": "START",
+      "next": null
+     },
+     {
+      "state": "EXITED",
+      "event": "BLOCK",
+      "next": null
+     },
+     {
+      "state": "EXITED",
+      "event": "WAKE",
+      "next": null
+     },
+     {
+      "state": "EXITED",
+      "event": "HEARTBEAT",
+      "next": null
+     },
+     {
+      "state": "EXITED",
+      "event": "EXIT_OK",
+      "next": null
+     },
+     {
+      "state": "EXITED",
+      "event": "EXIT_FAIL",
+      "next": null
+     },
+     {
+      "state": "EXITED",
+      "event": "RESULT_VERIFIED",
+      "next": "DONE"
+     },
+     {
+      "state": "EXITED",
+      "event": "RESULT_MISSING",
+      "next": "FAILED"
+     },
+     {
+      "state": "EXITED",
+      "event": "STOP_REQUEST",
+      "next": null
+     },
+     {
+      "state": "EXITED",
+      "event": "STOP_CONFIRMED",
+      "next": null
+     },
+     {
+      "state": "EXITED",
+      "event": "DEADLINE",
+      "next": "FAILED"
+     },
+     {
+      "state": "DONE",
+      "event": "START",
+      "next": null
+     },
+     {
+      "state": "DONE",
+      "event": "BLOCK",
+      "next": null
+     },
+     {
+      "state": "DONE",
+      "event": "WAKE",
+      "next": null
+     },
+     {
+      "state": "DONE",
+      "event": "HEARTBEAT",
+      "next": null
+     },
+     {
+      "state": "DONE",
+      "event": "EXIT_OK",
+      "next": null
+     },
+     {
+      "state": "DONE",
+      "event": "EXIT_FAIL",
+      "next": null
+     },
+     {
+      "state": "DONE",
+      "event": "RESULT_VERIFIED",
+      "next": null
+     },
+     {
+      "state": "DONE",
+      "event": "RESULT_MISSING",
+      "next": null
+     },
+     {
+      "state": "DONE",
+      "event": "STOP_REQUEST",
+      "next": null
+     },
+     {
+      "state": "DONE",
+      "event": "STOP_CONFIRMED",
+      "next": null
+     },
+     {
+      "state": "DONE",
+      "event": "DEADLINE",
+      "next": null
+     },
+     {
+      "state": "FAILED",
+      "event": "START",
+      "next": null
+     },
+     {
+      "state": "FAILED",
+      "event": "BLOCK",
+      "next": null
+     },
+     {
+      "state": "FAILED",
+      "event": "WAKE",
+      "next": null
+     },
+     {
+      "state": "FAILED",
+      "event": "HEARTBEAT",
+      "next": null
+     },
+     {
+      "state": "FAILED",
+      "event": "EXIT_OK",
+      "next": null
+     },
+     {
+      "state": "FAILED",
+      "event": "EXIT_FAIL",
+      "next": null
+     },
+     {
+      "state": "FAILED",
+      "event": "RESULT_VERIFIED",
+      "next": null
+     },
+     {
+      "state": "FAILED",
+      "event": "RESULT_MISSING",
+      "next": null
+     },
+     {
+      "state": "FAILED",
+      "event": "STOP_REQUEST",
+      "next": null
+     },
+     {
+      "state": "FAILED",
+      "event": "STOP_CONFIRMED",
+      "next": null
+     },
+     {
+      "state": "FAILED",
+      "event": "DEADLINE",
+      "next": null
+     },
+     {
+      "state": "STOPPED",
+      "event": "START",
+      "next": null
+     },
+     {
+      "state": "STOPPED",
+      "event": "BLOCK",
+      "next": null
+     },
+     {
+      "state": "STOPPED",
+      "event": "WAKE",
+      "next": null
+     },
+     {
+      "state": "STOPPED",
+      "event": "HEARTBEAT",
+      "next": null
+     },
+     {
+      "state": "STOPPED",
+      "event": "EXIT_OK",
+      "next": null
+     },
+     {
+      "state": "STOPPED",
+      "event": "EXIT_FAIL",
+      "next": null
+     },
+     {
+      "state": "STOPPED",
+      "event": "RESULT_VERIFIED",
+      "next": null
+     },
+     {
+      "state": "STOPPED",
+      "event": "RESULT_MISSING",
+      "next": null
+     },
+     {
+      "state": "STOPPED",
+      "event": "STOP_REQUEST",
+      "next": null
+     },
+     {
+      "state": "STOPPED",
+      "event": "STOP_CONFIRMED",
+      "next": null
+     },
+     {
+      "state": "STOPPED",
+      "event": "DEADLINE",
+      "next": null
+     },
+     {
+      "state": "LOST",
+      "event": "START",
+      "next": null
+     },
+     {
+      "state": "LOST",
+      "event": "BLOCK",
+      "next": null
+     },
+     {
+      "state": "LOST",
+      "event": "WAKE",
+      "next": null
+     },
+     {
+      "state": "LOST",
+      "event": "HEARTBEAT",
+      "next": null
+     },
+     {
+      "state": "LOST",
+      "event": "EXIT_OK",
+      "next": null
+     },
+     {
+      "state": "LOST",
+      "event": "EXIT_FAIL",
+      "next": null
+     },
+     {
+      "state": "LOST",
+      "event": "RESULT_VERIFIED",
+      "next": null
+     },
+     {
+      "state": "LOST",
+      "event": "RESULT_MISSING",
+      "next": null
+     },
+     {
+      "state": "LOST",
+      "event": "STOP_REQUEST",
+      "next": null
+     },
+     {
+      "state": "LOST",
+      "event": "STOP_CONFIRMED",
+      "next": null
+     },
+     {
+      "state": "LOST",
+      "event": "DEADLINE",
+      "next": null
+     }
+    ]
+   },
+   "DELIVERY": {
+    "initial": "NOT_DELIVERED",
+    "final": [
+     "-"
+    ],
+    "transitions": [
+     {
+      "state": "NOT_DELIVERED",
+      "event": "DELIVER",
+      "next": "DELIVERED"
+     },
+     {
+      "state": "NOT_DELIVERED",
+      "event": "CONTEXT_RESET",
+      "next": "NOT_DELIVERED"
+     },
+     {
+      "state": "NOT_DELIVERED",
+      "event": "RELEASE_CHANGED",
+      "next": "NOT_DELIVERED"
+     },
+     {
+      "state": "DELIVERED",
+      "event": "DELIVER",
+      "next": "DELIVERED"
+     },
+     {
+      "state": "DELIVERED",
+      "event": "CONTEXT_RESET",
+      "next": "STALE"
+     },
+     {
+      "state": "DELIVERED",
+      "event": "RELEASE_CHANGED",
+      "next": "STALE"
+     },
+     {
+      "state": "STALE",
+      "event": "DELIVER",
+      "next": "DELIVERED"
+     },
+     {
+      "state": "STALE",
+      "event": "CONTEXT_RESET",
+      "next": "STALE"
+     },
+     {
+      "state": "STALE",
+      "event": "RELEASE_CHANGED",
+      "next": "STALE"
+     }
+    ]
+   },
+   "LINK": {
+    "initial": "OFFLINE",
+    "final": [
+     "-"
+    ],
+    "transitions": [
+     {
+      "state": "OFFLINE",
+      "event": "UP",
+      "next": "ONLINE"
+     },
+     {
+      "state": "OFFLINE",
+      "event": "DOWN",
+      "next": "OFFLINE"
+     },
+     {
+      "state": "ONLINE",
+      "event": "UP",
+      "next": "ONLINE"
+     },
+     {
+      "state": "ONLINE",
+      "event": "DOWN",
+      "next": "OFFLINE"
+     }
+    ]
+   }
+  },
+  "guard_clause_trace": [
+   {
+    "guard": "section",
+    "clause": "title in the pinned Core Specification",
+    "what": "places in acr.rs that cite it"
+   },
+   {
+    "guard": "1.2",
+    "clause": "Smallest sufficient review",
+    "what": "1"
+   },
+   {
+    "guard": "2.1",
+    "clause": "Receiving and adopting ACR",
+    "what": "6"
+   },
+   {
+    "guard": "2.2",
+    "clause": "Whole and part",
+    "what": "2"
+   },
+   {
+    "guard": "2.4",
+    "clause": "Commission identity and retries",
+    "what": "1"
+   },
+   {
+    "guard": "3.2",
+    "clause": "Direction and participation",
+    "what": "1"
+   },
+   {
+    "guard": "4.3",
+    "clause": "Sources and support",
+    "what": "1"
+   },
+   {
+    "guard": "5.1",
+    "clause": "Criterion-to-check mapping",
+    "what": "3"
+   },
+   {
+    "guard": "5.2",
+    "clause": "Scoped findings",
+    "what": "9"
+   },
+   {
+    "guard": "6.1",
+    "clause": "Gate commitments",
+    "what": "10"
+   },
+   {
+    "guard": "7.1",
+    "clause": "Independent state dimensions",
+    "what": "5"
+   },
+   {
+    "guard": "7.2",
+    "clause": "Parent integration",
+    "what": "1"
+   },
+   {
+    "guard": "7.4",
+    "clause": "Baselines, freezes and locks",
+    "what": "1"
+   },
+   {
+    "guard": "8.2",
+    "clause": "Refresh and access",
+    "what": "1"
+   },
+   {
+    "guard": "14.1",
+    "clause": "Complementary modules",
+    "what": "4"
+   },
+   {
+    "guard": "14.2",
+    "clause": "Evaluation and conformance",
+    "what": "2"
+   },
+   {
+    "guard": "15.1",
+    "clause": "Standing and order of authority",
+    "what": "3"
+   },
+   {
+    "guard": "15.2",
+    "clause": "Halt",
+    "what": "2"
+   },
+   {
+    "guard": "15.6",
+    "clause": "Undefined and near-miss tokens",
+    "what": "1"
+   },
+   {
+    "guard": "15.8",
+    "clause": "Delivery, grounding and fidelity",
+    "what": "5"
+   }
+  ]
+ },
+ "design": {
+  "tokens": "pcp.tokens.json (Design Tokens Community Group format)",
+  "tokens_sha256": "aa6ac11cba9cbc44c09a10bb9820f5e82ab0f20b969cd2e51fa013ed1f30b1bb"
+ }
+}

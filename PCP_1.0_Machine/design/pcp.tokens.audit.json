@@ -1,0 +1,400 @@
+{
+ "floors": {
+  "text": 4.5,
+  "non_text": 3.0,
+  "standard": "WCAG 2.2 success criteria 1.4.3 and 1.4.11; 1.4.1 (colour is not the only means)"
+ },
+ "edition": {
+  "personal": {
+   "text_on_field": 13.36,
+   "accent_on_field": 4.78,
+   "soft_on_field": 6.71,
+   "ink_on_white": 6.86,
+   "white_on_table_header": 10.46
+  },
+  "commercial": {
+   "text_on_field": 6.03,
+   "accent_on_field": 4.88,
+   "soft_on_field": 5.2,
+   "ink_on_white": 7.49,
+   "white_on_table_header": 10.51
+  },
+  "enterprise": {
+   "text_on_field": 16.25,
+   "accent_on_field": 8.33,
+   "soft_on_field": 10.81,
+   "ink_on_white": 8.96,
+   "white_on_table_header": 14.19
+  }
+ },
+ "module_plate": {
+  "core": {
+   "on_plate": 13.94
+  },
+  "mathematics": {
+   "on_plate": 10.35
+  },
+  "science": {
+   "on_plate": 9.18
+  },
+  "engineering": {
+   "on_plate": 4.62
+  },
+  "cryptography": {
+   "on_plate": 13.2
+  },
+  "statistics": {
+   "on_plate": 16.1
+  },
+  "quality_assurance": {
+   "on_plate": 9.96
+  }
+ },
+ "workspace": {
+  "core": {
+   "personal": {
+    "accent": "#157A76",
+    "accent_on_field": 4.54,
+    "plate_against_field": 13.24
+   },
+   "commercial": {
+    "accent": "#90E9E3",
+    "accent_on_field": 4.5,
+    "plate_against_field": 2.38
+   },
+   "enterprise": {
+    "accent": "#2F8C88",
+    "accent_on_field": 4.5,
+    "plate_against_field": 1.2
+   }
+  },
+  "mathematics": {
+   "personal": {
+    "accent": "#7D2945",
+    "accent_on_field": 8.13,
+    "plate_against_field": 9.83
+   },
+   "commercial": {
+    "accent": "#FFCDD8",
+    "accent_on_field": 4.51,
+    "plate_against_field": 1.76
+   },
+   "enterprise": {
+    "accent": "#BD637C",
+    "accent_on_field": 4.51,
+    "plate_against_field": 1.62
+   }
+  },
+  "science": {
+   "personal": {
+    "accent": "#006B86",
+    "accent_on_field": 5.37,
+    "plate_against_field": 1.21
+   },
+   "commercial": {
+    "accent": "#9CE4FF",
+    "accent_on_field": 4.51,
+    "plate_against_field": 4.62
+   },
+   "enterprise": {
+    "accent": "#3289A5",
+    "accent_on_field": 4.53,
+    "plate_against_field": 13.22
+   }
+  },
+  "engineering": {
+   "personal": {
+    "accent": "#9A3E16",
+    "accent_on_field": 6.02,
+    "plate_against_field": 3.5
+   },
+   "commercial": {
+    "accent": "#FFD0BE",
+    "accent_on_field": 4.52,
+    "plate_against_field": 1.59
+   },
+   "enterprise": {
+    "accent": "#C4643F",
+    "accent_on_field": 4.51,
+    "plate_against_field": 4.55
+   }
+  },
+  "cryptography": {
+   "personal": {
+    "accent": "#68429B",
+    "accent_on_field": 6.51,
+    "plate_against_field": 12.53
+   },
+   "commercial": {
+    "accent": "#E2D3FF",
+    "accent_on_field": 4.52,
+    "plate_against_field": 2.25
+   },
+   "enterprise": {
+    "accent": "#926DCA",
+    "accent_on_field": 4.53,
+    "plate_against_field": 1.27
+   }
+  },
+  "statistics": {
+   "personal": {
+    "accent": "#152137",
+    "accent_on_field": 14.18,
+    "plate_against_field": 1.13
+   },
+   "commercial": {
+    "accent": "#CADBF9",
+    "accent_on_field": 4.52,
+    "plate_against_field": 6.33
+   },
+   "enterprise": {
+    "accent": "#70809B",
+    "accent_on_field": 4.52,
+    "plate_against_field": 18.09
+   }
+  },
+  "quality_assurance": {
+   "personal": {
+    "accent": "#4E6B12",
+    "accent_on_field": 5.39,
+    "plate_against_field": 1.42
+   },
+   "commercial": {
+    "accent": "#C3E690",
+    "accent_on_field": 4.53,
+    "plate_against_field": 3.91
+   },
+   "enterprise": {
+    "accent": "#6A8935",
+    "accent_on_field": 4.51,
+    "plate_against_field": 11.19
+   }
+  }
+ },
+ "separation": {
+  "edition_fields": {
+   "normal": {
+    "closest_pair": [
+     "commercial",
+     "enterprise"
+    ],
+    "distance": 28.9
+   },
+   "protanopia": {
+    "closest_pair": [
+     "commercial",
+     "enterprise"
+    ],
+    "distance": 30.6
+   },
+   "deuteranopia": {
+    "closest_pair": [
+     "commercial",
+     "enterprise"
+    ],
+    "distance": 27.5
+   },
+   "tritanopia": {
+    "closest_pair": [
+     "commercial",
+     "enterprise"
+    ],
+    "distance": 29.5
+   }
+  },
+  "module_plates": {
+   "normal": {
+    "closest_pair": [
+     "core",
+     "cryptography"
+    ],
+    "distance": 6.9
+   },
+   "protanopia": {
+    "closest_pair": [
+     "core",
+     "cryptography"
+    ],
+    "distance": 3.4
+   },
+   "deuteranopia": {
+    "closest_pair": [
+     "core",
+     "cryptography"
+    ],
+    "distance": 3.0
+   },
+   "tritanopia": {
+    "closest_pair": [
+     "core",
+     "cryptography"
+    ],
+    "distance": 6.0
+   }
+  },
+  "workspace_accents_on_personal": {
+   "normal": {
+    "closest_pair": [
+     "core",
+     "science"
+    ],
+    "distance": 6.1
+   },
+   "protanopia": {
+    "closest_pair": [
+     "core",
+     "science"
+    ],
+    "distance": 5.9
+   },
+   "deuteranopia": {
+    "closest_pair": [
+     "engineering",
+     "quality_assurance"
+    ],
+    "distance": 0.8
+   },
+   "tritanopia": {
+    "closest_pair": [
+     "core",
+     "science"
+    ],
+    "distance": 3.4
+   }
+  },
+  "workspace_accents_on_commercial": {
+   "normal": {
+    "closest_pair": [
+     "mathematics",
+     "engineering"
+    ],
+    "distance": 3.8
+   },
+   "protanopia": {
+    "closest_pair": [
+     "science",
+     "statistics"
+    ],
+    "distance": 1.2
+   },
+   "deuteranopia": {
+    "closest_pair": [
+     "cryptography",
+     "statistics"
+    ],
+    "distance": 0.8
+   },
+   "tritanopia": {
+    "closest_pair": [
+     "mathematics",
+     "engineering"
+    ],
+    "distance": 0.8
+   }
+  },
+  "workspace_accents_on_enterprise": {
+   "normal": {
+    "closest_pair": [
+     "core",
+     "science"
+    ],
+    "distance": 5.0
+   },
+   "protanopia": {
+    "closest_pair": [
+     "science",
+     "statistics"
+    ],
+    "distance": 1.8
+   },
+   "deuteranopia": {
+    "closest_pair": [
+     "core",
+     "statistics"
+    ],
+    "distance": 2.5
+   },
+   "tritanopia": {
+    "closest_pair": [
+     "core",
+     "science"
+    ],
+    "distance": 1.1
+   }
+  },
+  "note": "Distance is Euclidean in OKLab times 100; about 2 is a just-noticeable difference. Deficiency is simulated (Machado et al. 2009, full severity). A simulation is not a test with people."
+ },
+ "below_floor": [],
+ "terminal_themes": {
+  "pcp-core": {
+   "accent": "#37938E",
+   "assumed_ground": "#1E1E1E",
+   "contrast": 4.55
+  },
+  "pcp-core-light": {
+   "accent": "#187C78",
+   "assumed_ground": "#FFFFFF",
+   "contrast": 5.01
+  },
+  "pcp-mathematics": {
+   "accent": "#C46982",
+   "assumed_ground": "#1E1E1E",
+   "contrast": 4.52
+  },
+  "pcp-mathematics-light": {
+   "accent": "#7D2945",
+   "assumed_ground": "#FFFFFF",
+   "contrast": 9.23
+  },
+  "pcp-science": {
+   "accent": "#398FAB",
+   "assumed_ground": "#1E1E1E",
+   "contrast": 4.52
+  },
+  "pcp-science-light": {
+   "accent": "#006B86",
+   "assumed_ground": "#FFFFFF",
+   "contrast": 6.09
+  },
+  "pcp-engineering": {
+   "accent": "#CB6A45",
+   "assumed_ground": "#1E1E1E",
+   "contrast": 4.51
+  },
+  "pcp-engineering-light": {
+   "accent": "#9A3E16",
+   "assumed_ground": "#FFFFFF",
+   "contrast": 6.83
+  },
+  "pcp-cryptography": {
+   "accent": "#9873D0",
+   "assumed_ground": "#1E1E1E",
+   "contrast": 4.52
+  },
+  "pcp-cryptography-light": {
+   "accent": "#68429B",
+   "assumed_ground": "#FFFFFF",
+   "contrast": 7.39
+  },
+  "pcp-statistics": {
+   "accent": "#7686A1",
+   "assumed_ground": "#1E1E1E",
+   "contrast": 4.52
+  },
+  "pcp-statistics-light": {
+   "accent": "#152137",
+   "assumed_ground": "#FFFFFF",
+   "contrast": 16.1
+  },
+  "pcp-quality-assurance": {
+   "accent": "#708F3C",
+   "assumed_ground": "#1E1E1E",
+   "contrast": 4.51
+  },
+  "pcp-quality-assurance-light": {
+   "accent": "#4E6B12",
+   "assumed_ground": "#FFFFFF",
+   "contrast": 6.11
+  }
+ }
+}

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "format": "pcp-edition-profile/1",
+  "product": "Parrot Council Protocol",
+  "abbreviation": "PCP",
+  "method": "Adversarial Claim Review",
+  "method_abbreviation": "ACR",
+  "version": "1.0",
+  "build": 19,
+  "build_date": "2026-11-12",
+  "creator": "Kirtus Justus",
+  "edition": "ENTERPRISE",
+  "edition_name": "Enterprise Edition",
+  "licensed_to": "the organization named in a written agreement with the rights holder, on the terms of that agreement",
+  "licensing": "PROPRIETARY_ALL_RIGHTS_RESERVED",
+  "license_model": "LICENSED_NOT_SOLD",
+  "price": {
+    "amount": null,
+    "currency": null,
+    "basis": "INDIVIDUALLY_NEGOTIATED_WRITTEN_AGREEMENT",
+    "published_price": false
+  },
+  "people": {
+    "licensed_persons": "AS_AGREED",
+    "second_person_available": true,
+    "organization_floor": true
+  },
+  "varies_with_edition": [
+    "license terms",
+    "who may take part and in which roles",
+    "which fields of a standard can be met",
+    "the page theme"
+  ],
+  "does_not_vary_with_edition": [
+    "the method text (by digest)",
+    "the guards",
+    "the programs",
+    "every skill, subagent and hook",
+    "the module profiles"
+  ],
+  "method_release": {
+    "manifest_sha256": "6b6d3a680f3fdec811ce7105dd2124e951e272c28a24608f073914f4155853c6",
+    "kernel_sha256": "01bf42c8c662fa0d9d42e50e40eebd422f50ff8298680bcc71144a339e2e29de"
+  },
+  "theme": {
+    "field": "#16151F",
+    "text": "#F3F2F8",
+    "accent": "#B7A4F7",
+    "ink": "#4B3A96"
+  }
+}

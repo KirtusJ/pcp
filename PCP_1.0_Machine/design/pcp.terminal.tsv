@@ -1,0 +1,8 @@
+module	plate	on_plate	ansi_background	ansi_text
+core	#10283F	#F2F7FC	48;2;16;40;63	38;2;242;247;252
+mathematics	#701A32	#F2F7FC	48;2;112;26;50	38;2;242;247;252
+science	#A5E7F5	#103844	48;2;165;231;245	38;2;16;56;68
+engineering	#D05D29	#211008	48;2;208;93;41	38;2;33;16;8
+cryptography	#34214F	#F2F7FC	48;2;52;33;79	38;2;242;247;252
+statistics	#FFFFFF	#152137	48;2;255;255;255	38;2;21;33;55
+quality_assurance	#B5D94B	#152137	48;2;181;217;75	38;2;21;33;55

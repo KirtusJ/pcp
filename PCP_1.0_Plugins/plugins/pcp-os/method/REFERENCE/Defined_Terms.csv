@@ -1,0 +1,31 @@
+defined_term,class,defined_meaning,core_section,persona_permitted
+Review,record_term,"One commissioned instance of ACR: a persistent identified mandate to examine, construct, compare or revise",1.2; 2.1,NO
+Session,record_term,One bounded assessment cycle of a Review; not a chat session,7.1,NO
+Target,record_term,The identified subject being examined or constructed,2.1,NO
+Claim,record_term,"A precise assertion, question, comparison or construction brief about the Target",2.1,NO
+Charter,record_term,The commission and operating contract,2.1,NO
+Director,duty,"Sets objectives, Charter, resources, delegations and practical direction",3.1,NO
+Coordinator,duty,Dispatches work and executes authorized control transitions,3.1,NO
+Author,duty,"Supplies Claims and candidate alternatives, with assumptions and intended meaning",3.1,NO
+Case Developer,duty,Develops the strongest case found for an identified position or authorized revision,3.1,NO
+Challenger,duty,"Tests support, boundaries, assumptions and contrary cases",3.1,NO
+Source Reviewer,duty,"Inspects sources, provenance, applicability and alternatives",3.1,NO
+Resilience Tester,duty,Conducts explicitly commissioned Resilience Exercises within the exercise mandate,3.1,NO
+Interpreter,duty,Assesses consequential readbacks and meaning disputes,3.1,NO
+Checker,duty,Performs and records decisive applicable checks,3.1,NO
+Assessor,duty,Applies admissibility and disposition rules to the evidence,3.1,NO
+Courier,duty,Publishes and retrieves exact permitted artifacts and receipts,3.1,NO
+Recorder,duty,"Maintains identities, lineage, current records and preserved history",3.1,NO
+Monitor,duty,Detects declared changes within an actual monitoring service,3.1,NO
+Observer,duty,Observes permitted views and submits contributions when enabled,3.1; 13,NO
+Observer Channel,record_term,Permitted audience views and contribution channels,13,NO
+Repository,record_term,The authorized record and artifact location,11.1,NO
+Execution Boundary,record_term,Participant execution and access boundary,Appendix A,NO
+Resilience Exercise,record_term,Bounded fault-injection or adversarial-resilience exercise,10.4,NO
+Delegated Continuation,record_term,Bounded delegated continuation under an identified execution policy,12.2,NO
+Register,record_term,Authoritative control state and events,Appendix A,NO
+Ledger,record_term,Versioned findings and support relationships,Appendix A,NO
+Entry Card,record_term,Optional view of information needed to begin or continue an act,1.3,NO
+State Brief,record_term,Smallest permitted projection sufficient for an assigned act,8.1,NO
+Basis Header,record_term,Portion carrying controlling meanings and inherited obligations,8.1,NO
+Method Card,record_term,Reusable procedure contract for an optional method,10.1,NO

@@ -1,0 +1,89 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PCP design profiles</title>
+<style>
+:root{--ink:#18222D;--soft:#5B6B7A;--line:#DDE3EA;--page:#FFFFFF}
+*{box-sizing:border-box}body{margin:0;background:var(--page);color:var(--ink);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:1080px;margin:0 auto;padding:32px 16px 64px}
+h1{font-size:28px;line-height:1.2;margin:0 0 4px}h2{font-size:19px;margin:40px 0 6px}p{margin:0 0 12px;max-width:70ch}.sub{color:var(--soft)}
+code{font:13px ui-monospace,"DejaVu Sans Mono",Menlo,monospace}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.card{border-radius:10px;padding:16px;min-height:132px;border:1px solid var(--line)}
+.card b{display:block;font-size:17px}.card small{display:block;opacity:.9}
+.plates{display:grid;grid-template-columns:repeat(auto-fit,minmax(138px,1fr));gap:12px}
+.plate{border-radius:14px;padding:14px;min-height:118px;border:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between}
+.plate b{font-size:16px}.plate small{font-size:12px}
+.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:720px}th,td{padding:0;text-align:left;vertical-align:top}
+th{font-size:12px;color:var(--soft);font-weight:600;padding:6px 8px}
+.ws{padding:10px 12px;border-bottom:1px solid rgba(128,128,128,.25)}
+.ws .name{font-weight:700}.ws .bar{height:4px;border-radius:2px;margin:6px 0 4px}.ws small{font-size:12px}
+.tag{display:inline-block;border-radius:6px;padding:1px 7px;font-size:12px;font-weight:600}
+.note{border-left:3px solid var(--line);padding:2px 0 2px 12px;color:var(--soft)}
+</style></head><body><main>
+<h1>Parrot Council Protocol &middot; design profiles</h1>
+<p class="sub">Evidence before agreement. &nbsp;Edition sets the page. Module sets the hue. A workspace is a module on an edition's page.</p>
+<p>Generated from <code>pcp.tokens.json</code>. Every figure on this page is computed from the colours shown, by the build that wrote it.</p>
+<h2>The three editions</h2>
+<p>Told apart by lightness first, hue second, and by name always. Lightness survives greyscale printing and colour-vision deficiency; hue does not.</p><div class="row">
+<div class="card" style="background:#F6F0E4;color:#1B2733"><b>Personal Edition</b><small>field <code>#F6F0E4</code> &middot; text <code>#1B2733</code></small><p style="color:#A25600;margin:10px 0 0;font-weight:600">Accent #A25600</p><small>text 13.36:1 &middot; accent 4.78:1 &middot; secondary 6.71:1</small></div>
+<div class="card" style="background:#0F6B67;color:#F4FBF9"><b>Commercial Edition</b><small>field <code>#0F6B67</code> &middot; text <code>#F4FBF9</code></small><p style="color:#A6F0E4;margin:10px 0 0;font-weight:600">Accent #A6F0E4</p><small>text 6.03:1 &middot; accent 4.88:1 &middot; secondary 5.2:1</small></div>
+<div class="card" style="background:#16151F;color:#F3F2F8"><b>Enterprise Edition</b><small>field <code>#16151F</code> &middot; text <code>#F3F2F8</code></small><p style="color:#B7A4F7;margin:10px 0 0;font-weight:600">Accent #B7A4F7</p><small>text 16.25:1 &middot; accent 8.33:1 &middot; secondary 10.81:1</small></div>
+</div><h2>The seven modules</h2><p>One plate each, the same in every edition, with a wing mark so that the plate is never read by colour alone.</p><div class="plates">
+<div class="plate" style="background:#10283F;color:#F2F7FC"><b>Core</b><small>plain wing<br><code>#10283F</code> &middot; 13.94:1</small></div>
+<div class="plate" style="background:#701A32;color:#F2F7FC"><b>Mathematics</b><small>two concentric arcs<br><code>#701A32</code> &middot; 10.35:1</small></div>
+<div class="plate" style="background:#A5E7F5;color:#103844"><b>Science</b><small>ring with a centre dot<br><code>#A5E7F5</code> &middot; 9.18:1</small></div>
+<div class="plate" style="background:#D05D29;color:#211008"><b>Engineering</b><small>two stacked chevrons<br><code>#D05D29</code> &middot; 4.62:1</small></div>
+<div class="plate" style="background:#34214F;color:#F2F7FC"><b>Cryptography</b><small>keyhole<br><code>#34214F</code> &middot; 13.2:1</small></div>
+<div class="plate" style="background:#FFFFFF;color:#152137"><b>Statistics</b><small>three rising bars<br><code>#FFFFFF</code> &middot; 16.1:1</small></div>
+<div class="plate" style="background:#B5D94B;color:#152137"><b>Quality Assurance</b><small>check mark<br><code>#B5D94B</code> &middot; 9.96:1</small></div>
+</div><h2>Why each hue</h2><div class="scroll"><table style="min-width:560px">
+<tr><td style="padding:8px 10px 8px 0;white-space:nowrap"><span class="tag" style="background:#10283F;color:#F2F7FC">Core</span></td><td style="padding:8px 0;border-bottom:1px solid var(--line)">Navy ground with the reference bird&#x27;s teal. The neutral base every other profile sits on; it claims no domain.</td></tr>
+<tr><td style="padding:8px 10px 8px 0;white-space:nowrap"><span class="tag" style="background:#701A32;color:#F2F7FC">Mathematics</span></td><td style="padding:8px 0;border-bottom:1px solid var(--line)">Burgundy: a deep, low-lightness red, apart from the alarm reds used for errors. Reads as ink and binding, for derivation and proof.</td></tr>
+<tr><td style="padding:8px 10px 8px 0;white-space:nowrap"><span class="tag" style="background:#A5E7F5;color:#103844">Science</span></td><td style="padding:8px 0;border-bottom:1px solid var(--line)">Sky blue, the lightest chromatic plate: open field, observation. Blue stays distinct under red-green colour-vision deficiency, which shifts reds and greens and leaves the blue-yellow axis.</td></tr>
+<tr><td style="padding:8px 10px 8px 0;white-space:nowrap"><span class="tag" style="background:#D05D29;color:#211008">Engineering</span></td><td style="padding:8px 0;border-bottom:1px solid var(--line)">Orange, the hue safety signage uses for warning (ANSI Z535 pairs orange with its WARNING signal word). Fits work where a failure has consequences.</td></tr>
+<tr><td style="padding:8px 10px 8px 0;white-space:nowrap"><span class="tag" style="background:#34214F;color:#F2F7FC">Cryptography</span></td><td style="padding:8px 0;border-bottom:1px solid var(--line)">Deep violet: the darkest chromatic plate, at the far end of the spectrum from orange. Concealment and keys.</td></tr>
+<tr><td style="padding:8px 10px 8px 0;white-space:nowrap"><span class="tag" style="background:#FFFFFF;color:#152137">Statistics</span></td><td style="padding:8px 0;border-bottom:1px solid var(--line)">White plate, ink-blue marks: the empty plot area. Deliberately achromatic so that data colours placed on it are not biased by a tint.</td></tr>
+<tr><td style="padding:8px 10px 8px 0;white-space:nowrap"><span class="tag" style="background:#B5D94B;color:#152137">Quality Assurance</span></td><td style="padding:8px 0;border-bottom:1px solid var(--line)">Lime green: the conventional pass hue, shifted toward yellow so it stays apart from the Commercial teal and survives red-green deficiency by lightness.</td></tr>
+</table></div><h2>The 21 workspaces</h2><p>The module's hue, moved in lightness only as far as needed to reach 4.5 to 1 on that edition's field. The figure under each is the measured contrast of the accent against the field.</p><div class="scroll"><table><tr><th>Module</th>
+<th>Personal Edition</th>
+<th>Commercial Edition</th>
+<th>Enterprise Edition</th>
+</tr>
+<tr><td style="padding:10px 12px 10px 0;white-space:nowrap"><span class="tag" style="background:#10283F;color:#F2F7FC">Core</span></td>
+<td><div class="ws" style="background:#F6F0E4;color:#1B2733"><span class="name" style="color:#157A76">Core workspace</span><div class="bar" style="background:#157A76"></div><small>accent <code>#157A76</code> &middot; 4.54:1</small></div></td>
+<td><div class="ws" style="background:#0F6B67;color:#F4FBF9"><span class="name" style="color:#90E9E3">Core workspace</span><div class="bar" style="background:#90E9E3"></div><small>accent <code>#90E9E3</code> &middot; 4.5:1</small></div></td>
+<td><div class="ws" style="background:#16151F;color:#F3F2F8"><span class="name" style="color:#2F8C88">Core workspace</span><div class="bar" style="background:#2F8C88"></div><small>accent <code>#2F8C88</code> &middot; 4.5:1</small></div></td>
+</tr>
+<tr><td style="padding:10px 12px 10px 0;white-space:nowrap"><span class="tag" style="background:#701A32;color:#F2F7FC">Mathematics</span></td>
+<td><div class="ws" style="background:#F6F0E4;color:#1B2733"><span class="name" style="color:#7D2945">Mathematics workspace</span><div class="bar" style="background:#7D2945"></div><small>accent <code>#7D2945</code> &middot; 8.13:1</small></div></td>
+<td><div class="ws" style="background:#0F6B67;color:#F4FBF9"><span class="name" style="color:#FFCDD8">Mathematics workspace</span><div class="bar" style="background:#FFCDD8"></div><small>accent <code>#FFCDD8</code> &middot; 4.51:1</small></div></td>
+<td><div class="ws" style="background:#16151F;color:#F3F2F8"><span class="name" style="color:#BD637C">Mathematics workspace</span><div class="bar" style="background:#BD637C"></div><small>accent <code>#BD637C</code> &middot; 4.51:1</small></div></td>
+</tr>
+<tr><td style="padding:10px 12px 10px 0;white-space:nowrap"><span class="tag" style="background:#A5E7F5;color:#103844">Science</span></td>
+<td><div class="ws" style="background:#F6F0E4;color:#1B2733"><span class="name" style="color:#006B86">Science workspace</span><div class="bar" style="background:#006B86"></div><small>accent <code>#006B86</code> &middot; 5.37:1</small></div></td>
+<td><div class="ws" style="background:#0F6B67;color:#F4FBF9"><span class="name" style="color:#9CE4FF">Science workspace</span><div class="bar" style="background:#9CE4FF"></div><small>accent <code>#9CE4FF</code> &middot; 4.51:1</small></div></td>
+<td><div class="ws" style="background:#16151F;color:#F3F2F8"><span class="name" style="color:#3289A5">Science workspace</span><div class="bar" style="background:#3289A5"></div><small>accent <code>#3289A5</code> &middot; 4.53:1</small></div></td>
+</tr>
+<tr><td style="padding:10px 12px 10px 0;white-space:nowrap"><span class="tag" style="background:#D05D29;color:#211008">Engineering</span></td>
+<td><div class="ws" style="background:#F6F0E4;color:#1B2733"><span class="name" style="color:#9A3E16">Engineering workspace</span><div class="bar" style="background:#9A3E16"></div><small>accent <code>#9A3E16</code> &middot; 6.02:1</small></div></td>
+<td><div class="ws" style="background:#0F6B67;color:#F4FBF9"><span class="name" style="color:#FFD0BE">Engineering workspace</span><div class="bar" style="background:#FFD0BE"></div><small>accent <code>#FFD0BE</code> &middot; 4.52:1</small></div></td>
+<td><div class="ws" style="background:#16151F;color:#F3F2F8"><span class="name" style="color:#C4643F">Engineering workspace</span><div class="bar" style="background:#C4643F"></div><small>accent <code>#C4643F</code> &middot; 4.51:1</small></div></td>
+</tr>
+<tr><td style="padding:10px 12px 10px 0;white-space:nowrap"><span class="tag" style="background:#34214F;color:#F2F7FC">Cryptography</span></td>
+<td><div class="ws" style="background:#F6F0E4;color:#1B2733"><span class="name" style="color:#68429B">Cryptography workspace</span><div class="bar" style="background:#68429B"></div><small>accent <code>#68429B</code> &middot; 6.51:1</small></div></td>
+<td><div class="ws" style="background:#0F6B67;color:#F4FBF9"><span class="name" style="color:#E2D3FF">Cryptography workspace</span><div class="bar" style="background:#E2D3FF"></div><small>accent <code>#E2D3FF</code> &middot; 4.52:1</small></div></td>
+<td><div class="ws" style="background:#16151F;color:#F3F2F8"><span class="name" style="color:#926DCA">Cryptography workspace</span><div class="bar" style="background:#926DCA"></div><small>accent <code>#926DCA</code> &middot; 4.53:1</small></div></td>
+</tr>
+<tr><td style="padding:10px 12px 10px 0;white-space:nowrap"><span class="tag" style="background:#FFFFFF;color:#152137">Statistics</span></td>
+<td><div class="ws" style="background:#F6F0E4;color:#1B2733"><span class="name" style="color:#152137">Statistics workspace</span><div class="bar" style="background:#152137"></div><small>accent <code>#152137</code> &middot; 14.18:1</small></div></td>
+<td><div class="ws" style="background:#0F6B67;color:#F4FBF9"><span class="name" style="color:#CADBF9">Statistics workspace</span><div class="bar" style="background:#CADBF9"></div><small>accent <code>#CADBF9</code> &middot; 4.52:1</small></div></td>
+<td><div class="ws" style="background:#16151F;color:#F3F2F8"><span class="name" style="color:#70809B">Statistics workspace</span><div class="bar" style="background:#70809B"></div><small>accent <code>#70809B</code> &middot; 4.52:1</small></div></td>
+</tr>
+<tr><td style="padding:10px 12px 10px 0;white-space:nowrap"><span class="tag" style="background:#B5D94B;color:#152137">Quality Assurance</span></td>
+<td><div class="ws" style="background:#F6F0E4;color:#1B2733"><span class="name" style="color:#4E6B12">Quality Assurance workspace</span><div class="bar" style="background:#4E6B12"></div><small>accent <code>#4E6B12</code> &middot; 5.39:1</small></div></td>
+<td><div class="ws" style="background:#0F6B67;color:#F4FBF9"><span class="name" style="color:#C3E690">Quality Assurance workspace</span><div class="bar" style="background:#C3E690"></div><small>accent <code>#C3E690</code> &middot; 4.53:1</small></div></td>
+<td><div class="ws" style="background:#16151F;color:#F3F2F8"><span class="name" style="color:#6A8935">Quality Assurance workspace</span><div class="bar" style="background:#6A8935"></div><small>accent <code>#6A8935</code> &middot; 4.51:1</small></div></td>
+</tr>
+</table></div><h2>What the measurements say, including what they do not support</h2>
+<p>Every text pairing above is at or over 4.5 to 1 (WCAG 2.2, 1.4.3). Edition fields stay at least 27.5 units apart in OKLab under every simulated colour-vision deficiency.</p>
+<p class="note">Hue alone does not separate every pair of modules for every viewer. The closest pair of workspace accents is cryptography and statistics (commercial field, deuteranopia): 0.8 units, where about 2 is just noticeable. Module plates are closest for core and cryptography under deuteranopia (3.0 units). This is why each module also has a name and a wing mark, and why no colour is ever the only code (WCAG 1.4.1). These are computed figures. Deficiency is simulated; no test with people, print proof or accessibility audit was performed.</p>
+<p>Colour decides nothing in a review. A workspace's colour repeats what its name already says.</p></main></body></html>

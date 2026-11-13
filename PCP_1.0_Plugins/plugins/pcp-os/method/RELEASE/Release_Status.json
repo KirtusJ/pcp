@@ -1,0 +1,17 @@
+{
+  "product": "ACR",
+  "method": "Adversarial Claim Review",
+  "product_version": "1.0",
+  "publication_state": "PRE_PUBLICATION",
+  "licensing": "PROPRIETARY_ALL_RIGHTS_RESERVED",
+  "rights_granted_by_possession": "NONE",
+  "host_effect_authorization": "NOT_GRANTED_BY_THIS_PACKAGE",
+  "professional_or_safety_certification": "NOT_ESTABLISHED",
+  "third_party_llm_service_included": false,
+  "peer_review": "NOT_PERFORMED",
+  "independent_review": "NOT_PERFORMED",
+  "behavioral_validation": "NOT_PERFORMED",
+  "empirical_evaluation": "NOT_PERFORMED",
+  "observational_evidence": "NONE_OF_EFFECT",
+  "packet": "IMPLEMENTATION"
+}

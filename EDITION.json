@@ -1,0 +1,108 @@
+{
+  "product": "Parrot Council Protocol",
+  "abbreviation": "PCP",
+  "method": "Adversarial Claim Review",
+  "version": "1.0",
+  "edition": "ENTERPRISE",
+  "edition_name": "Enterprise Edition",
+  "creator": "Kirtus Justus",
+  "build_date": "2026-11-12",
+  "publication_state": "PRE_PUBLICATION",
+  "licensing": "PROPRIETARY_ALL_RIGHTS_RESERVED",
+  "license_model": "LICENSED_NOT_SOLD",
+  "price": {
+    "amount": null,
+    "currency": null,
+    "basis": "INDIVIDUALLY_NEGOTIATED_WRITTEN_AGREEMENT",
+    "published_price": false
+  },
+  "evidence": {
+    "peer_review": "NOT_PERFORMED",
+    "independent_review": "NOT_PERFORMED",
+    "empirical_evaluation": "NOT_PERFORMED",
+    "behavioral_validation": "NOT_PERFORMED",
+    "observational_evidence": "NONE_OF_EFFECT",
+    "plugins_in_live_sessions": "UNCONTROLLED_SESSIONS_ONLY"
+  },
+  "theme": {
+    "field": "#16151F",
+    "text": "#F3F2F8",
+    "sig": "#B7A4F7",
+    "ink": "#4B3A96"
+  },
+  "packets": {
+    "implementation": {
+      "file": "ACR_1.0_Implementation.zip",
+      "sha256": "31bd0bcff43d073b0f675aac2dbfbde994cfc751cc8e897767cd55331d0e0647",
+      "manifest_sha256": "6b6d3a680f3fdec811ce7105dd2124e951e272c28a24608f073914f4155853c6",
+      "identical_in_every_edition": true
+    },
+    "readers": {
+      "file": "PCP_1.0_Readers.zip",
+      "sha256": "db182ee4d1dbca8ce61e8a2f0e304e6b514e3416c63a32596ccb635287141e34",
+      "manifest_sha256": "763c9453e59dbd3cdc48f4df4cae12de2ab6e39467f0b4c486696ae1a8855bb0"
+    }
+  },
+  "build": 19,
+  "plugin_version": "1.0.19",
+  "method_release": {
+    "manifest_sha256": "6b6d3a680f3fdec811ce7105dd2124e951e272c28a24608f073914f4155853c6",
+    "revised": "2026-11-12",
+    "predecessor_manifest_sha256": "3949b2401d0a835cb116c22e44821993cbac59bbd2b281572ebb1b04e8296c18",
+    "identical_in_every_edition": true
+  },
+  "components": {
+    "plugins": {
+      "folder": "PCP_1.0_Plugins",
+      "marketplace": "pcp-enterprise",
+      "pcp": {
+        "manifest_sha256": "233719b949bf3cdd1bdfb57f026d39fb4786d6fdf8836f6cee8354723c063e96"
+      },
+      "pcp-os": {
+        "manifest_sha256": "2469b7c51949807a1749dbe89e2659a13b734705d6fd61f80736c8c8339cf891",
+        "program": {
+          "file": "plugins/pcp-os/servers/linux-x86_64/pcpos",
+          "sha256": "5d30c7be3f536b2086e0126851c2180ea7f8db31ed0980096c5edfc9848abd73",
+          "system": "linux-x86_64",
+          "signed": false
+        },
+        "programs": [
+          {
+            "file": "plugins/pcp-os/servers/linux-x86_64/pcpos",
+            "sha256": "5d30c7be3f536b2086e0126851c2180ea7f8db31ed0980096c5edfc9848abd73",
+            "system": "linux-x86_64",
+            "linking": "STATIC",
+            "signed": false,
+            "tried": "EVERY_TEST_AND_SCENARIO_OF_THE_RELEASE"
+          },
+          {
+            "file": "plugins/pcp-os/servers/linux-aarch64/pcpos",
+            "sha256": "a511c57f57e884a25f3662b213a977d46b6a5730211844fd9d1bc0ee37d70647",
+            "system": "linux-aarch64",
+            "linking": "STATIC",
+            "signed": false,
+            "tried": "SCENARIOS_UNDER_QEMU_USER_EMULATION_ONLY"
+          }
+        ]
+      }
+    },
+    "machine_form": {
+      "folder": "PCP_1.0_Machine",
+      "sha256": "dbae278538930f195ace540edcaf529f6765481bc17256528fb06f7e7f4eadb7"
+    },
+    "os_documents": {
+      "folder": "PCP_1.0_OS",
+      "specification_sha256": "f6afbb317f7aa7bcbf1ab5f2863ba6ed614f6c4b6b0374fc9a14d2bf2642def7",
+      "overview_sha256": "edb298a2d4fc13fd5725f648469596725d4b87ef31d82abe12e338c7160840b1",
+      "requirements": {
+        "BUILT": 32,
+        "PARTIAL": 10,
+        "DESIGN": 16
+      }
+    },
+    "design_tokens": {
+      "file": "PCP_1.0_Machine/design/pcp.tokens.json",
+      "sha256": "aa6ac11cba9cbc44c09a10bb9820f5e82ab0f20b969cd2e51fa013ed1f30b1bb"
+    }
+  }
+}

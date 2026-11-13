@@ -1,0 +1,9 @@
+{
+ "name": "PCP Cryptography (light)",
+ "base": "light",
+ "overrides": {
+  "claude": "#68429B",
+  "promptBorder": "#68429B",
+  "briefLabelClaude": "#68429B"
+ }
+}

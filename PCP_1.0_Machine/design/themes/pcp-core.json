@@ -1,0 +1,9 @@
+{
+ "name": "PCP Core",
+ "base": "dark",
+ "overrides": {
+  "claude": "#37938E",
+  "promptBorder": "#37938E",
+  "briefLabelClaude": "#37938E"
+ }
+}

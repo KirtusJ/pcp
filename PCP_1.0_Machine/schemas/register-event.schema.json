@@ -1,0 +1,90 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "pcp:schema:register-event:1",
+ "title": "One line of a PCP OS register",
+ "description": "The envelope of every event. The body's rules are the guards', which depend on the record so far and cannot be stated as a schema: `pcpos verify` replays them.",
+ "type": "object",
+ "required": [
+  "seq",
+  "ts",
+  "actor",
+  "auth",
+  "kind",
+  "prev",
+  "body"
+ ],
+ "additionalProperties": false,
+ "properties": {
+  "seq": {
+   "type": "integer",
+   "minimum": 0
+  },
+  "ts": {
+   "type": "string",
+   "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+  },
+  "actor": {
+   "type": "string",
+   "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+  },
+  "auth": {
+   "enum": [
+    "HOST",
+    "DECLARED"
+   ]
+  },
+  "kind": {
+   "anyOf": [
+    {
+     "enum": [
+      "ADOPTED",
+      "ARTIFACT_ADDED",
+      "ARTIFACT_READ",
+      "CHECK_RAN",
+      "CLAIM_ADDED",
+      "CONDITION_REGISTERED",
+      "DELIVERY_STATE",
+      "ENVIRONMENT_RECORDED",
+      "FINDING_RECORDED",
+      "GATE_COMMITTED",
+      "HALTED",
+      "HOST_EVENT",
+      "INSPECTION_DECLARED",
+      "LINK_STATE",
+      "METHOD_PINNED",
+      "NOTE",
+      "OBJECTION_RAISED",
+      "OBJECTION_RESOLVED",
+      "OBLIGATION_CLOSED",
+      "OBLIGATION_OPENED",
+      "PARTICIPANT_ADDED",
+      "REVIEW_CLOSED",
+      "REVIEW_COMMISSIONED",
+      "REVIEW_PAUSED",
+      "REVIEW_RESUMED",
+      "RUN_COMPLETED",
+      "SESSION_OPENED",
+      "STANDARD_SET",
+      "SUBMISSION_ADMITTED",
+      "SYSTEM_STATE",
+      "TASK_ENDED",
+      "TASK_STARTED",
+      "TREE_PINNED",
+      "WORKSPACE_CREATED"
+     ]
+    },
+    {
+     "type": "string",
+     "pattern": "^X_[A-Z0-9_]+$"
+    }
+   ]
+  },
+  "prev": {
+   "type": "string",
+   "pattern": "^[0-9a-f]{64}$"
+  },
+  "body": {
+   "type": "object"
+  }
+ }
+}

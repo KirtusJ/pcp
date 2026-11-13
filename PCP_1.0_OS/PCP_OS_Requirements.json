@@ -1,0 +1,782 @@
+{
+ "format": "pcp-os-requirements/1",
+ "generated_from": "PCP_OS_Specification.md",
+ "source_sha256": "f6afbb317f7aa7bcbf1ab5f2863ba6ed614f6c4b6b0374fc9a14d2bf2642def7",
+ "keywords": "BCP 14 (RFC 2119, RFC 8174)",
+ "status_counts": {
+  "BUILT": 32,
+  "PARTIAL": 10,
+  "DESIGN": 16
+ },
+ "requirements": [
+  {
+   "id": "P-1",
+   "section": {
+    "number": 1,
+    "title": "Two paths"
+   },
+   "levels": [
+    "MUST NOT"
+   ],
+   "text": "The kernel MUST NOT evaluate an ACR guard while handling a system call, an interrupt, a memory fault, a context switch or the completion of an input or output operation.",
+   "status": "PARTIAL",
+   "evidence": "system calls, the timer interrupt, faults from user mode and the switch between processes exist and evaluate no guard (`user.rs` calls none; the kernel records processes in its register after they have all ended). No input or output completion path exists"
+  },
+  {
+   "id": "P-2",
+   "section": {
+    "number": 1,
+    "title": "Two paths"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "An ACR guard MUST be evaluated only when an event is offered to a register.",
+   "status": "BUILT",
+   "evidence": "the guards are reachable only through `Record::submit`, `Record::open` and `Record::extend` in the core"
+  },
+  {
+   "id": "P-3",
+   "section": {
+    "number": 1,
+    "title": "Two paths"
+   },
+   "levels": [
+    "MUST NOT"
+   ],
+   "text": "For a writer that has already checked a register, the cost of offering one more event MUST NOT grow with the number of events already in it, beyond reading the file.",
+   "status": "BUILT",
+   "evidence": "measured in this build at 0.28 ms per stored event at 100, 500 and 2,000 events, each event written durably; before this build it was 1.25 ms, 5.3 ms and 21 ms. Test: continuing a checked record equals checking the whole, at every split"
+  },
+  {
+   "id": "P-4",
+   "section": {
+    "number": 1,
+    "title": "Two paths"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "While ACR is not in use, the system MUST do no ACR work beyond establishing that it is not in use.",
+   "status": "BUILT",
+   "evidence": "for the host program: a hook with no register present reads nothing and writes nothing. DESIGN for the kernel"
+  },
+  {
+   "id": "P-5",
+   "section": {
+    "number": 1,
+    "title": "Two paths"
+   },
+   "levels": [
+    "MUST NOT"
+   ],
+   "text": "The kernel MUST NOT schedule, delay or reprioritise a task because of the state of a review.",
+   "status": "PARTIAL",
+   "evidence": "the scheduler takes the next process in turn and reads nothing else; the kernel holds no review, so the rule has not been tested against one"
+  },
+  {
+   "id": "P-6",
+   "section": {
+    "number": 1,
+    "title": "Two paths"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "A halt of ACR use MUST be accepted in every state in which anything is in use.",
+   "status": "BUILT",
+   "evidence": "state-machine test over every state; host tests for a mismatched label, a register holding a refused event, and 64 open reviews"
+  },
+  {
+   "id": "P-7",
+   "section": {
+    "number": 1,
+    "title": "Two paths"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "The system MUST start and be usable on a machine with no graphics processor, no network and no accelerator.",
+   "status": "DESIGN",
+   "evidence": "today it has no use for any of them"
+  },
+  {
+   "id": "P-8",
+   "section": {
+    "number": 1,
+    "title": "Two paths"
+   },
+   "levels": [
+    "MUST NOT"
+   ],
+   "text": "The system MUST NOT open a network connection that the person directing it did not cause.",
+   "status": "PARTIAL",
+   "evidence": "the LINK state machine starts OFFLINE and the guards refuse a retrieved artifact without its source; there is no network stack to enforce it on"
+  },
+  {
+   "id": "K-1",
+   "section": {
+    "number": 2,
+    "title": "The kernel"
+   },
+   "levels": [
+    "MUST",
+    "MUST NOT"
+   ],
+   "text": "The kernel MUST contain no code from another kernel and MUST NOT require another operating system to start.",
+   "status": "BUILT",
+   "evidence": "its only dependency is the PCP OS core; it is started directly by a Multiboot loader"
+  },
+  {
+   "id": "K-2",
+   "section": {
+    "number": 2,
+    "title": "The kernel"
+   },
+   "levels": [
+    "MUST",
+    "MUST"
+   ],
+   "text": "Before enabling a processor feature, the kernel MUST ask the processor whether it offers that feature, and MUST report and stop where a required one is absent.",
+   "status": "BUILT",
+   "evidence": "started as two processors without long mode; each printed the reason and halted"
+  },
+  {
+   "id": "K-3",
+   "section": {
+    "number": 2,
+    "title": "The kernel"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "No memory MUST be both writable and executable.",
+   "status": "BUILT",
+   "evidence": "the page tables are read back and the count is zero; a write to code, a write to read-only data and execution of data are each attempted and refused by the processor"
+  },
+  {
+   "id": "K-4",
+   "section": {
+    "number": 2,
+    "title": "The kernel"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "The kernel MUST map its own image and nothing else.",
+   "status": "BUILT",
+   "evidence": "2,209 pages from 1 MiB to the end of the image; reads of the display memory, the low mebibyte and memory above the image are attempted and refused. Before this build the whole first gibibyte was mapped writable"
+  },
+  {
+   "id": "K-5",
+   "section": {
+    "number": 2,
+    "title": "The kernel"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "The interrupt table, the segment table and the task state segment MUST be read-only once set.",
+   "status": "BUILT",
+   "evidence": "a write to each is attempted and refused"
+  },
+  {
+   "id": "K-6",
+   "section": {
+    "number": 2,
+    "title": "The kernel"
+   },
+   "levels": [
+    "MUST",
+    "MUST"
+   ],
+   "text": "A double fault, a non-maskable interrupt and a machine check MUST each be delivered on a stack of their own, and every stack MUST have an unmapped page below it.",
+   "status": "BUILT",
+   "evidence": "a read of each of the five guard pages is refused (the kernel stack, the three fault stacks and the stack for entries from user mode); the stack-exhaustion demonstration ends in a reported double fault"
+  },
+  {
+   "id": "K-7",
+   "section": {
+    "number": 2,
+    "title": "The kernel"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "The kernel MUST turn on supervisor execution prevention, supervisor access prevention and user-mode instruction prevention wherever the processor offers them.",
+   "status": "BUILT",
+   "evidence": "read back from the control register on a processor with all three and on one with none"
+  },
+  {
+   "id": "K-8",
+   "section": {
+    "number": 2,
+    "title": "The kernel"
+   },
+   "levels": [
+    "MUST",
+    "MUST NOT"
+   ],
+   "text": "An exception the kernel did not prepare for MUST stop the kernel with a report, and MUST NOT be continued past.",
+   "status": "BUILT",
+   "evidence": "the fault demonstration"
+  },
+  {
+   "id": "K-9",
+   "section": {
+    "number": 2,
+    "title": "The kernel"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "Arithmetic overflow in the kernel MUST stop the kernel.",
+   "status": "BUILT",
+   "evidence": "overflow checks are compiled into the release build"
+  },
+  {
+   "id": "K-10",
+   "section": {
+    "number": 2,
+    "title": "The kernel"
+   },
+   "levels": [
+    "MUST",
+    "MUST"
+   ],
+   "text": "Code that the compiler cannot check for memory safety MUST be confined to one named module, and each use MUST state why it is sound.",
+   "status": "BUILT",
+   "evidence": "`arch.rs` only; every other file refuses it at compile time"
+  },
+  {
+   "id": "K-11",
+   "section": {
+    "number": 2,
+    "title": "The kernel"
+   },
+   "levels": [
+    "MUST",
+    "MUST"
+   ],
+   "text": "The kernel MUST record its own start, verification and stop in a register, and verification MUST end in OPERATIONAL or in SAFE and nothing else.",
+   "status": "BUILT",
+   "evidence": "the kernel's register replays with no problem"
+  },
+  {
+   "id": "K-12",
+   "section": {
+    "number": 2,
+    "title": "The kernel"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "The kernel MUST measure its running image and compare the measurement with a value it did not compute.",
+   "status": "PARTIAL",
+   "evidence": "it measures. There is nothing yet to compare with: no signed image and no measured start"
+  },
+  {
+   "id": "K-13",
+   "section": {
+    "number": 2,
+    "title": "The kernel"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "No code supplied by a third party MUST run in kernel mode.",
+   "status": "DESIGN",
+   "evidence": null
+  },
+  {
+   "id": "K-14",
+   "section": {
+    "number": 2,
+    "title": "The kernel"
+   },
+   "levels": [
+    "SHOULD"
+   ],
+   "text": "The kernel SHOULD be loaded at an address that differs between starts.",
+   "status": "DESIGN",
+   "evidence": "it is loaded at a fixed address"
+  },
+  {
+   "id": "K-15",
+   "section": {
+    "number": 2,
+    "title": "The kernel"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "The kernel MUST have a source of randomness before it issues any identifier or key.",
+   "status": "DESIGN",
+   "evidence": null
+  },
+  {
+   "id": "A-1",
+   "section": {
+    "number": 3,
+    "title": "Authority and administration"
+   },
+   "levels": [
+    "MUST",
+    "MUST"
+   ],
+   "text": "Authority MUST be held as capabilities, and a capability derived from another MUST carry the same rights or fewer.",
+   "status": "BUILT",
+   "evidence": "in the core: derivation, narrowing and revocation tests. PARTIAL in the kernel: each process is a holder, and the write call is answered only for a process that holds a capability for the console (self-test: a program started without it is refused). One object and one right; no capability passes between processes"
+  },
+  {
+   "id": "A-2",
+   "section": {
+    "number": 3,
+    "title": "Authority and administration"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "There MUST be no identity that holds every right.",
+   "status": "DESIGN",
+   "evidence": null
+  },
+  {
+   "id": "A-3",
+   "section": {
+    "number": 3,
+    "title": "Authority and administration"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "No combination of roles MUST give a model or a program the right to start ACR use, to administer, or to change the system.",
+   "status": "BUILT",
+   "evidence": "exhaustive over every kind of identity, set of roles and edition"
+  },
+  {
+   "id": "A-4",
+   "section": {
+    "number": 3,
+    "title": "Authority and administration"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "Administration MUST be a role held by a person and exercised only while the system is in MAINTENANCE.",
+   "status": "PARTIAL",
+   "evidence": "the SYSTEM state machine has MAINTENANCE and its transitions, and entering it asks every task to stop. Nothing yet enforces it on a running system"
+  },
+  {
+   "id": "A-5",
+   "section": {
+    "number": 3,
+    "title": "Authority and administration"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "Every administrative act MUST be an event in the register before it takes effect.",
+   "status": "DESIGN",
+   "evidence": null
+  },
+  {
+   "id": "A-6",
+   "section": {
+    "number": 3,
+    "title": "Authority and administration"
+   },
+   "levels": [
+    "MUST NOT"
+   ],
+   "text": "In the Commercial and Enterprise Editions, whoever administers an installation MUST NOT assess under it.",
+   "status": "PARTIAL",
+   "evidence": "stated in the edition profile; the host program refuses a two-person standard in the Personal Edition; separation of the two roles is not enforced"
+  },
+  {
+   "id": "M-1",
+   "section": {
+    "number": 4,
+    "title": "What of ACR can be changed, when, and by whom"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "Every register MUST state the method release it is held to, by digest.",
+   "status": "BUILT",
+   "evidence": null
+  },
+  {
+   "id": "M-2",
+   "section": {
+    "number": 4,
+    "title": "What of ACR can be changed, when, and by whom"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "A review MUST keep the method release and the modules it was commissioned under until it is closed.",
+   "status": "BUILT",
+   "evidence": "for modules, which are fixed in the commission event. PARTIAL for the release, which is fixed per register"
+  },
+  {
+   "id": "M-3",
+   "section": {
+    "number": 4,
+    "title": "What of ACR can be changed, when, and by whom"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "Adding or removing a module MUST require no change to any program.",
+   "status": "BUILT",
+   "evidence": "in the host program, the plugins and the machine form: a module is found by the header of its own Specification, and a test adds one the program has never heard of. The method packet's own Python tools still carry a list"
+  },
+  {
+   "id": "M-4",
+   "section": {
+    "number": 4,
+    "title": "What of ACR can be changed, when, and by whom"
+   },
+   "levels": [
+    "MUST",
+    "MUST"
+   ],
+   "text": "A commission MUST name each selected module by identifier, version and the digest of its Specification, and each MUST be a module found in the method text at hand.",
+   "status": "BUILT",
+   "evidence": "tests for a wrong digest, a wrong version, an unknown module, Core listed, and a module listed twice"
+  },
+  {
+   "id": "M-5",
+   "section": {
+    "number": 4,
+    "title": "What of ACR can be changed, when, and by whom"
+   },
+   "levels": [
+    "MUST NOT"
+   ],
+   "text": "A module written for another Core than the one a program implements MUST NOT be selected.",
+   "status": "BUILT",
+   "evidence": null
+  },
+  {
+   "id": "M-6",
+   "section": {
+    "number": 4,
+    "title": "What of ACR can be changed, when, and by whom"
+   },
+   "levels": [
+    "MUST NOT"
+   ],
+   "text": "A participant MUST NOT select a module; selection is the act of the person directing the work or of a policy they set.",
+   "status": "BUILT",
+   "evidence": "recorded by the host from a typed command or a terminal; refused from a session"
+  },
+  {
+   "id": "M-7",
+   "section": {
+    "number": 4,
+    "title": "What of ACR can be changed, when, and by whom"
+   },
+   "levels": [
+    "MAY"
+   ],
+   "text": "A licensee MAY modify a module or add their own.",
+   "status": "PARTIAL",
+   "evidence": "adding is a supported path in the host program (`pcpos module add`): the module stands beside the register, the addition is recorded with the digest of its Specification, and a review selects it by that digest. Modifying a released module is not a supported path: a changed file is found, its real digest is used, and the register records that the method text at hand differs from the release"
+  },
+  {
+   "id": "M-8",
+   "section": {
+    "number": 4,
+    "title": "What of ACR can be changed, when, and by whom"
+   },
+   "levels": [
+    "MUST NOT"
+   ],
+   "text": "A module that is not a released module MUST NOT carry the identifier of one.",
+   "status": "PARTIAL",
+   "evidence": "the host program accepts an added module only under an identifier beginning `local.`, refuses one that takes the name of a module of the method, and serves no text for an identifier that two folders claim. A folder placed by hand inside the method text itself and named `acr.<new name>` is still listed as a module; the register's method check then reports the text as differing from the release"
+  },
+  {
+   "id": "M-9",
+   "section": {
+    "number": 4,
+    "title": "What of ACR can be changed, when, and by whom"
+   },
+   "levels": [
+    "MAY",
+    "MAY"
+   ],
+   "text": "The person who owns the machine MAY replace any program outside the kernel image and MAY rebuild the image.",
+   "status": "DESIGN",
+   "evidence": null
+  },
+  {
+   "id": "L-1",
+   "section": {
+    "number": 5,
+    "title": "Languages and trust"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "A record MUST state what produced each observation it holds: which participant, and whether the host observed it or a participant reported it.",
+   "status": "BUILT",
+   "evidence": "actor, authority, `read_by`, `observed` and the task worker are recorded. Since build 18 a check says how the record came by it: `HOST_OBSERVED_TOOL` where the host saw the shell command run and passed on its exit status and output, `REPORTED_BY_PARTICIPANT` where a participant gave its own account, which is all that builds before 18 could record. The host's observation is of the command and its output as the host reported them; it is not an observation that the command tests anything. Since build 19 the observation must have been made after the open review was commissioned, a finding that rests only on reported checks is marked `execution: UNKNOWN`, and material that reaches the record while a review is open is recorded by how it came (words the host did not see the person type, and a file written since commissioning, as PRODUCED). The observations are kept in an ordinary file that a shell command can write: none of this is authentication"
+  },
+  {
+   "id": "L-2",
+   "section": {
+    "number": 5,
+    "title": "Languages and trust"
+   },
+   "levels": [
+    "MUST NOT"
+   ],
+   "text": "System services MUST NOT hold a capability to an interpreter or a compiler.",
+   "status": "PARTIAL",
+   "evidence": "the host program depends on no interpreter and runs none, clause lookup included. Capabilities between services do not exist yet"
+  },
+  {
+   "id": "L-3",
+   "section": {
+    "number": 5,
+    "title": "Languages and trust"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "Where two implementations of the core disagree, the Rust implementation MUST govern.",
+   "status": "BUILT",
+   "evidence": "the Python implementation is run against 17,113 cases published by the Rust one"
+  },
+  {
+   "id": "L-5",
+   "section": {
+    "number": 5,
+    "title": "Languages and trust"
+   },
+   "levels": [
+    "MUST NOT"
+   ],
+   "text": "A finding MUST NOT be recorded as supported or as refuted where all that it cites is text the review itself produced.",
+   "status": "BUILT",
+   "evidence": "both implementations refuse it (Core 4.3, 5.2), for an artifact recorded as produced after the review was commissioned and for what a task of the review returned. What the guards cannot do is tell a claim that a procedure settles from one that reading settles: the participant declares the kind of claim, and the status shows for each finding whether a check was run and who saw it"
+  },
+  {
+   "id": "L-4",
+   "section": {
+    "number": 5,
+    "title": "Languages and trust"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "Code in C or C++ MUST run in T2.",
+   "status": "DESIGN",
+   "evidence": null
+  },
+  {
+   "id": "L-5",
+   "section": {
+    "number": 5,
+    "title": "Languages and trust"
+   },
+   "levels": [
+    "MUST",
+    "MUST"
+   ],
+   "text": "The core MUST have one stable binary interface, in the C calling convention, and every binding for another language MUST be a thin layer over it that adds no rule.",
+   "status": "DESIGN",
+   "evidence": "today the core is reached as a Rust library, through the tool server and at a terminal. The Python implementation is a second implementation, not a binding, and is to become one"
+  },
+  {
+   "id": "I-1",
+   "section": {
+    "number": 6,
+    "title": "Interfaces"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "Every way of reaching a register MUST go through the same core and the same guards.",
+   "status": "BUILT",
+   "evidence": "the terminal commands, the tool server and the hooks are one program over one core"
+  },
+  {
+   "id": "I-2",
+   "section": {
+    "number": 6,
+    "title": "Interfaces"
+   },
+   "levels": [
+    "MUST NOT"
+   ],
+   "text": "A caller MUST NOT be able to name the actor of an event.",
+   "status": "BUILT",
+   "evidence": null
+  },
+  {
+   "id": "I-3",
+   "section": {
+    "number": 6,
+    "title": "Interfaces"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "The interface for models MUST be the Model Context Protocol.",
+   "status": "BUILT",
+   "evidence": "revisions 2024-11-05 to 2025-11-25; tools only"
+  },
+  {
+   "id": "I-4",
+   "section": {
+    "number": 6,
+    "title": "Interfaces"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "Material retrieved from outside MUST be recorded with where and when it was retrieved.",
+   "status": "BUILT",
+   "evidence": "in the guards"
+  },
+  {
+   "id": "X-1",
+   "section": {
+    "number": 7,
+    "title": "Extensions"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "An extension MUST be a package with a manifest stating its identity, its digest, its tier and the capabilities it asks for.",
+   "status": "DESIGN",
+   "evidence": "The two PCP plugins for Claude are packages of this shape for another host"
+  },
+  {
+   "id": "X-2",
+   "section": {
+    "number": 7,
+    "title": "Extensions"
+   },
+   "levels": [
+    "MUST NOT"
+   ],
+   "text": "An extension MUST NOT run in kernel mode.",
+   "status": "DESIGN",
+   "evidence": null
+  },
+  {
+   "id": "X-3",
+   "section": {
+    "number": 7,
+    "title": "Extensions"
+   },
+   "levels": [
+    "MUST",
+    "MUST"
+   ],
+   "text": "An extension MUST receive only the capabilities the person granted it, and installing, granting and revoking MUST each be recorded.",
+   "status": "DESIGN",
+   "evidence": null
+  },
+  {
+   "id": "X-4",
+   "section": {
+    "number": 7,
+    "title": "Extensions"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "Revoking a capability MUST take back everything derived from it, in every holder.",
+   "status": "BUILT",
+   "evidence": "in the core"
+  },
+  {
+   "id": "D-1",
+   "section": {
+    "number": 8,
+    "title": "Devices, display, time and first start"
+   },
+   "levels": [
+    "MUST",
+    "SHOULD"
+   ],
+   "text": "The system MUST use the display at its native resolution as the firmware reports it, and SHOULD choose the default scale from the display's physical density.",
+   "status": "DESIGN",
+   "evidence": "the kernel has no display code"
+  },
+  {
+   "id": "D-2",
+   "section": {
+    "number": 8,
+    "title": "Devices, display, time and first start"
+   },
+   "levels": [
+    "MUST",
+    "MUST"
+   ],
+   "text": "Default backgrounds MUST be drawn at the display's own resolution from a resolution-independent description, and MUST use the design tokens of the edition and the workspace.",
+   "status": "PARTIAL",
+   "evidence": "the backgrounds exist as vector files generated from the tokens. Nothing displays them"
+  },
+  {
+   "id": "D-3",
+   "section": {
+    "number": 8,
+    "title": "Devices, display, time and first start"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "Every record MUST carry time in UTC.",
+   "status": "BUILT",
+   "evidence": null
+  },
+  {
+   "id": "D-4",
+   "section": {
+    "number": 8,
+    "title": "Devices, display, time and first start"
+   },
+   "levels": [
+    "MUST",
+    "MUST NOT"
+   ],
+   "text": "The time zone MUST be a setting of each person, used for display only, and setting it MUST NOT need a network.",
+   "status": "DESIGN",
+   "evidence": null
+  },
+  {
+   "id": "D-5",
+   "section": {
+    "number": 8,
+    "title": "Devices, display, time and first start"
+   },
+   "levels": [
+    "MUST",
+    "MUST NOT"
+   ],
+   "text": "First start MUST create the person who directs the system before anything else is allowed, and MUST NOT require an account with any service.",
+   "status": "DESIGN",
+   "evidence": null
+  },
+  {
+   "id": "D-6",
+   "section": {
+    "number": 8,
+    "title": "Devices, display, time and first start"
+   },
+   "levels": [
+    "MUST"
+   ],
+   "text": "A graphics processor MUST be a device like any other: used by whoever holds a capability to it, absent without consequence.",
+   "status": "DESIGN",
+   "evidence": null
+  }
+ ]
+}

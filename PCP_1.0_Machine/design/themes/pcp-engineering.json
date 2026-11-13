@@ -1,0 +1,9 @@
+{
+ "name": "PCP Engineering",
+ "base": "dark",
+ "overrides": {
+  "claude": "#CB6A45",
+  "promptBorder": "#CB6A45",
+  "briefLabelClaude": "#CB6A45"
+ }
+}

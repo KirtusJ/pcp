@@ -1,0 +1,9 @@
+{
+ "name": "PCP Cryptography",
+ "base": "dark",
+ "overrides": {
+  "claude": "#9873D0",
+  "promptBorder": "#9873D0",
+  "briefLabelClaude": "#9873D0"
+ }
+}

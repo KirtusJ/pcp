@@ -1,0 +1,5 @@
+referenced_in,referenced_path,status,packaged_path,note
+MODULES/01_Core/SOURCE/Overview.md,contracts/command_interface.md,PACKAGED_AT,SUPPLEMENTS/Core_Conditional/Command_Interface.md,Component-local path in the source; the file is packaged at the path shown.
+MODULES/01_Core/SOURCE/Specification.md,contracts/command_interface.md,PACKAGED_AT,SUPPLEMENTS/Core_Conditional/Command_Interface.md,Component-local path in the source; the file is packaged at the path shown.
+MODULES/01_Core/SOURCE/Specification.md,contracts/record_contracts.md,PACKAGED_AT,SUPPLEMENTS/Core_Conditional/Record_Contracts.md,Component-local path in the source; the file is packaged at the path shown.
+MODULES/01_Core/SOURCE/Specification.md,methods/catalog.md,PACKAGED_AT,SUPPLEMENTS/Core_Conditional/Methods_Catalog.md,Component-local path in the source; the file is packaged at the path shown.

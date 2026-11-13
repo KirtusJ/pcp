@@ -1,0 +1,33 @@
+/* PCP design tokens as CSS custom properties. Generated from pcp.tokens.json; do not edit. */
+/* Use: <html data-pcp-edition="personal" data-pcp-module="science">. Edition sets the page; module sets the accent. */
+[data-pcp-edition="personal"] { --pcp-field: #F6F0E4; --pcp-text: #1B2733; --pcp-accent: #A25600; --pcp-soft: #4A5560; --pcp-ink: #8A4A00; --pcp-table-header: #5E3608; }
+[data-pcp-edition="commercial"] { --pcp-field: #0F6B67; --pcp-text: #F4FBF9; --pcp-accent: #A6F0E4; --pcp-soft: #D5EEEA; --pcp-ink: #0C5F5B; --pcp-table-header: #0B4744; }
+[data-pcp-edition="enterprise"] { --pcp-field: #16151F; --pcp-text: #F3F2F8; --pcp-accent: #B7A4F7; --pcp-soft: #C9C6D8; --pcp-ink: #4B3A96; --pcp-table-header: #2A2358; }
+[data-pcp-module="core"] { --pcp-plate: #10283F; --pcp-on-plate: #F2F7FC; }
+[data-pcp-edition="personal"][data-pcp-module="core"] { --pcp-accent: #157A76; }
+[data-pcp-edition="commercial"][data-pcp-module="core"] { --pcp-accent: #90E9E3; }
+[data-pcp-edition="enterprise"][data-pcp-module="core"] { --pcp-accent: #2F8C88; }
+[data-pcp-module="mathematics"] { --pcp-plate: #701A32; --pcp-on-plate: #F2F7FC; }
+[data-pcp-edition="personal"][data-pcp-module="mathematics"] { --pcp-accent: #7D2945; }
+[data-pcp-edition="commercial"][data-pcp-module="mathematics"] { --pcp-accent: #FFCDD8; }
+[data-pcp-edition="enterprise"][data-pcp-module="mathematics"] { --pcp-accent: #BD637C; }
+[data-pcp-module="science"] { --pcp-plate: #A5E7F5; --pcp-on-plate: #103844; }
+[data-pcp-edition="personal"][data-pcp-module="science"] { --pcp-accent: #006B86; }
+[data-pcp-edition="commercial"][data-pcp-module="science"] { --pcp-accent: #9CE4FF; }
+[data-pcp-edition="enterprise"][data-pcp-module="science"] { --pcp-accent: #3289A5; }
+[data-pcp-module="engineering"] { --pcp-plate: #D05D29; --pcp-on-plate: #211008; }
+[data-pcp-edition="personal"][data-pcp-module="engineering"] { --pcp-accent: #9A3E16; }
+[data-pcp-edition="commercial"][data-pcp-module="engineering"] { --pcp-accent: #FFD0BE; }
+[data-pcp-edition="enterprise"][data-pcp-module="engineering"] { --pcp-accent: #C4643F; }
+[data-pcp-module="cryptography"] { --pcp-plate: #34214F; --pcp-on-plate: #F2F7FC; }
+[data-pcp-edition="personal"][data-pcp-module="cryptography"] { --pcp-accent: #68429B; }
+[data-pcp-edition="commercial"][data-pcp-module="cryptography"] { --pcp-accent: #E2D3FF; }
+[data-pcp-edition="enterprise"][data-pcp-module="cryptography"] { --pcp-accent: #926DCA; }
+[data-pcp-module="statistics"] { --pcp-plate: #FFFFFF; --pcp-on-plate: #152137; }
+[data-pcp-edition="personal"][data-pcp-module="statistics"] { --pcp-accent: #152137; }
+[data-pcp-edition="commercial"][data-pcp-module="statistics"] { --pcp-accent: #CADBF9; }
+[data-pcp-edition="enterprise"][data-pcp-module="statistics"] { --pcp-accent: #70809B; }
+[data-pcp-module="quality_assurance"] { --pcp-plate: #B5D94B; --pcp-on-plate: #152137; }
+[data-pcp-edition="personal"][data-pcp-module="quality_assurance"] { --pcp-accent: #4E6B12; }
+[data-pcp-edition="commercial"][data-pcp-module="quality_assurance"] { --pcp-accent: #C3E690; }
+[data-pcp-edition="enterprise"][data-pcp-module="quality_assurance"] { --pcp-accent: #6A8935; }

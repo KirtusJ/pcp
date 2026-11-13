@@ -1,0 +1,9 @@
+{
+ "name": "PCP Science",
+ "base": "dark",
+ "overrides": {
+  "claude": "#398FAB",
+  "promptBorder": "#398FAB",
+  "briefLabelClaude": "#398FAB"
+ }
+}

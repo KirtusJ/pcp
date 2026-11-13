@@ -1,0 +1,9 @@
+{
+ "name": "PCP Core (light)",
+ "base": "light",
+ "overrides": {
+  "claude": "#187C78",
+  "promptBorder": "#187C78",
+  "briefLabelClaude": "#187C78"
+ }
+}

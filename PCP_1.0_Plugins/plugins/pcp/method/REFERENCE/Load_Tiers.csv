@@ -1,0 +1,7 @@
+tier,contents,files,utf8_bytes,whitespace_words,note
+T0,Kernel card,1,1494,247,Measured bytes and words. Token counts depend on the tokenizer and are not stated.
+T1,Kernel,1,19754,3154,Measured bytes and words. Token counts depend on the tokenizer and are not stated.
+T2,Core Specification,1,131574,18058,Measured bytes and words. Token counts depend on the tokenizer and are not stated.
+T3,Core Specification and three conditional contracts,4,176886,24118,Measured bytes and words. Token counts depend on the tokenizer and are not stated.
+T4,All Specifications,7,309630,40795,Measured bytes and words. Token counts depend on the tokenizer and are not stated.
+T5,"All Specifications, Overviews and conditional contracts",17,546595,75396,Measured bytes and words. Token counts depend on the tokenizer and are not stated.

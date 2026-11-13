@@ -1,0 +1,782 @@
+{
+ "$description": "Parrot Council Protocol (PCP) design tokens. Edition carries lightness and the page; module carries hue. Every colour is paired with a word or a mark: colour is never the only code.",
+ "edition": {
+  "personal": {
+   "$description": "Personal Edition",
+   "field": {
+    "$type": "color",
+    "$value": "#F6F0E4"
+   },
+   "text": {
+    "$type": "color",
+    "$value": "#1B2733"
+   },
+   "accent": {
+    "$type": "color",
+    "$value": "#A25600"
+   },
+   "ink": {
+    "$type": "color",
+    "$value": "#8A4A00",
+    "$description": "headings on a white page"
+   },
+   "table-header": {
+    "$type": "color",
+    "$value": "#5E3608"
+   },
+   "soft": {
+    "$type": "color",
+    "$value": "#4A5560",
+    "$description": "secondary text on the field"
+   }
+  },
+  "commercial": {
+   "$description": "Commercial Edition",
+   "field": {
+    "$type": "color",
+    "$value": "#0F6B67"
+   },
+   "text": {
+    "$type": "color",
+    "$value": "#F4FBF9"
+   },
+   "accent": {
+    "$type": "color",
+    "$value": "#A6F0E4"
+   },
+   "ink": {
+    "$type": "color",
+    "$value": "#0C5F5B",
+    "$description": "headings on a white page"
+   },
+   "table-header": {
+    "$type": "color",
+    "$value": "#0B4744"
+   },
+   "soft": {
+    "$type": "color",
+    "$value": "#D5EEEA",
+    "$description": "secondary text on the field"
+   }
+  },
+  "enterprise": {
+   "$description": "Enterprise Edition",
+   "field": {
+    "$type": "color",
+    "$value": "#16151F"
+   },
+   "text": {
+    "$type": "color",
+    "$value": "#F3F2F8"
+   },
+   "accent": {
+    "$type": "color",
+    "$value": "#B7A4F7"
+   },
+   "ink": {
+    "$type": "color",
+    "$value": "#4B3A96",
+    "$description": "headings on a white page"
+   },
+   "table-header": {
+    "$type": "color",
+    "$value": "#2A2358"
+   },
+   "soft": {
+    "$type": "color",
+    "$value": "#C9C6D8",
+    "$description": "secondary text on the field"
+   }
+  }
+ },
+ "module": {
+  "core": {
+   "$description": "Navy ground with the reference bird's teal. The neutral base every other profile sits on; it claims no domain.",
+   "name": {
+    "$type": "string",
+    "$value": "Core"
+   },
+   "mark": {
+    "$type": "string",
+    "$value": "plain wing"
+   },
+   "plate": {
+    "$type": "color",
+    "$value": "#10283F"
+   },
+   "on-plate": {
+    "$type": "color",
+    "$value": "#F2F7FC"
+   },
+   "hue": {
+    "$type": "color",
+    "$value": "#187C78",
+    "$description": "the module's hue source; accents are derived from it per field"
+   }
+  },
+  "mathematics": {
+   "$description": "Burgundy: a deep, low-lightness red, apart from the alarm reds used for errors. Reads as ink and binding, for derivation and proof.",
+   "name": {
+    "$type": "string",
+    "$value": "Mathematics"
+   },
+   "mark": {
+    "$type": "string",
+    "$value": "two concentric arcs"
+   },
+   "plate": {
+    "$type": "color",
+    "$value": "#701A32"
+   },
+   "on-plate": {
+    "$type": "color",
+    "$value": "#F2F7FC"
+   },
+   "hue": {
+    "$type": "color",
+    "$value": "#7D2945",
+    "$description": "the module's hue source; accents are derived from it per field"
+   }
+  },
+  "science": {
+   "$description": "Sky blue, the lightest chromatic plate: open field, observation. Blue stays distinct under red-green colour-vision deficiency, which shifts reds and greens and leaves the blue-yellow axis.",
+   "name": {
+    "$type": "string",
+    "$value": "Science"
+   },
+   "mark": {
+    "$type": "string",
+    "$value": "ring with a centre dot"
+   },
+   "plate": {
+    "$type": "color",
+    "$value": "#A5E7F5"
+   },
+   "on-plate": {
+    "$type": "color",
+    "$value": "#103844"
+   },
+   "hue": {
+    "$type": "color",
+    "$value": "#006B86",
+    "$description": "the module's hue source; accents are derived from it per field"
+   }
+  },
+  "engineering": {
+   "$description": "Orange, the hue safety signage uses for warning (ANSI Z535 pairs orange with its WARNING signal word). Fits work where a failure has consequences.",
+   "name": {
+    "$type": "string",
+    "$value": "Engineering"
+   },
+   "mark": {
+    "$type": "string",
+    "$value": "two stacked chevrons"
+   },
+   "plate": {
+    "$type": "color",
+    "$value": "#D05D29"
+   },
+   "on-plate": {
+    "$type": "color",
+    "$value": "#211008"
+   },
+   "hue": {
+    "$type": "color",
+    "$value": "#9A3E16",
+    "$description": "the module's hue source; accents are derived from it per field"
+   }
+  },
+  "cryptography": {
+   "$description": "Deep violet: the darkest chromatic plate, at the far end of the spectrum from orange. Concealment and keys.",
+   "name": {
+    "$type": "string",
+    "$value": "Cryptography"
+   },
+   "mark": {
+    "$type": "string",
+    "$value": "keyhole"
+   },
+   "plate": {
+    "$type": "color",
+    "$value": "#34214F"
+   },
+   "on-plate": {
+    "$type": "color",
+    "$value": "#F2F7FC"
+   },
+   "hue": {
+    "$type": "color",
+    "$value": "#68429B",
+    "$description": "the module's hue source; accents are derived from it per field"
+   }
+  },
+  "statistics": {
+   "$description": "White plate, ink-blue marks: the empty plot area. Deliberately achromatic so that data colours placed on it are not biased by a tint.",
+   "name": {
+    "$type": "string",
+    "$value": "Statistics"
+   },
+   "mark": {
+    "$type": "string",
+    "$value": "three rising bars"
+   },
+   "plate": {
+    "$type": "color",
+    "$value": "#FFFFFF"
+   },
+   "on-plate": {
+    "$type": "color",
+    "$value": "#152137"
+   },
+   "hue": {
+    "$type": "color",
+    "$value": "#152137",
+    "$description": "the module's hue source; accents are derived from it per field"
+   }
+  },
+  "quality_assurance": {
+   "$description": "Lime green: the conventional pass hue, shifted toward yellow so it stays apart from the Commercial teal and survives red-green deficiency by lightness.",
+   "name": {
+    "$type": "string",
+    "$value": "Quality Assurance"
+   },
+   "mark": {
+    "$type": "string",
+    "$value": "check mark"
+   },
+   "plate": {
+    "$type": "color",
+    "$value": "#B5D94B"
+   },
+   "on-plate": {
+    "$type": "color",
+    "$value": "#152137"
+   },
+   "hue": {
+    "$type": "color",
+    "$value": "#4E6B12",
+    "$description": "the module's hue source; accents are derived from it per field"
+   }
+  }
+ },
+ "workspace": {
+  "core": {
+   "personal": {
+    "$description": "Core workspace, Personal Edition",
+    "field": {
+     "$type": "color",
+     "$value": "{edition.personal.field}"
+    },
+    "text": {
+     "$type": "color",
+     "$value": "{edition.personal.text}"
+    },
+    "accent": {
+     "$type": "color",
+     "$value": "#157A76",
+     "$description": "the module hue at the lightness that reaches 4.5:1 on this field"
+    },
+    "plate": {
+     "$type": "color",
+     "$value": "{module.core.plate}"
+    },
+    "on-plate": {
+     "$type": "color",
+     "$value": "{module.core.on-plate}"
+    }
+   },
+   "commercial": {
+    "$description": "Core workspace, Commercial Edition",
+    "field": {
+     "$type": "color",
+     "$value": "{edition.commercial.field}"
+    },
+    "text": {
+     "$type": "color",
+     "$value": "{edition.commercial.text}"
+    },
+    "accent": {
+     "$type": "color",
+     "$value": "#90E9E3",
+     "$description": "the module hue at the lightness that reaches 4.5:1 on this field"
+    },
+    "plate": {
+     "$type": "color",
+     "$value": "{module.core.plate}"
+    },
+    "on-plate": {
+     "$type": "color",
+     "$value": "{module.core.on-plate}"
+    }
+   },
+   "enterprise": {
+    "$description": "Core workspace, Enterprise Edition",
+    "field": {
+     "$type": "color",
+     "$value": "{edition.enterprise.field}"
+    },
+    "text": {
+     "$type": "color",
+     "$value": "{edition.enterprise.text}"
+    },
+    "accent": {
+     "$type": "color",
+     "$value": "#2F8C88",
+     "$description": "the module hue at the lightness that reaches 4.5:1 on this field"
+    },
+    "plate": {
+     "$type": "color",
+     "$value": "{module.core.plate}"
+    },
+    "on-plate": {
+     "$type": "color",
+     "$value": "{module.core.on-plate}"
+    }
+   }
+  },
+  "mathematics": {
+   "personal": {
+    "$description": "Mathematics workspace, Personal Edition",
+    "field": {
+     "$type": "color",
+     "$value": "{edition.personal.field}"
+    },
+    "text": {
+     "$type": "color",
+     "$value": "{edition.personal.text}"
+    },
+    "accent": {
+     "$type": "color",
+     "$value": "#7D2945",
+     "$description": "the module hue at the lightness that reaches 4.5:1 on this field"
+    },
+    "plate": {
+     "$type": "color",
+     "$value": "{module.mathematics.plate}"
+    },
+    "on-plate": {
+     "$type": "color",
+     "$value": "{module.mathematics.on-plate}"
+    }
+   },
+   "commercial": {
+    "$description": "Mathematics workspace, Commercial Edition",
+    "field": {
+     "$type": "color",
+     "$value": "{edition.commercial.field}"
+    },
+    "text": {
+     "$type": "color",
+     "$value": "{edition.commercial.text}"
+    },
+    "accent": {
+     "$type": "color",
+     "$value": "#FFCDD8",
+     "$description": "the module hue at the lightness that reaches 4.5:1 on this field"
+    },
+    "plate": {
+     "$type": "color",
+     "$value": "{module.mathematics.plate}"
+    },
+    "on-plate": {
+     "$type": "color",
+     "$value": "{module.mathematics.on-plate}"
+    }
+   },
+   "enterprise": {
+    "$description": "Mathematics workspace, Enterprise Edition",
+    "field": {
+     "$type": "color",
+     "$value": "{edition.enterprise.field}"
+    },
+    "text": {
+     "$type": "color",
+     "$value": "{edition.enterprise.text}"
+    },
+    "accent": {
+     "$type": "color",
+     "$value": "#BD637C",
+     "$description": "the module hue at the lightness that reaches 4.5:1 on this field"
+    },
+    "plate": {
+     "$type": "color",
+     "$value": "{module.mathematics.plate}"
+    },
+    "on-plate": {
+     "$type": "color",
+     "$value": "{module.mathematics.on-plate}"
+    }
+   }
+  },
+  "science": {
+   "personal": {
+    "$description": "Science workspace, Personal Edition",
+    "field": {
+     "$type": "color",
+     "$value": "{edition.personal.field}"
+    },
+    "text": {
+     "$type": "color",
+     "$value": "{edition.personal.text}"
+    },
+    "accent": {
+     "$type": "color",
+     "$value": "#006B86",
+     "$description": "the module hue at the lightness that reaches 4.5:1 on this field"
+    },
+    "plate": {
+     "$type": "color",
+     "$value": "{module.science.plate}"
+    },
+    "on-plate": {
+     "$type": "color",
+     "$value": "{module.science.on-plate}"
+    }
+   },
+   "commercial": {
+    "$description": "Science workspace, Commercial Edition",
+    "field": {
+     "$type": "color",
+     "$value": "{edition.commercial.field}"
+    },
+    "text": {
+     "$type": "color",
+     "$value": "{edition.commercial.text}"
+    },
+    "accent": {
+     "$type": "color",
+     "$value": "#9CE4FF",
+     "$description": "the module hue at the lightness that reaches 4.5:1 on this field"
+    },
+    "plate": {
+     "$type": "color",
+     "$value": "{module.science.plate}"
+    },
+    "on-plate": {
+     "$type": "color",
+     "$value": "{module.science.on-plate}"
+    }
+   },
+   "enterprise": {
+    "$description": "Science workspace, Enterprise Edition",
+    "field": {
+     "$type": "color",
+     "$value": "{edition.enterprise.field}"
+    },
+    "text": {
+     "$type": "color",
+     "$value": "{edition.enterprise.text}"
+    },
+    "accent": {
+     "$type": "color",
+     "$value": "#3289A5",
+     "$description": "the module hue at the lightness that reaches 4.5:1 on this field"
+    },
+    "plate": {
+     "$type": "color",
+     "$value": "{module.science.plate}"
+    },
+    "on-plate": {
+     "$type": "color",
+     "$value": "{module.science.on-plate}"
+    }
+   }
+  },
+  "engineering": {
+   "personal": {
+    "$description": "Engineering workspace, Personal Edition",
+    "field": {
+     "$type": "color",
+     "$value": "{edition.personal.field}"
+    },
+    "text": {
+     "$type": "color",
+     "$value": "{edition.personal.text}"
+    },
+    "accent": {
+     "$type": "color",
+     "$value": "#9A3E16",
+     "$description": "the module hue at the lightness that reaches 4.5:1 on this field"
+    },
+    "plate": {
+     "$type": "color",
+     "$value": "{module.engineering.plate}"
+    },
+    "on-plate": {
+     "$type": "color",
+     "$value": "{module.engineering.on-plate}"
+    }
+   },
+   "commercial": {
+    "$description": "Engineering workspace, Commercial Edition",
+    "field": {
+     "$type": "color",
+     "$value": "{edition.commercial.field}"
+    },
+    "text": {
+     "$type": "color",
+     "$value": "{edition.commercial.text}"
+    },
+    "accent": {
+     "$type": "color",
+     "$value": "#FFD0BE",
+     "$description": "the module hue at the lightness that reaches 4.5:1 on this field"
+    },
+    "plate": {
+     "$type": "color",
+     "$value": "{module.engineering.plate}"
+    },
+    "on-plate": {
+     "$type": "color",
+     "$value": "{module.engineering.on-plate}"
+    }
+   },
+   "enterprise": {
+    "$description": "Engineering workspace, Enterprise Edition",
+    "field": {
+     "$type": "color",
+     "$value": "{edition.enterprise.field}"
+    },
+    "text": {
+     "$type": "color",
+     "$value": "{edition.enterprise.text}"
+    },
+    "accent": {
+     "$type": "color",
+     "$value": "#C4643F",
+     "$description": "the module hue at the lightness that reaches 4.5:1 on this field"
+    },
+    "plate": {
+     "$type": "color",
+     "$value": "{module.engineering.plate}"
+    },
+    "on-plate": {
+     "$type": "color",
+     "$value": "{module.engineering.on-plate}"
+    }
+   }
+  },
+  "cryptography": {
+   "personal": {
+    "$description": "Cryptography workspace, Personal Edition",
+    "field": {
+     "$type": "color",
+     "$value": "{edition.personal.field}"
+    },
+    "text": {
+     "$type": "color",
+     "$value": "{edition.personal.text}"
+    },
+    "accent": {
+     "$type": "color",
+     "$value": "#68429B",
+     "$description": "the module hue at the lightness that reaches 4.5:1 on this field"
+    },
+    "plate": {
+     "$type": "color",
+     "$value": "{module.cryptography.plate}"
+    },
+    "on-plate": {
+     "$type": "color",
+     "$value": "{module.cryptography.on-plate}"
+    }
+   },
+   "commercial": {
+    "$description": "Cryptography workspace, Commercial Edition",
+    "field": {
+     "$type": "color",
+     "$value": "{edition.commercial.field}"
+    },
+    "text": {
+     "$type": "color",
+     "$value": "{edition.commercial.text}"
+    },
+    "accent": {
+     "$type": "color",
+     "$value": "#E2D3FF",
+     "$description": "the module hue at the lightness that reaches 4.5:1 on this field"
+    },
+    "plate": {
+     "$type": "color",
+     "$value": "{module.cryptography.plate}"
+    },
+    "on-plate": {
+     "$type": "color",
+     "$value": "{module.cryptography.on-plate}"
+    }
+   },
+   "enterprise": {
+    "$description": "Cryptography workspace, Enterprise Edition",
+    "field": {
+     "$type": "color",
+     "$value": "{edition.enterprise.field}"
+    },
+    "text": {
+     "$type": "color",
+     "$value": "{edition.enterprise.text}"
+    },
+    "accent": {
+     "$type": "color",
+     "$value": "#926DCA",
+     "$description": "the module hue at the lightness that reaches 4.5:1 on this field"
+    },
+    "plate": {
+     "$type": "color",
+     "$value": "{module.cryptography.plate}"
+    },
+    "on-plate": {
+     "$type": "color",
+     "$value": "{module.cryptography.on-plate}"
+    }
+   }
+  },
+  "statistics": {
+   "personal": {
+    "$description": "Statistics workspace, Personal Edition",
+    "field": {
+     "$type": "color",
+     "$value": "{edition.personal.field}"
+    },
+    "text": {
+     "$type": "color",
+     "$value": "{edition.personal.text}"
+    },
+    "accent": {
+     "$type": "color",
+     "$value": "#152137",
+     "$description": "the module hue at the lightness that reaches 4.5:1 on this field"
+    },
+    "plate": {
+     "$type": "color",
+     "$value": "{module.statistics.plate}"
+    },
+    "on-plate": {
+     "$type": "color",
+     "$value": "{module.statistics.on-plate}"
+    }
+   },
+   "commercial": {
+    "$description": "Statistics workspace, Commercial Edition",
+    "field": {
+     "$type": "color",
+     "$value": "{edition.commercial.field}"
+    },
+    "text": {
+     "$type": "color",
+     "$value": "{edition.commercial.text}"
+    },
+    "accent": {
+     "$type": "color",
+     "$value": "#CADBF9",
+     "$description": "the module hue at the lightness that reaches 4.5:1 on this field"
+    },
+    "plate": {
+     "$type": "color",
+     "$value": "{module.statistics.plate}"
+    },
+    "on-plate": {
+     "$type": "color",
+     "$value": "{module.statistics.on-plate}"
+    }
+   },
+   "enterprise": {
+    "$description": "Statistics workspace, Enterprise Edition",
+    "field": {
+     "$type": "color",
+     "$value": "{edition.enterprise.field}"
+    },
+    "text": {
+     "$type": "color",
+     "$value": "{edition.enterprise.text}"
+    },
+    "accent": {
+     "$type": "color",
+     "$value": "#70809B",
+     "$description": "the module hue at the lightness that reaches 4.5:1 on this field"
+    },
+    "plate": {
+     "$type": "color",
+     "$value": "{module.statistics.plate}"
+    },
+    "on-plate": {
+     "$type": "color",
+     "$value": "{module.statistics.on-plate}"
+    }
+   }
+  },
+  "quality_assurance": {
+   "personal": {
+    "$description": "Quality Assurance workspace, Personal Edition",
+    "field": {
+     "$type": "color",
+     "$value": "{edition.personal.field}"
+    },
+    "text": {
+     "$type": "color",
+     "$value": "{edition.personal.text}"
+    },
+    "accent": {
+     "$type": "color",
+     "$value": "#4E6B12",
+     "$description": "the module hue at the lightness that reaches 4.5:1 on this field"
+    },
+    "plate": {
+     "$type": "color",
+     "$value": "{module.quality_assurance.plate}"
+    },
+    "on-plate": {
+     "$type": "color",
+     "$value": "{module.quality_assurance.on-plate}"
+    }
+   },
+   "commercial": {
+    "$description": "Quality Assurance workspace, Commercial Edition",
+    "field": {
+     "$type": "color",
+     "$value": "{edition.commercial.field}"
+    },
+    "text": {
+     "$type": "color",
+     "$value": "{edition.commercial.text}"
+    },
+    "accent": {
+     "$type": "color",
+     "$value": "#C3E690",
+     "$description": "the module hue at the lightness that reaches 4.5:1 on this field"
+    },
+    "plate": {
+     "$type": "color",
+     "$value": "{module.quality_assurance.plate}"
+    },
+    "on-plate": {
+     "$type": "color",
+     "$value": "{module.quality_assurance.on-plate}"
+    }
+   },
+   "enterprise": {
+    "$description": "Quality Assurance workspace, Enterprise Edition",
+    "field": {
+     "$type": "color",
+     "$value": "{edition.enterprise.field}"
+    },
+    "text": {
+     "$type": "color",
+     "$value": "{edition.enterprise.text}"
+    },
+    "accent": {
+     "$type": "color",
+     "$value": "#6A8935",
+     "$description": "the module hue at the lightness that reaches 4.5:1 on this field"
+    },
+    "plate": {
+     "$type": "color",
+     "$value": "{module.quality_assurance.plate}"
+    },
+    "on-plate": {
+     "$type": "color",
+     "$value": "{module.quality_assurance.on-plate}"
+    }
+   }
+  }
+ }
+}

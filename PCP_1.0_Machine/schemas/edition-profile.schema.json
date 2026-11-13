@@ -1,0 +1,92 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "pcp:schema:edition-profile:1",
+ "title": "edition/EDITION.json: what an edition is, for a program",
+ "type": "object",
+ "required": [
+  "format",
+  "product",
+  "method",
+  "version",
+  "build",
+  "edition",
+  "licensed_to",
+  "price",
+  "people",
+  "method_release",
+  "theme"
+ ],
+ "properties": {
+  "format": {
+   "const": "pcp-edition-profile/1"
+  },
+  "product": {
+   "const": "Parrot Council Protocol"
+  },
+  "method": {
+   "const": "Adversarial Claim Review"
+  },
+  "version": {
+   "type": "string"
+  },
+  "build": {
+   "type": "integer"
+  },
+  "edition": {
+   "enum": [
+    "PERSONAL",
+    "COMMERCIAL",
+    "ENTERPRISE"
+   ]
+  },
+  "creator": {
+   "const": "Kirtus Justus"
+  },
+  "price": {
+   "type": "object",
+   "required": [
+    "basis"
+   ],
+   "properties": {
+    "basis": {
+     "enum": [
+      "SINGLE_PURCHASE",
+      "INDIVIDUALLY_NEGOTIATED_WRITTEN_AGREEMENT"
+     ]
+    }
+   }
+  },
+  "people": {
+   "type": "object",
+   "required": [
+    "second_person_available",
+    "organization_floor"
+   ]
+  },
+  "method_release": {
+   "type": "object",
+   "required": [
+    "manifest_sha256"
+   ],
+   "properties": {
+    "manifest_sha256": {
+     "type": "string",
+     "pattern": "^[0-9a-f]{64}$"
+    },
+    "kernel_sha256": {
+     "type": "string",
+     "pattern": "^[0-9a-f]{64}$"
+    }
+   }
+  },
+  "theme": {
+   "type": "object",
+   "patternProperties": {
+    ".*": {
+     "type": "string",
+     "pattern": "^#[0-9A-F]{6}$"
+    }
+   }
+  }
+ }
+}

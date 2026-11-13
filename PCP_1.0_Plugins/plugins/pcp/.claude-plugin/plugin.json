@@ -1,0 +1,32 @@
+{
+  "name": "pcp",
+  "displayName": "PCP",
+  "version": "1.0.19",
+  "description": "Parrot Council Protocol (PCP): Adversarial Claim Review (ACR), an epistemological protocol for staged review of a claim, reporting what the evidence supports. Skills, subagents and the pinned method text.",
+  "author": {
+    "name": "Kirtus Justus"
+  },
+  "license": "LicenseRef-Proprietary",
+  "keywords": [
+    "review",
+    "claims",
+    "evidence",
+    "epistemology",
+    "audit",
+    "pcp",
+    "acr"
+  ],
+  "experimental": {
+    "themes": "./themes/"
+  },
+  "metadata": {
+    "product": "Parrot Council Protocol",
+    "method": "Adversarial Claim Review",
+    "product_version": "1.0",
+    "build": 19,
+    "build_date": "2026-11-12",
+    "method_manifest_sha256": "6b6d3a680f3fdec811ce7105dd2124e951e272c28a24608f073914f4155853c6",
+    "edition_overlay": "edition/",
+    "delivery": "TEXT_AND_RETRIEVAL"
+  }
+}

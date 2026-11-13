@@ -1,0 +1,67 @@
+{
+  "product": "ACR",
+  "method": "Adversarial Claim Review",
+  "version": "1.0",
+  "single_distribution": true,
+  "module_count": 7,
+  "documents_per_module": [
+    "Overview",
+    "Specification"
+  ],
+  "packet": "IMPLEMENTATION",
+  "component_versions": [
+    {
+      "component_id": "acr.core",
+      "component_version": "1.0",
+      "source_sha256": "39efd83b4122545455124f20420f212590a06064f391b259e93ea968449e6b7f",
+      "distribution_status": "RELEASED",
+      "task_selection": "CORE_APPLIES_WHEN_ACR_IS_AUTHORIZED"
+    },
+    {
+      "component_id": "acr.mathematics",
+      "component_version": "1.0",
+      "source_sha256": "8c5009a8b6a610fb03ae4fe1e25d4674e0d256c9593885fb03b8159e580463f1",
+      "distribution_status": "RELEASED",
+      "task_selection": "NOT_SELECTED_BY_DISTRIBUTION"
+    },
+    {
+      "component_id": "acr.science",
+      "component_version": "1.0",
+      "source_sha256": "162e664eeedd605250c5edfaa4f1eb1550020b1bd21f5e6ce384a47c1a9783e9",
+      "distribution_status": "RELEASED",
+      "task_selection": "NOT_SELECTED_BY_DISTRIBUTION"
+    },
+    {
+      "component_id": "acr.engineering",
+      "component_version": "1.0",
+      "source_sha256": "da418ac28d1632755d91f1f7749c4afc90aaa39f54d33be6c9df84d29ee68e6c",
+      "distribution_status": "RELEASED",
+      "task_selection": "NOT_SELECTED_BY_DISTRIBUTION"
+    },
+    {
+      "component_id": "acr.cryptography",
+      "component_version": "1.0",
+      "source_sha256": "e3fa9f15515f19093cb16eeaa254020a05e95b1ee0d3e24657f54180f2d913cc",
+      "distribution_status": "RELEASED",
+      "task_selection": "NOT_SELECTED_BY_DISTRIBUTION"
+    },
+    {
+      "component_id": "acr.statistics",
+      "component_version": "1.0",
+      "source_sha256": "6769b73c2a26d1f6400caec883925362835668a7d5d997dacfc4f810d51c2b76",
+      "distribution_status": "RELEASED",
+      "task_selection": "NOT_SELECTED_BY_DISTRIBUTION"
+    },
+    {
+      "component_id": "acr.quality_assurance",
+      "component_version": "1.0",
+      "source_sha256": "a039818b002cc014dff23e297211692296c7f534f5503f319fdd293af9864f8c",
+      "distribution_status": "RELEASED",
+      "task_selection": "NOT_SELECTED_BY_DISTRIBUTION"
+    }
+  ],
+  "core_descriptor": "RELEASE/Core_Descriptor.json",
+  "core_descriptor_sha256": "f15686b385002bf597c2625bc18e98a390531a21ce91f64bdb249f2fe04a86a7",
+  "command_profile": "ACR-TEXT-2",
+  "external_llm_service_included": false
+}

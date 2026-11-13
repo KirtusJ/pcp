@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "pcp": {
+      "command": "${CLAUDE_PLUGIN_ROOT}/servers/pcpos",
+      "args": [
+        "mcp"
+      ],
+      "env": {
+        "PCPOS_ROOT": "${CLAUDE_PROJECT_DIR}"
+      }
+    }
+  }
+}

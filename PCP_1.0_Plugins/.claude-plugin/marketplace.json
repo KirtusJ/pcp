@@ -1,0 +1,26 @@
+{
+  "name": "pcp-enterprise",
+  "owner": {
+    "name": "Kirtus Justus"
+  },
+  "metadata": {
+    "description": "Parrot Council Protocol (PCP) 1.0, Enterprise Edition: the two PCP plugins for Claude. Proprietary; supplied under license only.",
+    "version": "1.0.19"
+  },
+  "plugins": [
+    {
+      "name": "pcp",
+      "source": "./plugins/pcp",
+      "version": "1.0.19",
+      "displayName": "PCP (Enterprise Edition)",
+      "description": "Adversarial Claim Review as skills, subagents and the pinned method text. Text only; nothing enforces it."
+    },
+    {
+      "name": "pcp-os",
+      "source": "./plugins/pcp-os",
+      "version": "1.0.19",
+      "displayName": "PCP OS (Enterprise Edition)",
+      "description": "Adversarial Claim Review over the native core of PCP OS: a register whose guards run outside the assistant's context, module workspaces, a task view and host hooks."
+    }
+  ]
+}

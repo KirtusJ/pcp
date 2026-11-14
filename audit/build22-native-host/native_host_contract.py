@@ -99,11 +99,18 @@ def concurrent_add(binary, method, base, rounds):
             replies = list(pool.map(lambda p: add(binary, method, reg, p), sources))
         written = additions(reg)
         accepted = sum(p['exit'] == 0 for p in replies)
+        recorded_hashes = [e['body']['module']['sha256'] for e in written]
+        stored = reg.parent / 'modules/race/SOURCE/Specification.md'
+        stored_hash = digest(stored.read_bytes()) if stored.is_file() else None
+        matches_single_event = len(recorded_hashes) == 1 and stored_hash == recorded_hashes[0]
         trials.append(dict(accepted=accepted, recorded=len(written),
-                           distinct_hashes=len({e['body']['module']['sha256'] for e in written}),
+                           distinct_hashes=len(set(recorded_hashes)),
+                           installed_spec_sha256=stored_hash,
+                           installed_matches_only_event=matches_single_event,
                            register_verified=(run(binary, 'verify', reg)['exit'] == 0)))
     bad = any(t['recorded'] > 1 or t['accepted'] > 1 for t in trials)
-    healthy = all(t['accepted'] == 1 and t['recorded'] == 1 and t['register_verified'] for t in trials)
+    healthy = all(t['accepted'] == 1 and t['recorded'] == 1 and
+                  t['installed_matches_only_event'] and t['register_verified'] for t in trials)
     return dict(pass_control=healthy and not bad, violation_seen=bad, trials=trials,
                 note='No collision in finite trials does not prove absence of a race')
 

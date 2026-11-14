@@ -44,7 +44,7 @@ def source(root, name, tag):
     path = root / ('input_' + str(tag))
     path.mkdir()
     (path / 'Specification.md').write_text(
-        '**Component:** \x60local.%s\x60, Version 1.0\n\n## 1. Purpose\n\nSynthetic %s\n' % (name, tag), encoding='utf-8')
+        '**Component:** `local.%s`, Version 1.0\n\n## 1. Purpose\n\nSynthetic %s\n' % (name, tag), encoding='utf-8')
     return path
 
 

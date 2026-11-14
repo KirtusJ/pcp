@@ -7,7 +7,7 @@ This test-only folder exercises **five known native-host filesystem / evidence-i
 - Owner-supplied outer `PCP_1.0_Release(8).zip`: SHA-256 `6007acc5b5fe43d4639330e17ef03f4948859f42df7d857e8f713aeca6ec73b0`.
 - Binary: `c2c6795d36027c6e9041d63c5349f97434fe5709a6bcb649f4146faee9f03dcd`.
 - `pcp-os/method/MANIFEST.json` bytes: SHA-256 `7ff72eed9162e2c11fc62f6681c4afbc29524bfa96b87d45a455423d027d4707`.
-- Committed test program SHA-256: `371a4ba14d120a063c1af06ebd3e66362d4538ba93d41d51b21bc50dc75fe93c`; Git blob SHA `2f0da0ccec9185688aad8b695e21f9877e79dd28` was checked against the locally executed program.
+- Committed test program SHA-256: `3524fbf3e4cd3b7bed84aa036e2508b709d468127e8ca5fb144913f564cbd234`; Git blob SHA `69ba4c836f3f0e4e1adf22b02ba051961c11ab62` was checked against the locally executed program.
 
 ## How to run
 
@@ -29,7 +29,7 @@ The script creates synthetic, disposable temporary directories, registers, and e
 | Case | Property | Issue |
 | --- | --- | --- |
 | `normal` | A normal module is added; a sequential duplicate is refused; chain remains sound | Positive control |
-| `race` | Concurrent proposals for the same module ID cannot append multiple accepted additions | [#4](https://github.com/KirtusJ/pcp/issues/4) |
+| `race` | Concurrent proposals for the same module ID cannot append multiple accepted additions; the installed Specification must match the sole recorded digest | [#4](https://github.com/KirtusJ/pcp/issues/4) |
 | `module_symlink` | A prelinked module folder must not cause exterior writes | [#8](https://github.com/KirtusJ/pcp/issues/8) |
 | `failed_remove` | Failed register append must not leave a module physically removed without a recorded transition | [#5](https://github.com/KirtusJ/pcp/issues/5) |
 | `repair_symlink` | A prelinked fragment sidecar must not overwrite an exterior file | [#9](https://github.com/KirtusJ/pcp/issues/9) |
@@ -42,7 +42,7 @@ The byte-identical script was syntax-checked with `python -m py_compile` and exe
 
 - Evidence mode, two racing rounds: **6/8** and **6/8** duplicate module installs accepted, with corresponding events and intact register verification. All four other adverse cases reproduced; both positive controls passed.
 - `--expect-fixed` mode, two more racing rounds: **5/8** and **5/8** accepted. Exited **1** with `REGRESSION_FAIL: race, module_symlink, failed_remove, repair_symlink, artifact_hardlink`. The two positive controls again passed.
-- A finite collision-free race test after a fix cannot prove the absence of races. Repeat it and inspect transaction ordering; include interruption points and real filesystem snapshots.
+- Additional refreshed two-round run with the strengthened on-disk identity oracle: **4/8** and **7/8** accepted, matching 4 and 7 recorded addition events while the register verified. The installed-file digest and sole-event comparison correctly failed. A finite collision-free race test after a fix cannot prove the absence of races. Repeat it and inspect transaction ordering; include interruption points and real filesystem snapshots.
 - The file-size injection is POSIX-specific, and these controls have not been run against a repaired binary, on real hardware, or on another host OS.
 
 ## Important boundaries

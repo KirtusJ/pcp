@@ -33,6 +33,7 @@ The script creates synthetic, disposable temporary directories, registers, and e
 | `module_symlink` | A prelinked module folder must not cause exterior writes | [#8](https://github.com/KirtusJ/pcp/issues/8) |
 | `failed_remove` | Failed register append must not leave a module physically removed without a recorded transition | [#5](https://github.com/KirtusJ/pcp/issues/5) |
 | `repair_symlink` | A prelinked fragment sidecar must not overwrite an exterior file | [#9](https://github.com/KirtusJ/pcp/issues/9) |
+| `orphan_remove` | An invalid or unrelated directory under `modules/` must not be deleted or represented as a real module removal | [#17](https://github.com/KirtusJ/pcp/issues/17) |
 | `artifact_hardlink` | Text artifact storage must not overwrite an exterior hard-linked inode | [#10](https://github.com/KirtusJ/pcp/issues/10) |
 | `artifact_read` | In-root ordinary artifact readable; symlink, parent link, traversal and exterior absolute path refused | Positive control |
 
@@ -44,6 +45,10 @@ The byte-identical script was syntax-checked with `python -m py_compile` and exe
 - `--expect-fixed` mode, two more racing rounds: **5/8** and **5/8** accepted. Exited **1** with `REGRESSION_FAIL: race, module_symlink, failed_remove, repair_symlink, artifact_hardlink`. The two positive controls again passed.
 - Additional refreshed two-round run with the strengthened on-disk identity oracle: **4/8** and **7/8** accepted, matching 4 and 7 recorded addition events while the register verified. The installed-file digest and sole-event comparison correctly failed. A finite collision-free race test after a fix cannot prove the absence of races. Repeat it and inspect transaction ordering; include interruption points and real filesystem snapshots.
 - The file-size injection is POSIX-specific, and these controls have not been run against a repaired binary, on real hardware, or on another host OS.
+
+### Additional issue #17 check (stacked contribution)
+
+The `orphan_remove` test exercises four fresh isolated registers: a nonexistent name (expected refusal), an empty module-shaped directory, a directory holding unrelated synthetic notes, and a malformed `Specification.md`. Every refused operation must leave the entire module directory and register bytes unchanged; no `MODULE_REMOVED` event may appear. The original build-22 host was separately exercised with equivalent inputs: valid and nonexistent controls passed, but each of the three existing invalid directories was deleted and recorded as removed. This new case was not part of the earlier seven-case run counts above. A run of the revised integrated test program against the candidate fixed host is still required before closing the issue.
 
 ## Important boundaries
 

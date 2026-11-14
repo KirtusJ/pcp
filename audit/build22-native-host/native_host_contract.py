@@ -159,6 +159,44 @@ def repair_symlink(binary, base):
                 violation_seen=outside_mutated, repair_exit=result['exit'], outside_changed=outside_mutated)
 
 
+
+def orphan_remove(binary, base):
+    """An unknown module directory must never be deleted or recorded as removed."""
+    trials = []
+    for case in ('absent', 'empty', 'unrelated', 'malformed'):
+        root = base / ('orphan_' + case); reg = initialize(binary, root)
+        orphan = reg.parent / 'modules/not_a_module'
+        if case != 'absent':
+            orphan.mkdir(parents=True)
+            if case == 'unrelated':
+                (orphan / 'notes-private.txt').write_bytes(b'SYNTHETIC; NOT A PCP MODULE')
+            elif case == 'malformed':
+                spec = orphan / 'SOURCE/Specification.md'
+                spec.parent.mkdir()
+                spec.write_bytes(b'No valid Component header here.\\n')
+        original = reg.read_bytes()
+        initial_files = {str(p.relative_to(orphan)): p.read_bytes()
+                         for p in orphan.rglob('*') if p.is_file()} if orphan.is_dir() else {}
+        result = run(binary, 'module', 'remove', reg, 'not_a_module', '--by', 'principal')
+        remaining = orphan.is_dir()
+        remaining_files = {str(p.relative_to(orphan)): p.read_bytes()
+                           for p in orphan.rglob('*') if p.is_file()} if remaining else {}
+        removals = [e for e in map(json.loads, reg.read_text().splitlines())
+                    if e.get('body', {}).get('event') == 'MODULE_REMOVED']
+        ok = (result['exit'] != 0 and reg.read_bytes() == original and not removals
+              and run(binary, 'verify', reg)['exit'] == 0
+              and ((not remaining) if case == 'absent'
+                   else (remaining and initial_files == remaining_files)))
+        trials.append(dict(case=case, pass_control=ok,
+                           exit=result['exit'], preserved_directory=remaining,
+                           recorded_removals=len(removals),
+                           register_unchanged=reg.read_bytes() == original))
+    return dict(pass_control=all(t['pass_control'] for t in trials),
+                violation_seen=any(not t['pass_control'] for t in trials),
+                trials=trials)
+
+
+
 def artifact_hardlink(binary, base):
     root = base / 'hardlink_artifact'; reg = initialize(binary, root)
     payload = b'HOST_TEXT_EXACT'
@@ -209,6 +247,7 @@ def main():
                   ('race', lambda: concurrent_add(binary, method, base, options.rounds)),
                   ('module_symlink', lambda: linked_module(binary, method, base)),
                   ('failed_remove', lambda: failed_remove(binary, method, base)),
+                  ('orphan_remove', lambda: orphan_remove(binary, base)),
                   ('repair_symlink', lambda: repair_symlink(binary, base)),
                   ('artifact_hardlink', lambda: artifact_hardlink(binary, base)),
                   ('artifact_read', lambda: artifact_read_control(binary, base))]

@@ -1,0 +1,27 @@
+{
+  "name": "pcp-plugins",
+  "owner": {
+    "name": "Kirtus Justus"
+  },
+  "metadata": {
+    "description": "Parrot Council Protocol (PCP): the two PCP plugins for Claude, fetched from their own repositories. Proprietary; supplied under license only. Access to those repositories is required."
+  },
+  "plugins": [
+    {
+      "name": "pcp",
+      "source": {
+        "source": "github",
+        "repo": "KirtusJ/pcp-claude"
+      },
+      "description": "Adversarial Claim Review as skills, subagents and the pinned method text. Text only; nothing enforces it."
+    },
+    {
+      "name": "pcp-os",
+      "source": {
+        "source": "github",
+        "repo": "KirtusJ/pcp-os-claude"
+      },
+      "description": "Adversarial Claim Review over the native core of PCP OS: a register whose guards run outside the assistant's context, module workspaces, a task view and host hooks. Install this or pcp, not both."
+    }
+  ]
+}

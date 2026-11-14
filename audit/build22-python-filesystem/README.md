@@ -24,7 +24,7 @@ The tests should **fail on the original vulnerable build-22 Python source** and 
 
 ### First executed RED/GREEN result (13 November 2026)
 
-An independently extracted original build-22 source produced four failing tests out of eight on the first corresponding test suite. A locally modified candidate (`base.py`, `method.py`, `store.py`) produced 8/8 passes and separately passed 77 existing tests (four feature/environment skips). The candidate patch, `PCP22_Python_Filesystem_Hardening.patch`, SHA-256 `70cb4c826bc03acfe7ac4d5c4df33c798c35ab3cf219fbae975e59c7bc8386b8`, was provided privately for review; **this branch does not include or publish the proprietary source patch**.
+An independently extracted original build-22 source produced four failing tests out of eight on the first corresponding test suite. A locally modified candidate (`base.py`, `method.py`, `store.py`) produced 8/8 passes. A subsequent complete standard discovery log reported 113 total tests: 109 passes, four feature/environment skips. Targeted original suites also passed independently under optimized Python; no complete optimized aggregate is claimed. The candidate patch, `PCP22_Python_Filesystem_Hardening.patch`, SHA-256 `70cb4c826bc03acfe7ac4d5c4df33c798c35ab3cf219fbae975e59c7bc8386b8`, was provided privately for review; **this branch does not include or publish the proprietary source patch**.
 
 Issues: [#6](https://github.com/KirtusJ/pcp/issues/6), [#7](https://github.com/KirtusJ/pcp/issues/7), [#11](https://github.com/KirtusJ/pcp/issues/11). Do not mark these issues fixed until the repaired source, its tested binary/package, and the released identities are updated.
 

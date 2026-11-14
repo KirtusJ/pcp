@@ -16,6 +16,9 @@ source = args.python_os.resolve()
 packet = args.method_zip.resolve()
 if not (source / "pcpos/store.py").is_file() or not packet.is_file():
     argp.error("supply the exact trusted Python source and ACR packet paths")
+expected_packet = "c7310f55b34ec7705b48363b95fc0839e7df96dd044c41bfd9b3183edf21abe4"
+if hashlib.sha256(packet.read_bytes()).hexdigest() != expected_packet:
+    argp.error("the method ZIP does not match the build-22 archive SHA-256")
 sys.path.insert(0, str(source))
 
 from pcpos.base import atomic_write, PcposError
@@ -32,6 +35,14 @@ class FilesystemContract(unittest.TestCase):
     def workspace(self):
         return Workspace.create(self.root / "ws")
 
+    def plant_symlink(self, link, target, *, directory=False):
+        try:
+            link.symlink_to(target, target_is_directory=directory)
+        except OSError as exc:
+            if getattr(exc, "winerror", None) == 1314:
+                self.skipTest("Windows denied symbolic-link creation (error 1314)")
+            raise
+
     def test_normal_method_install(self):
         parent = self.root / "install"
         parent.mkdir()
@@ -45,7 +56,7 @@ class FilesystemContract(unittest.TestCase):
         target.mkdir(parents=True)
         outside = self.root / "outside"
         outside.mkdir()
-        (target / "MODULES").symlink_to(outside, target_is_directory=True)
+        self.plant_symlink(target / "MODULES", outside, directory=True)
         with self.assertRaises(PcposError):
             install_from_zip(packet, parent)
         self.assertFalse(list(outside.rglob("*")))
@@ -63,7 +74,7 @@ class FilesystemContract(unittest.TestCase):
         outside = self.root / "outside"
         outside.write_bytes(b"SENTINEL")
         old_temp = target.with_name(target.name + ".tmp%d" % os.getpid())
-        old_temp.symlink_to(outside)
+        self.plant_symlink(old_temp, outside)
         atomic_write(target, b"NEW")
         self.assertEqual(outside.read_bytes(), b"SENTINEL")
         self.assertEqual(target.read_bytes(), b"NEW")
@@ -85,7 +96,7 @@ class FilesystemContract(unittest.TestCase):
         outside = self.root / "external-store"
         outside.mkdir()
         ws.objects.rmdir()
-        ws.objects.symlink_to(outside, target_is_directory=True)
+        self.plant_symlink(ws.objects, outside, directory=True)
         with self.assertRaises(PcposError):
             ws.put_bytes(b"synthetic test")
         self.assertFalse(list(outside.rglob("*")))
@@ -96,10 +107,11 @@ class FilesystemContract(unittest.TestCase):
         digest = hashlib.sha256(data).hexdigest()
         target = ws.object_path(digest)
         target.parent.mkdir()
-        target.write_bytes(b"wrong")
+        corrupt = b"!" * len(data)
+        target.write_bytes(corrupt)
         with self.assertRaises(PcposError):
             ws.put_bytes(data)
-        self.assertEqual(target.read_bytes(), b"wrong")
+        self.assertEqual(target.read_bytes(), corrupt)
 
     def test_put_file_rejects_existing_corruption(self):
         ws = self.workspace()
@@ -109,10 +121,11 @@ class FilesystemContract(unittest.TestCase):
         digest = hashlib.sha256(data).hexdigest()
         target = ws.object_path(digest)
         target.parent.mkdir()
-        target.write_bytes(b"wrong")
+        corrupt = b"!" * len(data)
+        target.write_bytes(corrupt)
         with self.assertRaises(PcposError):
             ws.put_file(source_file)
-        self.assertEqual(target.read_bytes(), b"wrong")
+        self.assertEqual(target.read_bytes(), corrupt)
 
 
 if __name__ == "__main__":

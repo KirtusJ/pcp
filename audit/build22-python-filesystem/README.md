@@ -12,6 +12,8 @@ python3 audit/build22-python-filesystem/test_guard_contracts.py \
 
 Only synthetic files and disposable temp workspaces are created. Importing the selected Python source executes that code with the caller's permissions: use a trusted copy, **not** an arbitrary downloaded module.
 
+The wrapper checks the method ZIP's SHA-256 before loading the supplied Python code. On Windows, a host that denies symbolic-link creation with error 1314 explicitly skips the three symbolic-link fixtures. An otherwise passing run with those skips covers five tests. A complete run requires a host that can create the links.
+
 ## Required properties
 
 - Replacing an object uses an exclusive, unpredictable temporary file and does not follow a planted `.tmp<PID>` link.

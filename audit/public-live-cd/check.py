@@ -15,9 +15,10 @@ class GuestSafe(RuntimeError):
     pass
 
 
-def check(iso, output, *, clock="instructions", startup_only=False, capture_audio=False):
-    if hashlib.sha256(iso.read_bytes()).hexdigest() != ISO_SHA:
-        raise ValueError("The optical image differs from the published 0.3.1 CD")
+def check(iso, output, *, clock="instructions", startup_only=False, capture_audio=False,
+          expected_iso=ISO_SHA, expected_image=IMAGE_SHA):
+    if hashlib.sha256(iso.read_bytes()).hexdigest() != expected_iso:
+        raise ValueError("The optical image differs from the expected SHA-256")
     output.mkdir(parents=True, exist_ok=False)
     serial = output / "serial.txt"
     with tempfile.TemporaryDirectory() as tmp:
@@ -41,7 +42,7 @@ def check(iso, output, *, clock="instructions", startup_only=False, capture_audi
             raise ValueError(f"Unknown guest clock: {clock}")
         with subprocess.Popen(command, stdin=subprocess.DEVNULL) as guest:
             try:
-                exercise(guest, monitor, serial, output, startup_only)
+                exercise(guest, monitor, serial, output, startup_only, expected_image)
             finally:
                 if guest.poll() is None:
                     guest.terminate()
@@ -51,7 +52,7 @@ def check(iso, output, *, clock="instructions", startup_only=False, capture_audi
                         guest.kill()
 
 
-def exercise(guest, monitor, serial, output, startup_only):
+def exercise(guest, monitor, serial, output, startup_only, expected_image):
     import socket
 
     def wait(test, name, seconds=120):
@@ -100,7 +101,7 @@ def exercise(guest, monitor, serial, output, startup_only):
 
             rpc("qmp_capabilities")
             wait(lambda s: ("long mode true" in s and
-                            IMAGE_SHA + " (measured; equal" in s and
+                            expected_image + " (measured; equal" in s and
                             "leaves no memory behind" in s), "unattended kernel and self-tests")
             launcher("unattended-launcher")
             if startup_only:
@@ -121,6 +122,7 @@ def exercise(guest, monitor, serial, output, startup_only):
             final = serial.read_text(errors="replace")
             if "ALL SELF-TESTS PASS" not in final or code != 33:
                 raise RuntimeError(f"Inspect final serial result and QEMU exit {code}")
+            (output / "qemu-exit.txt").write_text(f"{code}\n")
             print("Verified unattended launcher, app playback, keyboard Stop and power-off")
 
 

@@ -16,9 +16,9 @@ def sha256(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def check_audio(iso, output, verifier):
-    if sha256(iso) != ISO_SHA:
-        raise ValueError("The optical image differs from the published 0.3.1 CD")
+def check_audio(iso, output, verifier, *, expected_iso=ISO_SHA):
+    if sha256(iso) != expected_iso:
+        raise ValueError("The optical image differs from the expected SHA-256")
     spec = importlib.util.spec_from_file_location("surfbird_media", verifier)
     media = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(media)
@@ -34,7 +34,7 @@ def check_audio(iso, output, verifier):
         captured = media.captured_audio(capture, 0)
 
     receipt = {
-        "iso_sha256": ISO_SHA,
+        "iso_sha256": expected_iso,
         "clip_sha256": CLIP_SHA,
         "capture_sha256": sha256(capture),
         "source_bursts": source,

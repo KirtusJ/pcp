@@ -1,0 +1,57 @@
+{
+  "source_commit": "946ef854d908c9beb37436cf3f37284a2ad86610",
+  "released_iso": "93ed3b599ad7be0e1e88a64813b1f2b5299d51507df2edca691aaf6189d10d15",
+  "released_image": "0232c02a8946d66216da0ac65953a246ce3d41d7a966ae31aa83c3335b3259e3",
+  "candidate_iso": "09e61116cc295f45a91061253d3913301ef867d790ee08678bd0fb25c1a0a00d",
+  "candidate_image": "a9be6b1599bb10eead1344ae4a2ca53ec978074ae9aef1d30e8da10f04d044f3",
+  "files": {
+    "boot.cat": {
+      "released": "80e22a2f32e5f83ef2eb1474268ca0f1a6d543f83cbae639124063a95c78aa38",
+      "candidate": "735343495f5733fc10b124ec6e71bba786d58f9a062369161adcdb06b34a58ad"
+    },
+    "clip.ppm": {
+      "released": "f6a1d9a0702f472f5b02cf0a528586e6d4447acbad2bd92eb0fc6d70eea4df4d",
+      "candidate": "f6a1d9a0702f472f5b02cf0a528586e6d4447acbad2bd92eb0fc6d70eea4df4d"
+    },
+    "clip.wav": {
+      "released": "70ca6a81bc6f94db7d14a61630ff02c517d20a65c31273b16ff02e233018e244",
+      "candidate": "70ca6a81bc6f94db7d14a61630ff02c517d20a65c31273b16ff02e233018e244"
+    },
+    "kernel.elf32": {
+      "released": "d2fae4ef3df316ff4fa0c1a88744e66cc17bd794856979fa55188b8402f7222f",
+      "candidate": "db4ea90ea62885e0aee46cbaabbea847292c3527070935e0f7709d79d81446ef"
+    },
+    "license.md": {
+      "released": "80b7b0741b3290e739c344f9e641ce6a13cca5869fc5f8c38243e0285f5c8640",
+      "candidate": "80b7b0741b3290e739c344f9e641ce6a13cca5869fc5f8c38243e0285f5c8640"
+    },
+    "limine-bios-cd.bin": {
+      "released": "1bb2f5c66404b17729ae3c1b736c14cbd0189cb2c9fdf1236e3c5efa9c03a12d",
+      "candidate": "dfa171f3b278238ea014d858aa02f7d741245c9eb4db8d4913a82e7f3e6ae6d4"
+    },
+    "limine-bios.sys": {
+      "released": "20c3c7f82e8be46aec7c7c17c6f6027fd613e57f5f0513b5bef3a01b58563942",
+      "candidate": "20c3c7f82e8be46aec7c7c17c6f6027fd613e57f5f0513b5bef3a01b58563942"
+    },
+    "limine.conf": {
+      "released": "fa250ae1489c70d9be6e752f918e8a45820cc84e1ed109266ddda6399921f56d",
+      "candidate": "3ac3407ef0c26b5ce46638c97b4d855186e7df38555c2f84e63ae14d25e58925"
+    },
+    "limine.txt": {
+      "released": "6f01658d2077b3d89b1867c87f48260675b20abc7a3bf43eb880f061f74de258",
+      "candidate": "6f01658d2077b3d89b1867c87f48260675b20abc7a3bf43eb880f061f74de258"
+    },
+    "notices.txt": {
+      "released": "04bb865733036f2f978fce369ba95fe335b5967de5de0abe767b0a47a3f386ca",
+      "candidate": "04bb865733036f2f978fce369ba95fe335b5967de5de0abe767b0a47a3f386ca"
+    },
+    "readme.txt": {
+      "released": "73768e45e425451e50f940ccf551489b6069dd410e97872b9dbf48ad959b224b",
+      "candidate": "73768e45e425451e50f940ccf551489b6069dd410e97872b9dbf48ad959b224b"
+    },
+    "surf.elf": {
+      "released": "b87f1185f86961ff8afdb21315c811f0c071c474d09737613146be46cbb98b34",
+      "candidate": "b87f1185f86961ff8afdb21315c811f0c071c474d09737613146be46cbb98b34"
+    }
+  }
+}

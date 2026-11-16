@@ -139,14 +139,14 @@ def exercise(guest, monitor, serial, output, startup_only, expected_image, captu
             launcher("after-stop")
             if check_register:
                 def outcomes(text):
-                    return (re.search(r"\boutcome\s+DONE\b", text) and
+                    return ("surf.elf" in text and re.search(r"\boutcome\s+DONE\b", text) and
                             re.search(r"\boutcome\s+STOPPED\b", text))
 
                 press("r")
                 screen_until("register-latest", outcomes)
                 press("up")
                 screen_until("register-earlier", lambda text: "scroll" in text.lower() and
-                             "outcome STOPPED" not in text and "outcome DONE" not in text)
+                             "METHOD_PINNED" in text and "surf.elf" not in text)
                 press("down")
                 screen_until("register-restored", outcomes)
                 if (output / "register-latest.ppm").read_bytes() != (output / "register-restored.ppm").read_bytes():

@@ -47,7 +47,7 @@ def check(iso, output, *, clock="instructions", startup_only=False):
                         guest.kill()
 
 
-def exercise(guest, monitor, serial, output):
+def exercise(guest, monitor, serial, output, startup_only):
     import socket
 
     def wait(test, name, seconds=120):

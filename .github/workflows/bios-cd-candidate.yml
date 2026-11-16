@@ -37,14 +37,11 @@ jobs:
         id: prepare
         run: |
           out="$RUNNER_TEMP/optical"
-          if test -f "$CANDIDATE/keyboard-01.zip"; then
-            python3 "$CANDIDATE/candidate.py" inspect PCP-OS.iso os-source "$out"
-          else
-            rustup toolchain install 1.100.0 --profile minimal --component rust-src
-            rustc -vV > "$out/rust.txt"
-            bash os-source/PCP_OS_Rust/crates/pcpos-kernel/run.sh build
-            python3 "$CANDIDATE/candidate.py" build PCP-OS.iso os-source "$out"
-          fi
+          rustup toolchain install 1.100.0 --profile minimal --component rust-src
+          rustc -vV > "$out/rust.txt"
+          bash os-source/PCP_OS_Rust/crates/pcpos-kernel/run.sh build
+          python3 "$CANDIDATE/candidate.py" inspect PCP-OS.iso os-source "$out"
+          cmp os-source/PCP_OS_Rust/crates/pcpos-kernel/target/pcpos-kernel.elf32 "$out/kernel.elf32"
       - name: Cold boot, playback, keyboard Stop, returns and shutdown on the wall clock
         if: "!cancelled() && steps.prepare.outcome == 'success'"
         run: python3 "$CANDIDATE/candidate.py" wall PCP-OS.iso os-source "$RUNNER_TEMP/optical"

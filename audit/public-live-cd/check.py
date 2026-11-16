@@ -142,16 +142,24 @@ def exercise(guest, monitor, serial, output, startup_only, expected_image, captu
                     return ("surf.elf" in text and re.search(r"\boutcome\s+DONE\b", text) and
                             re.search(r"\boutcome\s+STOPPED\b", text))
 
-                press("r")
+                # Send each make/break pair explicitly. A timed send-key release can
+                # still be pending when an instruction-counted guest accepts the next key.
+                def tap(key):
+                    rpc("input-send-event", events=[
+                        {"type": "key", "data": {"down": down, "key": {"type": "qcode", "data": key}}}
+                        for down in (True, False)
+                    ])
+
+                tap("r")
                 screen_until("register-latest", outcomes)
-                press("up")
+                tap("up")
                 screen_until("register-earlier", lambda text: "scroll" in text.lower() and
                              "METHOD_PINNED" in text and "surf.elf" not in text)
-                press("down")
+                tap("down")
                 screen_until("register-restored", outcomes)
                 if (output / "register-latest.ppm").read_bytes() != (output / "register-restored.ppm").read_bytes():
                     raise RuntimeError("Down did not restore the original register screen")
-                press("esc")
+                tap("esc")
                 launcher("after-register")
                 if (output / "after-register.ppm").read_bytes() != (output / "after-stop.ppm").read_bytes():
                     raise RuntimeError("Esc did not restore the launcher shown before R")

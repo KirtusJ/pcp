@@ -7,6 +7,26 @@ import subprocess
 from check import check, GuestSafe, IMAGE_SHA, ISO_SHA
 
 
+def observe(iso, directory, mode):
+    row = {}
+    try:
+        check(iso, directory, clock=mode, startup_only=True)
+        row["outcome"] = "launcher"
+    except GuestSafe:
+        row["outcome"] = "SAFE"
+    except Exception as error:
+        row.update(outcome="incomplete", error=repr(error))
+    serial = directory / "serial.txt"
+    log = serial.read_text(errors="replace") if serial.exists() else ""
+    row["running_image_matched"] = IMAGE_SHA + " (measured; equal" in log
+    row["keyboard_observations"] = [
+        line.strip() for line in log.splitlines()
+        if "note key while waiting:" in line or "note stop key while waiting for a key:" in line
+    ]
+    row["failed_checks"] = [line.strip() for line in log.splitlines() if line.startswith("  FAIL ")]
+    return row
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("iso", type=Path)
@@ -25,21 +45,7 @@ def main():
         for mode in order:
             directory = root / f"{pair}-{mode}"
             row = {"pair": pair, "clock": mode}
-            try:
-                check(args.iso.resolve(), directory, clock=mode, startup_only=True)
-                row["outcome"] = "launcher"
-            except GuestSafe:
-                row["outcome"] = "SAFE"
-            except Exception as error:
-                row.update(outcome="incomplete", error=repr(error))
-            serial = directory / "serial.txt"
-            log = serial.read_text(errors="replace") if serial.exists() else ""
-            row["running_image_matched"] = IMAGE_SHA + " (measured; equal" in log
-            row["keyboard_observations"] = [
-                line.strip() for line in log.splitlines()
-                if "note key while waiting:" in line or "note stop key while waiting for a key:" in line
-            ]
-            row["failed_checks"] = [line.strip() for line in log.splitlines() if line.startswith("  FAIL ")]
+            row.update(observe(args.iso.resolve(), directory, mode))
             report["runs"].append(row)
             summary.write_text(json.dumps(report, indent=2) + "\n")
             print(json.dumps(row), flush=True)

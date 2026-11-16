@@ -16,9 +16,21 @@ jobs:
       - name: Install emulator and framebuffer reader
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends qemu-system-x86 seabios tesseract-ocr tesseract-ocr-eng
+          sudo apt-get install -y --no-install-recommends qemu-system-x86 seabios tesseract-ocr tesseract-ocr-eng xorriso
+      - name: Read the PCP OS Surfbird waveform verifier
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: KirtusJ/pcp-os
+          ref: 946ef854d908c9beb37436cf3f37284a2ad86610
+          path: waveform-verifier
+          sparse-checkout: apps/surfbird/guest
+          persist-credentials: false
       - name: Boot the released CD and exercise its keyboard controls
-        run: python3 audit/public-live-cd/check.py PCP-OS.iso "$RUNNER_TEMP/pcp-optical"
+        run: python3 audit/public-live-cd/check.py PCP-OS.iso "$RUNNER_TEMP/pcp-optical" --capture-audio
+      - name: Check the bundled track and the captured AC'97 output
+        run: |
+          python3 audit/public-live-cd/check_audio.py PCP-OS.iso "$RUNNER_TEMP/pcp-optical" \
+            waveform-verifier/apps/surfbird/guest/replay_local_media.py
       - name: Compare cold-start clock modes
         if: success() || failure()
         run: python3 audit/public-live-cd/compare_clocks.py PCP-OS.iso "$RUNNER_TEMP/pcp-clocks"

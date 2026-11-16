@@ -27,6 +27,10 @@ The check uses an instruction-counted guest clock, reads the actual launcher fra
 
 [QEMU system invocation](https://www.qemu.org/docs/master/system/invocation.html) · [Coordination and wall-clock result](https://github.com/KirtusJ/pcp-os/issues/132#issuecomment-6913785729)
 
+## Capture the emulator's audio output
+
+To record the released CD's playback, add `--capture-audio` to the command above. The public-CD workflow also extracts `/clip.wav` from the pinned ISO with xorriso and checks the four bursts in both the extracted track and QEMU’s recorded audio. The expected sequence is 500 Hz on the left, 750 Hz on the right, 600 Hz on the left and 375 Hz on the right. The check measures duration, spacing and leakage into the other channel. The output directory contains the original `capture.wav`, a `captured-playable.wav` with finalized header lengths, and the measurements in `audio.json`. Loudspeaker output requires a separate listening test. [PCP OS waveform verifier](https://github.com/KirtusJ/pcp-os/blob/946ef854d908c9beb37436cf3f37284a2ad86610/apps/surfbird/guest/replay_local_media.py) · [QEMU WAV backend](https://www.qemu.org/docs/master/system/qemu-manpage.html).
+
 ## Keyboard timing fixes in kernel source
 
 The distributed 0.3.1 CD uses the ISO and running-kernel hashes above. Later PCP OS source changes pace the blocked-reader test from an actual keyboard wait and send the longest-sleep Stop chord after ten observed idle periods. Both fixes are present at `946ef854d908c9beb37436cf3f37284a2ad86610`. [Blocked-reader change](https://github.com/KirtusJ/pcp-os/pull/63) · [Longest-sleep change](https://github.com/KirtusJ/pcp-os/pull/164).

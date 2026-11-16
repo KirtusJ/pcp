@@ -15,19 +15,23 @@ class GuestSafe(RuntimeError):
     pass
 
 
-def check(iso, output, *, clock="instructions", startup_only=False):
+def check(iso, output, *, clock="instructions", startup_only=False, capture_audio=False):
     if hashlib.sha256(iso.read_bytes()).hexdigest() != ISO_SHA:
         raise ValueError("The optical image differs from the published 0.3.1 CD")
     output.mkdir(parents=True, exist_ok=False)
     serial = output / "serial.txt"
     with tempfile.TemporaryDirectory() as tmp:
         monitor = Path(tmp) / "qmp"
+        audio = "none,id=snd0"
+        if capture_audio:
+            wav_path = str((output / "capture.wav").resolve()).replace(",", ",,")
+            audio = f"wav,id=snd0,out.frequency=48000,out.channels=2,out.format=s16,path={wav_path}"
         command = [
             "qemu-system-x86_64", "-machine", "pc", "-accel", "tcg",
             "-cpu", "qemu64", "-m", "64M", "-boot", "order=d", "-cdrom", str(iso),
             "-nic", "none", "-vga", "std", "-display", "none", "-monitor", "none",
             "-serial", "file:" + str(serial), "-qmp", f"unix:{monitor},server=on,wait=off",
-            "-audiodev", "none,id=snd0", "-device", "AC97,audiodev=snd0",
+            "-audiodev", audio, "-device", "AC97,audiodev=snd0",
             "-no-reboot",
             "-device", "isa-debug-exit,iobase=0xf4,iosize=0x04",
         ]
@@ -124,5 +128,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("iso", type=Path)
     parser.add_argument("output", type=Path, help="a new directory for serial and framebuffer evidence")
+    parser.add_argument("--capture-audio", action="store_true", help="write the AC’97 output to capture.wav")
     args = parser.parse_args()
-    check(args.iso.resolve(), args.output.resolve())
+    check(args.iso.resolve(), args.output.resolve(), capture_audio=args.capture_audio)

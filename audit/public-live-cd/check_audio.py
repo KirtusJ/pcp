@@ -16,12 +16,17 @@ def sha256(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def check_audio(iso, output, verifier, *, expected_iso=ISO_SHA):
-    if sha256(iso) != expected_iso:
-        raise ValueError("The optical image differs from the expected SHA-256")
+def load_verifier(verifier):
     spec = importlib.util.spec_from_file_location("surfbird_media", verifier)
     media = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(media)
+    return media
+
+
+def check_audio(iso, output, verifier, *, expected_iso=ISO_SHA):
+    if sha256(iso) != expected_iso:
+        raise ValueError("The optical image differs from the expected SHA-256")
+    media = load_verifier(verifier)
     capture = output / "capture.wav"
     with tempfile.TemporaryDirectory() as temp:
         work = Path(temp)

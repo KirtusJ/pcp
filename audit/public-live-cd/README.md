@@ -38,3 +38,14 @@ The distributed 0.3.1 CD uses the ISO and running-kernel hashes above. Later PCP
 A separately built BIOS CD with those kernel sources and the public demo payloads reached the launcher unattended on both the ordinary and instruction-counted QEMU clocks. The instruction-counted run played all 32 demo frames, returned to the launcher, stopped the relaunched app on the keyboard chord, and powered off with exit 33. Its measured kernel was `28d5db873d8b21aed141a2bf0df0064ff79fa76d73fdc9078cac006c25d86859`. [Boot configuration, media identities and retained serials](https://github.com/KirtusJ/pcp-os/pull/164#issuecomment-6915886530).
 
 The [keyboard-01 BIOS CD candidate](candidates/keyboard-01/) carries the merged keyboard fixes. Its versioned handoff includes the ISO, rebuilt kernel and full playback and Stop observations under both guest clocks.
+
+## Check displayed playback frames
+
+Add `--capture-video` to the optical check to save four QEMU framebuffers during playback. Run the following command with the same ISO and output directory, and a checkout of PCP OS at `946ef854d908c9beb37436cf3f37284a2ad86610`.
+
+```sh
+python3 audit/public-live-cd/check_video.py PCP-OS.iso "$output" \
+  "$OS_SOURCE/apps/surfbird/guest/replay_local_media.py"
+```
+
+The checker extracts the 32 pictures from the disc’s pinned `clip.ppm`. It compares every pixel in each captured 640 × 360 screen, including the border, with the corresponding magnified source image. Serial markers 3, 11, 19 and 27 trigger the captures. The display can advance while QEMU takes a screenshot, so each capture must identify a unique source frame in the intended eight-frame scene. Read `video.json` for the actual frame numbers and screenshot digests. The serial log records all 32 frame numbers. [PCP OS framebuffer comparison](https://github.com/KirtusJ/pcp-os/blob/946ef854d908c9beb37436cf3f37284a2ad86610/apps/surfbird/guest/replay_local_media.py) · [QEMU screen capture](https://www.qemu.org/docs/master/interop/qemu-qmp-ref.html#command-QMP.screendump) · [Netpbm PPM format](https://netpbm.sourceforge.net/doc/ppm.html)

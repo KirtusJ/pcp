@@ -1,3 +1,60 @@
+name: BIOS CD candidate keyboard-01
+on:
+  pull_request:
+    paths:
+      - 'audit/public-live-cd/candidates/keyboard-01/**'
+      - 'audit/public-live-cd/check*.py'
+      - '.github/workflows/bios-cd-candidate.yml'
+      - 'PCP-OS.iso'
+permissions:
+  contents: read
+jobs:
+  optical:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      CANDIDATE: audit/public-live-cd/candidates/keyboard-01
+      RUSTUP_TOOLCHAIN: 1.100.0
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Read the merged keyboard fixes
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: KirtusJ/pcp-os
+          ref: 946ef854d908c9beb37436cf3f37284a2ad86610
+          path: os-source
+          persist-credentials: false
+      - name: Install build and observation tools
+        run: |
+          sudo apt-get -qq update
+          sudo apt-get -qq install -y --no-install-recommends qemu-system-x86 seabios xorriso lld binutils tesseract-ocr tesseract-ocr-eng
+          mkdir -p "$RUNNER_TEMP/optical"
+          qemu-system-x86_64 --version > "$RUNNER_TEMP/optical/qemu.txt"
+          xorriso -version > "$RUNNER_TEMP/optical/xorriso.txt"
+      - name: Prepare and independently inspect the CD
+        id: prepare
+        run: |
+          out="$RUNNER_TEMP/optical"
+          rustup toolchain install 1.100.0 --profile minimal --component rust-src
+          rustc -vV > "$out/rust.txt"
+          bash os-source/PCP_OS_Rust/crates/pcpos-kernel/run.sh build
+          python3 "$CANDIDATE/candidate.py" inspect PCP-OS.iso os-source "$out"
+          cmp os-source/PCP_OS_Rust/crates/pcpos-kernel/target/pcpos-kernel.elf32 "$out/kernel.elf32"
+      - name: Cold boot, playback, keyboard Stop, returns and shutdown on the wall clock
+        if: "!cancelled() && steps.prepare.outcome == 'success'"
+        run: python3 "$CANDIDATE/candidate.py" wall PCP-OS.iso os-source "$RUNNER_TEMP/optical"
+      - name: Cold boot, playback, keyboard Stop, returns and shutdown with instruction counting
+        if: "!cancelled() && steps.prepare.outcome == 'success'"
+        run: python3 "$CANDIDATE/candidate.py" instructions PCP-OS.iso os-source "$RUNNER_TEMP/optical"
+      - name: Preserve both trials and the optical identities
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-01-observations
+          path: ${{ runner.temp }}/optical
+          if-no-files-found: error
   rollback:
     runs-on: ubuntu-24.04
     timeout-minutes: 16

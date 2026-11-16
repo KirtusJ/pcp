@@ -113,14 +113,23 @@ def prepare(distribution, os_source, out, retained):
         if not retained:
             require(not iso.exists(), "Use a fresh output directory for a new candidate")
             epoch = build_epoch(os_source)
+            volume_date = time.strftime("%Y%m%d%H%M%S00", time.gmtime(epoch))
             environment = dict(os.environ, SOURCE_DATE_EPOCH=str(epoch), TZ="UTC")
             subprocess.run(["xorriso", "-no_rc", "-indev", distribution, "-outdev", iso,
                             "-map", elf, "/kernel.elf32", "-map", config, "/limine.conf",
                             "-chown", "0", "/kernel.elf32", "/limine.conf", "--",
                             "-chgrp", "0", "/kernel.elf32", "/limine.conf", "--",
                             "-chmod", "0644", "/kernel.elf32", "/limine.conf", "--",
-                            "-boot_image", "any", "replay", "-volume_date", "all_file_dates", f"={epoch}",
-                            "-commit"], check=True, env=environment)
+                            "-boot_image", "any", "replay", "-volume_date", "uuid", volume_date,
+                            "-volume_date", "all_file_dates", f"={epoch}", "-commit"], check=True, env=environment)
+            # ECMA-119 primary volume descriptor on this pinned BIOS layout, sector 16.
+            with iso.open("rb") as stream:
+                stream.seek(16 * 2048)
+                descriptor = stream.read(2048)
+            expected_date = volume_date.encode("ascii") + b"\x00"
+            require(descriptor[:7] == b"\x01CD001\x01" and
+                    descriptor[813:830] == descriptor[830:847] == expected_date,
+                    "Rebuilt volume creation or modification time differs from the requested epoch")
         extract(iso, candidate)
         files = lambda directory: {p.relative_to(directory).as_posix() for p in directory.rglob("*") if p.is_file()}
         require(files(original) == files(candidate), "CD file sets differ")

@@ -7,10 +7,11 @@ import subprocess
 from check import check, GuestSafe, IMAGE_SHA, ISO_SHA
 
 
-def observe(iso, directory, mode):
+def observe(iso, directory, mode, *, expected_iso=ISO_SHA, expected_image=IMAGE_SHA):
     row = {}
     try:
-        check(iso, directory, clock=mode, startup_only=True)
+        check(iso, directory, clock=mode, startup_only=True,
+              expected_iso=expected_iso, expected_image=expected_image)
         row["outcome"] = "launcher"
     except GuestSafe:
         row["outcome"] = "SAFE"
@@ -18,7 +19,12 @@ def observe(iso, directory, mode):
         row.update(outcome="incomplete", error=repr(error))
     serial = directory / "serial.txt"
     log = serial.read_text(errors="replace") if serial.exists() else ""
-    row["running_image_matched"] = IMAGE_SHA + " (measured; equal" in log
+    lines = log.splitlines()
+    measurement = (f"running image (code and read-only data), SHA-256: {expected_image} "
+                   "(measured; equal to the value the loader named)")
+    row["running_image_matched"] = lines.count(measurement) == 1
+    row["sleep_stop_observations"] = [line.strip() for line in lines
+                                      if line.startswith("  note stop key while asleep:")]
     row["keyboard_observations"] = [
         line.strip() for line in log.splitlines()
         if "note key while waiting:" in line or "note stop key while waiting for a key:" in line

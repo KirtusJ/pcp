@@ -46,3 +46,12 @@ python3 "$candidate" instructions PCP-OS.iso "$OS_SOURCE" "$out"
 To assemble another disposable CD, build the kernel with the pinned toolchain and use `build` in a fresh output directory. Optical timestamps and layout can change a newly assembled ISO’s digest. The checks above use the archived bytes.
 
 To try this candidate and then boot the preceding public CD, follow [Download and restore the BIOS CD](restore.md). It includes a pinned download of the original image for use from an empty directory.
+
+To compare cold starts under CPU contention, run the following after `candidate.py inspect` has written the retained candidate into `$out`.
+
+```sh
+python3 audit/public-live-cd/compare_contention.py PCP-OS.iso "$out/contention" \
+  --candidate "$out/candidate.iso"
+```
+
+Each image boots four times on the ordinary guest clock. The emulator shares one host CPU with a busy process. The order of the two images reverses in each successive pair. Read `contention/summary.json` for the measured kernel checks, keyboard self-test observations, launcher or SAFE outcomes, and CPU time consumed by the competing process. Each trial keeps its serial log. A SAFE startup on the original is recorded. A SAFE startup on keyboard-01 fails this candidate check. [Linux CPU affinity](https://man7.org/linux/man-pages/man2/sched_setaffinity.2.html)

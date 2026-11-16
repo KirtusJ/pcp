@@ -22,6 +22,9 @@ jobs:
       - name: Compare cold-start clock modes
         if: success() || failure()
         run: python3 audit/public-live-cd/compare_clocks.py PCP-OS.iso "$RUNNER_TEMP/pcp-clocks"
+      - name: Compare same-CPU contention on the wall clock
+        if: success() || failure()
+        run: python3 audit/public-live-cd/compare_contention.py PCP-OS.iso "$RUNNER_TEMP/pcp-contention"
       - name: Keep serial and framebuffer observations
         if: always()
         uses: actions/upload-artifact@v4
@@ -30,4 +33,5 @@ jobs:
           path: |
             ${{ runner.temp }}/pcp-optical/
             ${{ runner.temp }}/pcp-clocks/
+            ${{ runner.temp }}/pcp-contention/
           if-no-files-found: warn

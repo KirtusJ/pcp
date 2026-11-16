@@ -39,4 +39,6 @@ These links point to the files as published in PCP commit `0f0b34b1dbccabe9c4fe8
 
 4. Before entering any keys, check that the launcher appears. The recovered kernel’s measured image in `previous.log` is `0232c02a8946d66216da0ac65953a246ce3d41d7a966ae31aa83c3335b3259e3`. Enter opens Surfbird and Space plays the clip. After returning to the launcher, P powers off.
 
+To review an application run before powering off, press **R** at the launcher. Use **Up** and **Down** to scroll the kernel register. A normal exit appears as `DONE`. Stopping a running app with **Ctrl+Alt+Delete** appears as `STOPPED`. Press **Esc** once to return to the launcher.
+
 The scope here is switching bootable optical media. For the original public CD observations and SAFE behavior see the [public boot guide](../../README.md). [GitHub commit permalinks](https://docs.github.com/en/repositories/working-with-files/using-files/getting-permanent-links-to-files) · [QEMU guest clock options](https://www.qemu.org/docs/master/system/invocation.html)

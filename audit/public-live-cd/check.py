@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 import subprocess
 import tempfile
@@ -19,7 +20,8 @@ class GuestSafe(RuntimeError):
 
 
 def check(iso, output, *, clock="instructions", startup_only=False, capture_audio=False,
-          expected_iso=ISO_SHA, expected_image=IMAGE_SHA, capture_video=False, debug_exit=True):
+          expected_iso=ISO_SHA, expected_image=IMAGE_SHA, capture_video=False, debug_exit=True,
+          check_register=False):
     if hashlib.sha256(iso.read_bytes()).hexdigest() != expected_iso:
         raise ValueError("The optical image differs from the expected SHA-256")
     output.mkdir(parents=True, exist_ok=False)
@@ -46,7 +48,8 @@ def check(iso, output, *, clock="instructions", startup_only=False, capture_audi
         (output / "qemu-command.json").write_text(json.dumps(command, indent=2) + "\n")
         with subprocess.Popen(command, stdin=subprocess.DEVNULL) as guest:
             try:
-                exercise(guest, monitor, serial, output, startup_only, expected_image, capture_video, debug_exit)
+                exercise(guest, monitor, serial, output, startup_only, expected_image, capture_video,
+                         debug_exit, check_register)
             finally:
                 if guest.poll() is None:
                     guest.terminate()
@@ -56,7 +59,8 @@ def check(iso, output, *, clock="instructions", startup_only=False, capture_audi
                         guest.kill()
 
 
-def exercise(guest, monitor, serial, output, startup_only, expected_image, capture_video, debug_exit):
+def exercise(guest, monitor, serial, output, startup_only, expected_image, capture_video, debug_exit,
+             check_register):
     import socket
 
     def wait(test, name, seconds=120, poll=0.1):
@@ -97,15 +101,18 @@ def exercise(guest, monitor, serial, output, startup_only, expected_image, captu
                 rpc("send-key", keys=[{"type": "qcode", "data": k} for k in keys],
                     **{"hold-time": 70})
 
-            def launcher(label):
+            def screen_until(label, matches):
                 screen = output / (label + ".ppm")
                 def visible(_):
                     rpc("screendump", filename=str(screen))
                     result = subprocess.run(["tesseract", str(screen), "stdout", "--psm", "6"],
                                             check=True, capture_output=True, text=True)
                     (output / (label + ".txt")).write_text(result.stdout)
-                    return "power off" in result.stdout.lower()
+                    return matches(result.stdout)
                 wait(visible, label, 45)
+
+            def launcher(label):
+                screen_until(label, lambda text: "power off" in text.lower())
 
             rpc("qmp_capabilities")
             wait(lambda s: ("long mode true" in s and
@@ -130,6 +137,24 @@ def exercise(guest, monitor, serial, output, startup_only, expected_image, captu
             press("ctrl", "alt", "delete")
             wait(lambda s: "surf.elf ended STOPPED" in s, "kernel Stop")
             launcher("after-stop")
+            if check_register:
+                def outcomes(text):
+                    return (re.search(r"\boutcome\s+DONE\b", text) and
+                            re.search(r"\boutcome\s+STOPPED\b", text))
+
+                press("r")
+                screen_until("register-latest", outcomes)
+                press("up")
+                screen_until("register-earlier", lambda text: "scroll" in text.lower() and
+                             "outcome STOPPED" not in text and "outcome DONE" not in text)
+                press("down")
+                screen_until("register-restored", outcomes)
+                if (output / "register-latest.ppm").read_bytes() != (output / "register-restored.ppm").read_bytes():
+                    raise RuntimeError("Down did not restore the original register screen")
+                press("esc")
+                launcher("after-register")
+                if (output / "after-register.ppm").read_bytes() != (output / "after-stop.ppm").read_bytes():
+                    raise RuntimeError("Esc did not restore the launcher shown before R")
             events.clear()
             press("p")
             code = guest.wait(timeout=30)

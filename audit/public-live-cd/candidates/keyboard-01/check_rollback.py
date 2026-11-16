@@ -48,14 +48,14 @@ def main(output):
         candidate.write_bytes(archive.read("candidate.iso"))
     if verify_download(guide, candidate) != identity["candidate_iso"]:
         raise ValueError("Downloaded candidate differs from its distribution inventory")
-    check(candidate, output / "candidate-wall", clock="wall", debug_exit=False,
+    check(candidate, output / "candidate-wall", clock="wall", debug_exit=False, check_register=True,
           expected_iso=identity["candidate_iso"], expected_image=identity["candidate_image"])
 
     previous = download(guide, "PCP-OS.iso", recovery)
     if previous["sha256"] != ISO_SHA or identity["released_iso"] != ISO_SHA:
         raise ValueError("Recovery did not obtain the preceding public CD")
     iso = recovery / previous["filename"]
-    check(iso, output / "previous-instructions", clock="instructions", debug_exit=False)
+    check(iso, output / "previous-instructions", clock="instructions", debug_exit=False, check_register=True)
     try:
         check(iso, output / "previous-wall", clock="wall")
         wall = "launcher, playback, Stop, return and power-off"

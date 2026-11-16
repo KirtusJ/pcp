@@ -2,12 +2,14 @@
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import struct
 import subprocess
 import sys
 import tempfile
+import time
 import zipfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -69,6 +71,17 @@ def inspect_catalog(iso, catalog, boot_lba):
     raise ValueError("El Torito boot record missing")
 
 
+def build_epoch(os_source):
+    value = os.environ.get("SOURCE_DATE_EPOCH")
+    if value is None:
+        value = subprocess.check_output(["git", "-C", os_source, "show", "-s", "--format=%ct", OS_COMMIT],
+                                        text=True).strip()
+    require(re.fullmatch(r"[0-9]+", value), "Expected integer seconds in SOURCE_DATE_EPOCH")
+    epoch = int(value)
+    require(epoch <= 4354819199, "Build date exceeds the ZIP timestamp range (2107)")
+    return epoch
+
+
 def prepare(distribution, os_source, out, retained):
     require(digest(distribution) == ISO_SHA, "Unexpected public CD")
     actual = subprocess.check_output(["git", "-C", os_source, "rev-parse", "HEAD"], text=True).strip()
@@ -99,8 +112,24 @@ def prepare(distribution, os_source, out, retained):
         config.write_bytes(old.replace(key, ("image=" + image).encode("ascii")))
         if not retained:
             require(not iso.exists(), "Use a fresh output directory for a new candidate")
-            subprocess.run(["xorriso", "-indev", distribution, "-outdev", iso, "-map", elf, "/kernel.elf32",
-                            "-map", config, "/limine.conf", "-boot_image", "any", "replay", "-commit"], check=True)
+            epoch = build_epoch(os_source)
+            volume_date = time.strftime("%Y%m%d%H%M%S00", time.gmtime(epoch))
+            environment = dict(os.environ, SOURCE_DATE_EPOCH=str(epoch), TZ="UTC")
+            subprocess.run(["xorriso", "-no_rc", "-indev", distribution, "-outdev", iso,
+                            "-map", elf, "/kernel.elf32", "-map", config, "/limine.conf",
+                            "-chown", "0", "/kernel.elf32", "/limine.conf", "--",
+                            "-chgrp", "0", "/kernel.elf32", "/limine.conf", "--",
+                            "-chmod", "0644", "/kernel.elf32", "/limine.conf", "--",
+                            "-boot_image", "any", "replay", "-volume_date", "uuid", volume_date,
+                            "-volume_date", "all_file_dates", f"={epoch}", "-commit"], check=True, env=environment)
+            # ECMA-119 primary volume descriptor on this pinned BIOS layout, sector 16.
+            with iso.open("rb") as stream:
+                stream.seek(16 * 2048)
+                descriptor = stream.read(2048)
+            expected_date = volume_date.encode("ascii") + b"\x00"
+            require(descriptor[:7] == b"\x01CD001\x01" and
+                    descriptor[813:830] == descriptor[830:847] == expected_date,
+                    "Rebuilt volume creation or modification time differs from the requested epoch")
         extract(iso, candidate)
         files = lambda directory: {p.relative_to(directory).as_posix() for p in directory.rglob("*") if p.is_file()}
         require(files(original) == files(candidate), "CD file sets differ")
@@ -124,9 +153,14 @@ def prepare(distribution, os_source, out, retained):
         pins = json.loads(retained.with_name("identity.json").read_text())
         require(identities == pins, "Retained CD or kernel differs from the versioned pins")
     else:
-        with zipfile.ZipFile(out / BUNDLE, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
+        # ZIP stores UTC here by convention, at two-second resolution, starting in 1980.
+        timestamp = time.gmtime(max(epoch, 315532800))[:6]
+        with zipfile.ZipFile(out / BUNDLE, "w") as archive:
             for target in (iso, elf):
-                archive.write(target, arcname=target.name)
+                entry = zipfile.ZipInfo(target.name, timestamp)
+                entry.create_system = 3
+                entry.external_attr = 0o100644 << 16
+                archive.writestr(entry, target.read_bytes(), compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)
     (out / "identity.json").write_text(json.dumps(identities, indent=2) + "\n")
 
 

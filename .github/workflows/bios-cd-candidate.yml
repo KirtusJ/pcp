@@ -49,6 +49,23 @@ jobs:
       - name: Cold boot, playback, keyboard Stop, returns and shutdown with instruction counting
         if: "!cancelled() && steps.prepare.outcome == 'success'"
         run: python3 "$CANDIDATE/candidate.py" instructions PCP-OS.iso os-source "$RUNNER_TEMP/optical"
+      - name: Assemble the same BIOS CD in two fresh directories and boot the result
+        if: "!cancelled() && steps.prepare.outcome == 'success'"
+        run: |
+          root="$RUNNER_TEMP/optical/rebuilt"
+          elf=os-source/PCP_OS_Rust/crates/pcpos-kernel/target/pcpos-kernel.elf32
+          mkdir -p "$root"
+          touch -d '2017-01-02T03:04:05Z' "$elf"
+          (umask 022; unset SOURCE_DATE_EPOCH; TZ=Pacific/Honolulu python3 "$CANDIDATE/candidate.py" build PCP-OS.iso os-source "$root/first")
+          touch -d '2024-06-07T08:09:10Z' "$elf"
+          epoch=$(git -C os-source show -s --format=%ct HEAD)
+          (umask 077; TZ=Asia/Tokyo SOURCE_DATE_EPOCH="$epoch" python3 "$CANDIDATE/candidate.py" build PCP-OS.iso os-source "$root/second")
+          for file in candidate.iso kernel.elf32 keyboard-01.zip identity.json; do
+            cmp "$root/first/$file" "$root/second/$file"
+          done
+          printf '%s\n' "$epoch" > "$root/source-date-epoch.txt"
+          (cd "$root" && sha256sum {first,second}/{candidate.iso,kernel.elf32,keyboard-01.zip,identity.json}) > "$root/checksums.txt"
+          python3 "$CANDIDATE/candidate.py" instructions PCP-OS.iso os-source "$root/first"
       - name: Compare both optical images under the same competing CPU load
         if: "!cancelled() && steps.prepare.outcome == 'success'"
         run: |

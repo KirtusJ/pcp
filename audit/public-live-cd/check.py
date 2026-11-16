@@ -3,7 +3,6 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
-import re
 import subprocess
 import tempfile
 import time
@@ -106,7 +105,7 @@ def exercise(guest, monitor, serial, output):
             press("p")
             code = guest.wait(timeout=30)
             final = serial.read_text(errors="replace")
-            if not re.search(r"0 failed", final, re.I) or code != 33:
+            if "ALL SELF-TESTS PASS" not in final or code != 33:
                 raise RuntimeError(f"Inspect final serial result and QEMU exit {code}")
             print("Verified unattended launcher, app playback, keyboard Stop and power-off")
 

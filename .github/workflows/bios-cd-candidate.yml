@@ -4,6 +4,7 @@ on:
     paths:
       - 'audit/public-live-cd/candidates/keyboard-01/**'
       - 'audit/public-live-cd/check*.py'
+      - 'audit/public-live-cd/compare_*.py'
       - '.github/workflows/bios-cd-candidate.yml'
       - 'PCP-OS.iso'
 permissions:
@@ -48,6 +49,11 @@ jobs:
       - name: Cold boot, playback, keyboard Stop, returns and shutdown with instruction counting
         if: "!cancelled() && steps.prepare.outcome == 'success'"
         run: python3 "$CANDIDATE/candidate.py" instructions PCP-OS.iso os-source "$RUNNER_TEMP/optical"
+      - name: Compare both optical images under the same competing CPU load
+        if: "!cancelled() && steps.prepare.outcome == 'success'"
+        run: |
+          python3 audit/public-live-cd/compare_contention.py PCP-OS.iso "$RUNNER_TEMP/optical/contention" \
+            --candidate "$RUNNER_TEMP/optical/candidate.iso"
       - name: Preserve both trials and the optical identities
         if: always()
         uses: actions/upload-artifact@v4

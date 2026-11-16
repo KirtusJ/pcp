@@ -11,12 +11,15 @@ ISO_SHA = "93ed3b599ad7be0e1e88a64813b1f2b5299d51507df2edca691aaf6189d10d15"
 IMAGE_SHA = "0232c02a8946d66216da0ac65953a246ce3d41d7a966ae31aa83c3335b3259e3"
 
 
+VIDEO_MARKERS = (3, 11, 19, 27)
+
+
 class GuestSafe(RuntimeError):
     pass
 
 
 def check(iso, output, *, clock="instructions", startup_only=False, capture_audio=False,
-          expected_iso=ISO_SHA, expected_image=IMAGE_SHA):
+          expected_iso=ISO_SHA, expected_image=IMAGE_SHA, capture_video=False):
     if hashlib.sha256(iso.read_bytes()).hexdigest() != expected_iso:
         raise ValueError("The optical image differs from the expected SHA-256")
     output.mkdir(parents=True, exist_ok=False)
@@ -42,7 +45,7 @@ def check(iso, output, *, clock="instructions", startup_only=False, capture_audi
             raise ValueError(f"Unknown guest clock: {clock}")
         with subprocess.Popen(command, stdin=subprocess.DEVNULL) as guest:
             try:
-                exercise(guest, monitor, serial, output, startup_only, expected_image)
+                exercise(guest, monitor, serial, output, startup_only, expected_image, capture_video)
             finally:
                 if guest.poll() is None:
                     guest.terminate()
@@ -52,10 +55,10 @@ def check(iso, output, *, clock="instructions", startup_only=False, capture_audi
                         guest.kill()
 
 
-def exercise(guest, monitor, serial, output, startup_only, expected_image):
+def exercise(guest, monitor, serial, output, startup_only, expected_image, capture_video):
     import socket
 
-    def wait(test, name, seconds=120):
+    def wait(test, name, seconds=120, poll=0.1):
         end = time.monotonic() + seconds
         while time.monotonic() < end:
             if guest.poll() is not None:
@@ -65,7 +68,7 @@ def exercise(guest, monitor, serial, output, startup_only, expected_image):
                 raise GuestSafe("Guest entered SAFE. See serial.txt for failed self-tests.")
             if test(log):
                 return
-            time.sleep(0.1)
+            time.sleep(poll)
         raise TimeoutError(name)
 
     wait(lambda _: monitor.exists(), "QMP socket")
@@ -109,6 +112,11 @@ def exercise(guest, monitor, serial, output, startup_only, expected_image):
             press("ret")
             wait(lambda s: "SURFBIRD media ready" in s, "Surfbird media menu")
             press("spc")
+            if capture_video:
+                for frame in VIDEO_MARKERS:
+                    marker = f"SURFBIRD media-frame {frame}\n"
+                    wait(lambda s: marker in s, f"media frame {frame}", poll=0.012)
+                    rpc("screendump", filename=str((output / f"video-{frame}.ppm").resolve()))
             wait(lambda s: "SURFBIRD media drained" in s, "media playback")
             wait(lambda s: "surf.elf ended DONE" in s, "normal app exit")
             launcher("after-playback")
@@ -131,5 +139,6 @@ if __name__ == "__main__":
     parser.add_argument("iso", type=Path)
     parser.add_argument("output", type=Path, help="a new directory for serial and framebuffer evidence")
     parser.add_argument("--capture-audio", action="store_true", help="write the AC’97 output to capture.wav")
+    parser.add_argument("--capture-video", action="store_true", help="save four playback framebuffers")
     args = parser.parse_args()
-    check(args.iso.resolve(), args.output.resolve(), capture_audio=args.capture_audio)
+    check(args.iso.resolve(), args.output.resolve(), capture_audio=args.capture_audio, capture_video=args.capture_video)

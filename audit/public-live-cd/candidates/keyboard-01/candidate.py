@@ -13,6 +13,7 @@ import zipfile
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from check import check, ISO_SHA, IMAGE_SHA
 from check_audio import check_audio
+from check_video import check_video
 
 OS_COMMIT = "946ef854d908c9beb37436cf3f37284a2ad86610"
 ORIGINAL_KERNEL = "d2fae4ef3df316ff4fa0c1a88744e66cc17bd794856979fa55188b8402f7222f"
@@ -132,13 +133,14 @@ def prepare(distribution, os_source, out, retained):
 def exercise_clock(os_source, out, clock):
     identities = json.loads((out / "identity.json").read_text())
     evidence = out / clock
-    check(out / "candidate.iso", evidence, clock=clock, capture_audio=True,
+    check(out / "candidate.iso", evidence, clock=clock, capture_audio=True, capture_video=True,
           expected_iso=identities["candidate_iso"], expected_image=identities["candidate_image"])
     serial = (evidence / "serial.txt").read_text()
     frames = [int(n) for n in re.findall(r"^SURFBIRD media-frame (\d+)$", serial, re.M)]
     require(frames == list(range(32)), "Expected all 32 media frames in order")
-    check_audio(out / "candidate.iso", evidence, os_source / "apps/surfbird/guest/replay_local_media.py",
-                expected_iso=identities["candidate_iso"])
+    verifier = os_source / "apps/surfbird/guest/replay_local_media.py"
+    for verify in (check_audio, check_video):
+        verify(out / "candidate.iso", evidence, verifier, expected_iso=identities["candidate_iso"])
 
 
 if __name__ == "__main__":

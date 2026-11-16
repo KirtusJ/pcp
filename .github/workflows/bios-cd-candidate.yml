@@ -89,9 +89,19 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /audit/public-live-cd/check.py
+            /audit/public-live-cd/check_register.py
             /audit/public-live-cd/candidates/keyboard-01/check_rollback.py
             /audit/public-live-cd/candidates/keyboard-01/restore.md
             /audit/public-live-cd/candidates/keyboard-01/identity.json
+      - name: Read the pinned kernel font used by the optical launcher
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: KirtusJ/pcp-os
+          ref: 946ef854d908c9beb37436cf3f37284a2ad86610
+          path: os-font
+          sparse-checkout-cone-mode: false
+          sparse-checkout: /PCP_OS_Rust/crates/pcpos-kernel/src/font.rs
+          persist-credentials: false
       - name: Install the emulator and framebuffer reader
         run: |
           sudo apt-get -qq update
@@ -101,6 +111,10 @@ jobs:
           test ! -e PCP-OS.iso
           test ! -e audit/public-live-cd/candidates/keyboard-01/keyboard-01.zip
           python3 audit/public-live-cd/candidates/keyboard-01/check_rollback.py "$RUNNER_TEMP/rollback"
+      - name: Read the two Surfbird task IDs and outcomes from the actual register pixels
+        run: |
+          python3 audit/public-live-cd/check_register.py os-font/PCP_OS_Rust/crates/pcpos-kernel/src/font.rs \
+            "$RUNNER_TEMP/rollback/candidate-wall" "$RUNNER_TEMP/rollback/previous-instructions"
       - name: Preserve the fetched media, serials, framebuffers and outcomes
         if: always()
         uses: actions/upload-artifact@v4

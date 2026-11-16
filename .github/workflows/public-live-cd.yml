@@ -1,0 +1,28 @@
+name: Public live CD
+on:
+  pull_request:
+    paths:
+      - 'PCP-OS.iso'
+      - 'audit/public-live-cd/**'
+      - '.github/workflows/public-live-cd.yml'
+permissions:
+  contents: read
+jobs:
+  optical-boot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install emulator and framebuffer reader
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends qemu-system-x86 seabios tesseract-ocr tesseract-ocr-eng
+      - name: Boot the released CD and exercise its keyboard controls
+        run: python3 audit/public-live-cd/check.py PCP-OS.iso "$RUNNER_TEMP/pcp-optical"
+      - name: Keep serial and framebuffer observations
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-cd-observations
+          path: ${{ runner.temp }}/pcp-optical/
+          if-no-files-found: warn

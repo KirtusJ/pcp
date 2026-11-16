@@ -43,7 +43,7 @@ python3 "$candidate" wall PCP-OS.iso "$OS_SOURCE" "$out"
 python3 "$candidate" instructions PCP-OS.iso "$OS_SOURCE" "$out"
 ```
 
-To assemble another disposable CD, build the kernel with the pinned toolchain and use `build` in a fresh output directory. Optical timestamps and layout can change a newly assembled ISO’s digest. The checks above use the archived bytes.
+To assemble another disposable CD, build the kernel with the pinned toolchain and use `build` in a fresh output directory. By default the script uses the pinned OS commit’s timestamp for the ISO and ZIP. Set `SOURCE_DATE_EPOCH` to supply a different build timestamp. Use the same source CD, kernel bytes, build timestamp and tool versions when comparing rebuilds. `identity.json` records the newly assembled ISO’s digest. The published keyboard-01 archive predates this timestamp convention and has its own digest in the table above. [GNU xorriso timestamps](https://www.gnu.org/software/xorriso/man_1_xorriso.html) · [Reproducible Builds timestamp specification](https://reproducible-builds.org/specs/source-date-epoch/)
 
 To try this candidate and then boot the preceding public CD, follow [Download and restore the BIOS CD](restore.md). It includes a pinned download of the original image for use from an empty directory.
 

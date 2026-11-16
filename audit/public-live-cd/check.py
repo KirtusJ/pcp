@@ -19,7 +19,7 @@ class GuestSafe(RuntimeError):
 
 
 def check(iso, output, *, clock="instructions", startup_only=False, capture_audio=False,
-          expected_iso=ISO_SHA, expected_image=IMAGE_SHA, capture_video=False):
+          expected_iso=ISO_SHA, expected_image=IMAGE_SHA, capture_video=False, debug_exit=True):
     if hashlib.sha256(iso.read_bytes()).hexdigest() != expected_iso:
         raise ValueError("The optical image differs from the expected SHA-256")
     output.mkdir(parents=True, exist_ok=False)
@@ -36,16 +36,17 @@ def check(iso, output, *, clock="instructions", startup_only=False, capture_audi
             "-nic", "none", "-vga", "std", "-display", "none", "-monitor", "none",
             "-serial", "file:" + str(serial), "-qmp", f"unix:{monitor},server=on,wait=off",
             "-audiodev", audio, "-device", "AC97,audiodev=snd0",
-            "-no-reboot",
-            "-device", "isa-debug-exit,iobase=0xf4,iosize=0x04",
         ]
+        if debug_exit:
+            command.extend(["-no-reboot", "-device", "isa-debug-exit,iobase=0xf4,iosize=0x04"])
         if clock == "instructions":
             command.extend(["-icount", "shift=3,align=off,sleep=off"])
         elif clock != "wall":
             raise ValueError(f"Unknown guest clock: {clock}")
+        (output / "qemu-command.json").write_text(json.dumps(command, indent=2) + "\n")
         with subprocess.Popen(command, stdin=subprocess.DEVNULL) as guest:
             try:
-                exercise(guest, monitor, serial, output, startup_only, expected_image, capture_video)
+                exercise(guest, monitor, serial, output, startup_only, expected_image, capture_video, debug_exit)
             finally:
                 if guest.poll() is None:
                     guest.terminate()
@@ -55,7 +56,7 @@ def check(iso, output, *, clock="instructions", startup_only=False, capture_audi
                         guest.kill()
 
 
-def exercise(guest, monitor, serial, output, startup_only, expected_image, capture_video):
+def exercise(guest, monitor, serial, output, startup_only, expected_image, capture_video, debug_exit):
     import socket
 
     def wait(test, name, seconds=120, poll=0.1):
@@ -79,10 +80,14 @@ def exercise(guest, monitor, serial, output, startup_only, expected_image, captu
             if "QMP" not in json.loads(io.readline()):
                 raise RuntimeError("Missing QMP greeting")
 
+            events = []
+
             def rpc(name, **arguments):
                 io.write((json.dumps({"execute": name, "arguments": arguments}) + "\n").encode())
                 while True:
                     reply = json.loads(io.readline())
+                    if "event" in reply:
+                        events.append(reply)
                     if "error" in reply:
                         raise RuntimeError(reply["error"])
                     if "return" in reply:
@@ -125,10 +130,22 @@ def exercise(guest, monitor, serial, output, startup_only, expected_image, captu
             press("ctrl", "alt", "delete")
             wait(lambda s: "surf.elf ended STOPPED" in s, "kernel Stop")
             launcher("after-stop")
+            events.clear()
             press("p")
             code = guest.wait(timeout=30)
+            if not debug_exit:
+                for line in io:
+                    reply = json.loads(line)
+                    if "event" in reply:
+                        events.append(reply)
+                (output / "power-events.json").write_text(json.dumps(events, indent=2) + "\n")
+                if not any(event["event"] == "SHUTDOWN" and
+                           event.get("data", {}).get("guest") is True and
+                           event["data"].get("reason") == "guest-shutdown" for event in events):
+                    raise RuntimeError("No guest-requested QEMU shutdown after P")
             final = serial.read_text(errors="replace")
-            if "ALL SELF-TESTS PASS" not in final or code != 33:
+            expected_exit = 33 if debug_exit else 0
+            if "ALL SELF-TESTS PASS" not in final or code != expected_exit:
                 raise RuntimeError(f"Inspect final serial result and QEMU exit {code}")
             (output / "qemu-exit.txt").write_text(f"{code}\n")
             print("Verified unattended launcher, app playback, keyboard Stop and power-off")

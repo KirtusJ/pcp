@@ -26,3 +26,9 @@ python3 audit/public-live-cd/check.py PCP-OS.iso /tmp/pcp-live-cd-run
 The check uses an instruction-counted guest clock, reads the actual launcher framebuffer, exercises normal playback and the stop chord separately, and checks the guest’s final register and shutdown result. Its headless audio backend tests the guest’s playback path. Audible output requires a listening test with a working host audio backend.
 
 [QEMU system invocation](https://www.qemu.org/docs/master/system/invocation.html) · [Coordination and wall-clock result](https://github.com/KirtusJ/pcp-os/issues/132#issuecomment-6913785729)
+
+## Keyboard timing fixes in kernel source
+
+The distributed 0.3.1 CD uses the ISO and running-kernel hashes above. Later PCP OS source changes pace the blocked-reader test from an actual keyboard wait and send the longest-sleep Stop chord after ten observed idle periods. Both fixes are present at `946ef854d908c9beb37436cf3f37284a2ad86610`. [Blocked-reader change](https://github.com/KirtusJ/pcp-os/pull/63) · [Longest-sleep change](https://github.com/KirtusJ/pcp-os/pull/164).
+
+A separately built BIOS CD with those kernel sources and the public demo payloads reached the launcher unattended on both the ordinary and instruction-counted QEMU clocks. The instruction-counted run played all 32 demo frames, returned to the launcher, stopped the relaunched app on the keyboard chord, and powered off with exit 33. Its measured kernel was `28d5db873d8b21aed141a2bf0df0064ff79fa76d73fdc9078cac006c25d86859`. [Boot configuration, media identities and retained serials](https://github.com/KirtusJ/pcp-os/pull/164#issuecomment-6915886530).

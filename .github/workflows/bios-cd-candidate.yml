@@ -55,3 +55,33 @@ jobs:
           name: keyboard-01-observations
           path: ${{ runner.temp }}/optical
           if-no-files-found: error
+  rollback:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    steps:
+      - name: Read the guide and acceptance tools without checking out either image
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /audit/public-live-cd/check.py
+            /audit/public-live-cd/candidates/keyboard-01/check_rollback.py
+            /audit/public-live-cd/candidates/keyboard-01/restore.md
+            /audit/public-live-cd/candidates/keyboard-01/identity.json
+      - name: Install the emulator and framebuffer reader
+        run: |
+          sudo apt-get -qq update
+          sudo apt-get -qq install -y --no-install-recommends qemu-system-x86 seabios tesseract-ocr tesseract-ocr-eng
+      - name: Try the downloaded candidate and recover the preceding public CD
+        run: |
+          test ! -e PCP-OS.iso
+          test ! -e audit/public-live-cd/candidates/keyboard-01/keyboard-01.zip
+          python3 audit/public-live-cd/candidates/keyboard-01/check_rollback.py "$RUNNER_TEMP/rollback"
+      - name: Preserve the fetched media, serials, framebuffers and outcomes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-bios-cd-rollback
+          path: ${{ runner.temp }}/rollback
+          if-no-files-found: error

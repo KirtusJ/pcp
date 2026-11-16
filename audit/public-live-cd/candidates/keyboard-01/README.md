@@ -44,3 +44,5 @@ python3 "$candidate" instructions PCP-OS.iso "$OS_SOURCE" "$out"
 ```
 
 To assemble another disposable CD, build the kernel with the pinned toolchain and use `build` in a fresh output directory. Optical timestamps and layout can change a newly assembled ISO’s digest. The checks above use the archived bytes.
+
+To try this candidate and then boot the preceding public CD, follow [Download and restore the BIOS CD](restore.md). It includes a pinned download of the original image for use from an empty directory.

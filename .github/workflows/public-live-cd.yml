@@ -10,7 +10,7 @@ permissions:
 jobs:
   optical-boot:
     runs-on: ubuntu-24.04
-    timeout-minutes: 12
+    timeout-minutes: 24
     steps:
       - uses: actions/checkout@v4
       - name: Install emulator and framebuffer reader
@@ -19,10 +19,15 @@ jobs:
           sudo apt-get install -y --no-install-recommends qemu-system-x86 seabios tesseract-ocr tesseract-ocr-eng
       - name: Boot the released CD and exercise its keyboard controls
         run: python3 audit/public-live-cd/check.py PCP-OS.iso "$RUNNER_TEMP/pcp-optical"
+      - name: Compare cold-start clock modes
+        if: success() || failure()
+        run: python3 audit/public-live-cd/compare_clocks.py PCP-OS.iso "$RUNNER_TEMP/pcp-clocks"
       - name: Keep serial and framebuffer observations
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: public-cd-observations
-          path: ${{ runner.temp }}/pcp-optical/
+          path: |
+            ${{ runner.temp }}/pcp-optical/
+            ${{ runner.temp }}/pcp-clocks/
           if-no-files-found: warn

@@ -11,7 +11,11 @@ ISO_SHA = "93ed3b599ad7be0e1e88a64813b1f2b5299d51507df2edca691aaf6189d10d15"
 IMAGE_SHA = "0232c02a8946d66216da0ac65953a246ce3d41d7a966ae31aa83c3335b3259e3"
 
 
-def check(iso, output):
+class GuestSafe(RuntimeError):
+    pass
+
+
+def check(iso, output, *, clock="instructions", startup_only=False):
     if hashlib.sha256(iso.read_bytes()).hexdigest() != ISO_SHA:
         raise ValueError("The optical image differs from the published 0.3.1 CD")
     output.mkdir(parents=True, exist_ok=False)
@@ -24,12 +28,16 @@ def check(iso, output):
             "-nic", "none", "-vga", "std", "-display", "none", "-monitor", "none",
             "-serial", "file:" + str(serial), "-qmp", f"unix:{monitor},server=on,wait=off",
             "-audiodev", "none,id=snd0", "-device", "AC97,audiodev=snd0",
-            "-icount", "shift=3,align=off,sleep=off", "-no-reboot",
+            "-no-reboot",
             "-device", "isa-debug-exit,iobase=0xf4,iosize=0x04",
         ]
+        if clock == "instructions":
+            command.extend(["-icount", "shift=3,align=off,sleep=off"])
+        elif clock != "wall":
+            raise ValueError(f"Unknown guest clock: {clock}")
         with subprocess.Popen(command, stdin=subprocess.DEVNULL) as guest:
             try:
-                exercise(guest, monitor, serial, output)
+                exercise(guest, monitor, serial, output, startup_only)
             finally:
                 if guest.poll() is None:
                     guest.terminate()
@@ -39,7 +47,7 @@ def check(iso, output):
                         guest.kill()
 
 
-def exercise(guest, monitor, serial, output):
+def exercise(guest, monitor, serial, output, startup_only):
     import socket
 
     def wait(test, name, seconds=120):
@@ -49,7 +57,7 @@ def exercise(guest, monitor, serial, output):
                 raise RuntimeError(f"Guest exited {guest.returncode} before {name}")
             log = serial.read_text(errors="replace") if serial.exists() else ""
             if "it is in SAFE" in log:
-                raise RuntimeError("Guest entered SAFE. See serial.txt for failed self-tests.")
+                raise GuestSafe("Guest entered SAFE. See serial.txt for failed self-tests.")
             if test(log):
                 return
             time.sleep(0.1)
@@ -91,6 +99,8 @@ def exercise(guest, monitor, serial, output):
                             IMAGE_SHA + " (measured; equal" in s and
                             "leaves no memory behind" in s), "unattended kernel and self-tests")
             launcher("unattended-launcher")
+            if startup_only:
+                return
             press("ret")
             wait(lambda s: "SURFBIRD media ready" in s, "Surfbird media menu")
             press("spc")

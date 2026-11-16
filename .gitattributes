@@ -1,0 +1,16 @@
+# Preserve the exact Enterprise edition bytes referenced by the release manifests.
+/ACR_1.0_Implementation.zip -text
+/EDITION.json -text
+/EDITION_GUIDE.md -text
+/EVIDENCE_STATUS.md -text
+/LICENSE.md -text
+/MANIFEST.json -text
+/NOTICE.md -text
+/PCP_1.0_Machine/** -text
+/PCP_1.0_OS/** -text
+/PCP_1.0_Plugins/** -text
+/PCP_1.0_Readers.zip -text
+/PRICING.md -text
+/README.md -text
+/THIRD_PARTY_LICENSES.md -text
+/verify_edition.py -text

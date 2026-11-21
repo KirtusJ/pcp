@@ -5,6 +5,7 @@ import hashlib
 import json
 from pathlib import Path
 import platform
+import re
 import runpy
 import shutil
 import subprocess
@@ -77,6 +78,18 @@ async def observe(package, volume, out, second, start, checks, emulator):
             await wait("VM checkpoint store mounted: " + ("1 file(s)" if second else "0 file(s)"))
             await wait("leaves no memory behind")
             await asyncio.sleep(.5)
+            if not second:
+                await key("ret")
+                await wait("SURFBIRD media ready")
+                await rpc("screendump", filename=str(out / "surfbird.ppm"))
+                await key("spc")
+                await wait("surf.elf ended DONE: exit 0")
+                playback = next(line for line in log().splitlines() if line.startswith("surf.elf ended DONE:"))
+                frames = re.search(r"(\d+) frames shown", playback)
+                sound = re.search(r"(\d+) ms of sound played", playback)
+                require(frames and int(frames[1]) >= 32 and sound and int(sound[1]) >= 3000,
+                        "incomplete local media playback: " + playback)
+                await asyncio.sleep(.5)
             await key("down")
             await key("ret")
             await wait("PARROTS READY")

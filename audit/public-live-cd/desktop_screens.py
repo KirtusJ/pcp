@@ -38,6 +38,9 @@ class DesktopScreens:
         renderer = subprocess.check_output(["git", "-C", source, "show",
                                             "HEAD:PCP_OS_Rust/crates/pcpos-kernel/src/session.rs"], text=True)
         self.has_verification_page = "fn verification_view(" in renderer
+        self.home_form = "dock" if self.has_verification_page else "two-bar"
+        if "fn whole_bar(" in renderer:
+            self.home_form = "bar"
         checks = runpy.run_path(str(source / reader))
         self.read_screen = checks["read_screen"]
         self.glyphs = checks["kernel_glyphs"]()
@@ -79,7 +82,10 @@ class DesktopScreens:
             corner = (width - 120) // 10 + 1
             if footer[corner:corner + 8] != "verified":
                 return False
-            if surface == "home":
+            if surface == "home" and self.home_form == "bar":
+                return (footer[6:14] == "Programs" and footer[corner - 11:corner - 5] == "K keys"
+                        and clean_home(rows))
+            if surface in ("home", "home-dock"):
                 return footer[3:9] == "K keys" and clean_home(rows) and self.only_programs_dock(frame, rows)
             return footer[3:14] == "Esc desktop" and "K keys" in footer[14:] and selected_program(rows, surface)
 

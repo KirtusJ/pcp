@@ -88,6 +88,7 @@ async def exercise(guest, output, iso, evidence, expected_kernel, screens):
         evidence["verified_row_sha256"] = VERIFIED_ROW_SHA256
     else:
         log = await wait_screen("home", lambda frame: screens.matches(frame, "home"))
+        evidence["home_form"] = screens.home_form
         captures = ["home"]
         if screens.has_verification_page:
             await key("v")
@@ -104,6 +105,9 @@ async def exercise(guest, output, iso, evidence, expected_kernel, screens):
             name: hashlib.sha256((output / (name + ".ppm")).read_bytes()).hexdigest()
             for name in captures
         }
+        hashes = evidence["screen_sha256"]
+        if any(hashes[name] != hashes["home"] for name in captures if name.startswith("home-after-")):
+            raise ValueError("Returning to the desktop changed the initial Home frame")
 
     evidence["startup_pass_lines"] = sum(line.startswith("  pass ") for line in log.splitlines())
     if evidence["startup_pass_lines"] != 71 or expected_kernel + " (measured; equal" not in log:

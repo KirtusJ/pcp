@@ -40,6 +40,9 @@ class DesktopScreens:
         renderer = subprocess.check_output(["git", "-C", source, "show",
                                             "HEAD:PCP_OS_Rust/crates/pcpos-kernel/src/session.rs"], text=True)
         self.has_verification_page = "fn verification_view(" in renderer
+        self.confirm_power = "fn power_prompt(" in renderer
+        self.verification_key = "f5" if self.confirm_power else "v"
+        self.keys_hint = "F1 keys" if self.confirm_power else "K keys"
         self.home_form = "dock" if self.has_verification_page else "two-bar"
         if "fn whole_bar(" in renderer:
             self.home_form = "bar"
@@ -73,6 +76,10 @@ class DesktopScreens:
             return False
         status = f"Verified at start: all {startup_checks} self-tests passed."
         footer = rows[-2]
+        if surface == "power":
+            return (self.confirm_power and rows[1].strip() == "POWER OFF"
+                    and rows[3].strip() == "Switch PCP OS off?"
+                    and footer.strip() == "Enter switch off    Esc go back")
         if self.has_verification_page:
             if rows[1].strip() == "VERIFICATION":
                 return (surface == "verification" and rows[3].strip() == status
@@ -85,11 +92,11 @@ class DesktopScreens:
             if footer[corner:corner + 8] != "verified":
                 return False
             if surface == "home" and self.home_form == "bar":
-                return (footer[6:14] == "Programs" and footer[corner - 11:corner - 5] == "K keys"
+                return (footer[6:14] == "Programs" and footer[corner - 5 - len(self.keys_hint):corner - 5] == self.keys_hint
                         and clean_home(rows))
             if surface in ("home", "home-dock"):
-                return footer[3:9] == "K keys" and clean_home(rows) and self.only_programs_dock(frame, rows)
-            return footer[3:14] == "Esc desktop" and "K keys" in footer[14:] and selected_program(rows, surface, self.program_hashes)
+                return footer.startswith(self.keys_hint, 3) and clean_home(rows) and self.only_programs_dock(frame, rows)
+            return footer[3:14] == "Esc desktop" and self.keys_hint in footer[14:] and selected_program(rows, surface, self.program_hashes)
 
         # The earlier two-bar desktop displayed the complete verdict on its top bar.
         if not any(status in row for row in rows):
@@ -99,3 +106,12 @@ class DesktopScreens:
         if surface == "home":
             return home_keys and not launcher_keys and clean_home(rows)
         return launcher_keys and not home_keys and selected_program(rows, surface, self.program_hashes)
+
+    async def cancel_power(self, key, capture, name, expected, before_hash):
+        """Read the confirmation, cancel, then compare the full restored surface and selection."""
+        await key("f10")
+        await capture(name + "-power", "power")
+        await key("esc")
+        after_hash = await capture(name + "-after-cancel", expected)
+        if before_hash != after_hash:
+            raise ValueError("Power cancellation changed " + name)

@@ -79,8 +79,9 @@ async def observe(package, volume, out, second, start, checks, emulator, screens
                 await rpc("screendump", filename=str(capture))
                 frame = capture.read_bytes()
                 if screens.matches(frame, expected):
-                    report.setdefault("screen_checks", {})[capture.name] = {"surface": expected, "sha256": sha(frame)}
-                    return
+                    digest = sha(frame)
+                    report.setdefault("screen_checks", {})[capture.name] = {"surface": expected, "sha256": digest}
+                    return digest
                 await asyncio.sleep(.2)
             raise TimeoutError(f"{capture_name} did not show {expected}")
 
@@ -96,7 +97,7 @@ async def observe(package, volume, out, second, start, checks, emulator, screens
             if screens is not None:
                 await surface("home-at-start", "home")
                 if screens.has_verification_page:
-                    await key("v")
+                    await key(screens.verification_key)
                     await surface("verification", "verification")
                     await key("esc")
                     await surface("home-after-verification", "home")
@@ -140,10 +141,17 @@ async def observe(package, volume, out, second, start, checks, emulator, screens
             await wait("rdesk.elf ended DONE: exit 0")
             await asyncio.sleep(.5)
             if screens is not None:
-                await surface("launcher-after-queue", "rdesk.elf")
+                selected = await surface("launcher-after-queue", "rdesk.elf")
+                if screens.confirm_power:
+                    await screens.cancel_power(key, surface, "launcher", "rdesk.elf", selected)
                 await key("esc")
                 await surface("home-before-shutdown", "home")
-            await key("p")
+            if screens is not None and screens.confirm_power:
+                await key("f10")
+                await surface("confirm-shutdown", "power")
+                await key("ret")
+            else:
+                await key("p")
             while not any(e.get("event") == "SHUTDOWN" for e in events):
                 events.append(await message())
             require(any(e.get("data") == {"guest": True, "reason": "guest-shutdown"} for e in events),

@@ -1,0 +1,318 @@
+{
+  "source": "1cff81e4b935dc72a95a669a5214508ab8712efc",
+  "compiler": "ed61e7d7e242494fb7057f2657300d9e77bb4fcb",
+  "compile_host": "windows-2022",
+  "features": [
+    "guest-ethernet"
+  ],
+  "reference_iso": "93ed3b599ad7be0e1e88a64813b1f2b5299d51507df2edca691aaf6189d10d15",
+  "reference_elf": "d2fae4ef3df316ff4fa0c1a88744e66cc17bd794856979fa55188b8402f7222f",
+  "reference_measurement": "0232c02a8946d66216da0ac65953a246ce3d41d7a966ae31aa83c3335b3259e3",
+  "objcopy": "GNU objcopy (GNU Binutils for Ubuntu) 2.42",
+  "results": {
+    "kernel-gnu-historical": {
+      "bytes": 733284,
+      "sha256": "aaec3ed26ea126bc2b76475724824149440125c3aad4298549a9f01d63cd042b",
+      "whole_elf_equal": false,
+      "measurement": "0232c02a8946d66216da0ac65953a246ce3d41d7a966ae31aa83c3335b3259e3",
+      "sections": {
+        ".boot": {
+          "reference_size": 371,
+          "built_size": 371,
+          "address_equal": true,
+          "bytes_and_size_equal": true,
+          "sha256": "132dac02bd99f5a4a65550dc1e75f35abf7f34273e7da8960329dfa5c4348280"
+        },
+        ".text": {
+          "reference_size": 385024,
+          "built_size": 385024,
+          "address_equal": true,
+          "bytes_and_size_equal": true,
+          "sha256": "3f92a805841bb6add51d2070eebce0b6ee66e64a54f6322ef1d33b66a54790c5"
+        },
+        ".rodata": {
+          "reference_size": 139264,
+          "built_size": 139264,
+          "address_equal": true,
+          "bytes_and_size_equal": true,
+          "sha256": "bc38c9d30aaf89b8decb505f267f8cb308cb7736d6ff076cd80cd0239fedd73a"
+        },
+        ".got": {
+          "reference_size": 304,
+          "built_size": 304,
+          "address_equal": true,
+          "bytes_and_size_equal": true,
+          "sha256": "2dbaa0116158c289676af511c67870bbdee6edd02e731a5f31b6834564214a18"
+        },
+        ".data": {
+          "reference_size": 3776,
+          "built_size": 3776,
+          "address_equal": true,
+          "bytes_and_size_equal": true,
+          "sha256": "4a7e88aed9d43815323d885f1421c27b04cca9c537d1b84bab735c5d63676796"
+        },
+        ".bss": {
+          "reference_size": 17448960,
+          "built_size": 17448960,
+          "address_equal": true,
+          "bytes_and_size_equal": true,
+          "sha256": null
+        }
+      },
+      "llvm_objcopy": {
+        "bytes": 733284,
+        "sha256": "d2fae4ef3df316ff4fa0c1a88744e66cc17bd794856979fa55188b8402f7222f",
+        "whole_elf_equal": true,
+        "measurement": "0232c02a8946d66216da0ac65953a246ce3d41d7a966ae31aa83c3335b3259e3",
+        "sections": {
+          ".boot": {
+            "reference_size": 371,
+            "built_size": 371,
+            "address_equal": true,
+            "bytes_and_size_equal": true,
+            "sha256": "132dac02bd99f5a4a65550dc1e75f35abf7f34273e7da8960329dfa5c4348280"
+          },
+          ".text": {
+            "reference_size": 385024,
+            "built_size": 385024,
+            "address_equal": true,
+            "bytes_and_size_equal": true,
+            "sha256": "3f92a805841bb6add51d2070eebce0b6ee66e64a54f6322ef1d33b66a54790c5"
+          },
+          ".rodata": {
+            "reference_size": 139264,
+            "built_size": 139264,
+            "address_equal": true,
+            "bytes_and_size_equal": true,
+            "sha256": "bc38c9d30aaf89b8decb505f267f8cb308cb7736d6ff076cd80cd0239fedd73a"
+          },
+          ".got": {
+            "reference_size": 304,
+            "built_size": 304,
+            "address_equal": true,
+            "bytes_and_size_equal": true,
+            "sha256": "2dbaa0116158c289676af511c67870bbdee6edd02e731a5f31b6834564214a18"
+          },
+          ".data": {
+            "reference_size": 3776,
+            "built_size": 3776,
+            "address_equal": true,
+            "bytes_and_size_equal": true,
+            "sha256": "4a7e88aed9d43815323d885f1421c27b04cca9c537d1b84bab735c5d63676796"
+          },
+          ".bss": {
+            "reference_size": 17448960,
+            "built_size": 17448960,
+            "address_equal": true,
+            "bytes_and_size_equal": true,
+            "sha256": null
+          }
+        }
+      },
+      "llvm_version": [
+        "llvm-objcopy, compatible with GNU objcopy",
+        "Ubuntu LLVM version 18.1.3"
+      ]
+    },
+    "kernel-gnu-native": {
+      "bytes": 733284,
+      "sha256": "730f8741f0b00d75a03cacff1279e588289cc1ef19f12dc9132c823382766649",
+      "whole_elf_equal": false,
+      "measurement": "d683c965a39006efc429b957d73630a20e01c573dac79a8176709772b7f55cf1",
+      "sections": {
+        ".boot": {
+          "reference_size": 371,
+          "built_size": 371,
+          "address_equal": true,
+          "bytes_and_size_equal": true,
+          "sha256": "132dac02bd99f5a4a65550dc1e75f35abf7f34273e7da8960329dfa5c4348280"
+        },
+        ".text": {
+          "reference_size": 385024,
+          "built_size": 385024,
+          "address_equal": true,
+          "bytes_and_size_equal": false,
+          "sha256": "3d362491db5e75e184acd53a699b3f6b68d713f3e52dcab56e888f3f4ce58204"
+        },
+        ".rodata": {
+          "reference_size": 139264,
+          "built_size": 139264,
+          "address_equal": true,
+          "bytes_and_size_equal": false,
+          "sha256": "65ada54230919e0c401480b0acd2133fce56d003824bc4a121b20970bef13dac"
+        },
+        ".got": {
+          "reference_size": 304,
+          "built_size": 304,
+          "address_equal": true,
+          "bytes_and_size_equal": true,
+          "sha256": "2dbaa0116158c289676af511c67870bbdee6edd02e731a5f31b6834564214a18"
+        },
+        ".data": {
+          "reference_size": 3776,
+          "built_size": 3776,
+          "address_equal": true,
+          "bytes_and_size_equal": false,
+          "sha256": "3b2c99d6dff2a55d10285e56097731fc9d3ff278966c6836790a0576652ffb50"
+        },
+        ".bss": {
+          "reference_size": 17448960,
+          "built_size": 17448960,
+          "address_equal": true,
+          "bytes_and_size_equal": true,
+          "sha256": null
+        }
+      }
+    },
+    "kernel-gnu-remapped": {
+      "bytes": 733192,
+      "sha256": "d5cc08b69c4b5b393d0c31d41a75243968db32c30db687cda4284f7e148d6775",
+      "whole_elf_equal": false,
+      "measurement": "0e3da9f957b6b064a349a6af57acfd6b34c219c86be4800fae0247b2b3a8a7ee",
+      "sections": {
+        ".boot": {
+          "reference_size": 371,
+          "built_size": 371,
+          "address_equal": true,
+          "bytes_and_size_equal": true,
+          "sha256": "132dac02bd99f5a4a65550dc1e75f35abf7f34273e7da8960329dfa5c4348280"
+        },
+        ".text": {
+          "reference_size": 385024,
+          "built_size": 385024,
+          "address_equal": true,
+          "bytes_and_size_equal": false,
+          "sha256": "5fc2d94c2778e4e078738113d01147e98c292382d1fc41193161e03225af8ebd"
+        },
+        ".rodata": {
+          "reference_size": 139264,
+          "built_size": 139264,
+          "address_equal": true,
+          "bytes_and_size_equal": false,
+          "sha256": "b9ae15764698a3d3de65cd1019dd0d15ef839146622de540728d03b3600b9226"
+        },
+        ".got": {
+          "reference_size": 304,
+          "built_size": 304,
+          "address_equal": true,
+          "bytes_and_size_equal": true,
+          "sha256": "2dbaa0116158c289676af511c67870bbdee6edd02e731a5f31b6834564214a18"
+        },
+        ".data": {
+          "reference_size": 3776,
+          "built_size": 3776,
+          "address_equal": true,
+          "bytes_and_size_equal": true,
+          "sha256": "4a7e88aed9d43815323d885f1421c27b04cca9c537d1b84bab735c5d63676796"
+        },
+        ".bss": {
+          "reference_size": 17448960,
+          "built_size": 17448960,
+          "address_equal": true,
+          "bytes_and_size_equal": true,
+          "sha256": null
+        }
+      }
+    },
+    "kernel-msvc-native": {
+      "bytes": 733224,
+      "sha256": "2267c401f9fe58f5d0e57f46ce54a790a1e0ca20116c406e730cf0492d83c74e",
+      "whole_elf_equal": false,
+      "measurement": "31b8894935d7dde0ea25783ae161370e7d27696ce0902d2c48db3ba7603a2e49",
+      "sections": {
+        ".boot": {
+          "reference_size": 371,
+          "built_size": 371,
+          "address_equal": true,
+          "bytes_and_size_equal": true,
+          "sha256": "132dac02bd99f5a4a65550dc1e75f35abf7f34273e7da8960329dfa5c4348280"
+        },
+        ".text": {
+          "reference_size": 385024,
+          "built_size": 385024,
+          "address_equal": true,
+          "bytes_and_size_equal": false,
+          "sha256": "148a565a8861f3bc698de77620f9182dad66efa03a13b45f0b7d864a6492bf9b"
+        },
+        ".rodata": {
+          "reference_size": 139264,
+          "built_size": 139264,
+          "address_equal": true,
+          "bytes_and_size_equal": false,
+          "sha256": "d82e0a0817f17fdb9b35a53a30b3110b5e7a998f737a86837667a99a95b49821"
+        },
+        ".got": {
+          "reference_size": 304,
+          "built_size": 304,
+          "address_equal": true,
+          "bytes_and_size_equal": true,
+          "sha256": "2dbaa0116158c289676af511c67870bbdee6edd02e731a5f31b6834564214a18"
+        },
+        ".data": {
+          "reference_size": 3776,
+          "built_size": 3776,
+          "address_equal": true,
+          "bytes_and_size_equal": false,
+          "sha256": "3b2c99d6dff2a55d10285e56097731fc9d3ff278966c6836790a0576652ffb50"
+        },
+        ".bss": {
+          "reference_size": 17448960,
+          "built_size": 17448960,
+          "address_equal": true,
+          "bytes_and_size_equal": true,
+          "sha256": null
+        }
+      }
+    },
+    "kernel-msvc-remapped": {
+      "bytes": 733236,
+      "sha256": "68fb666b41fe1e77d5df48d5b9577c508a9af073274f5fd929c65cdb126bb5c8",
+      "whole_elf_equal": false,
+      "measurement": "abe6b9e1f49378ccef8cc1147ad2dde1616237c09a68150c53ca066f3e5851e0",
+      "sections": {
+        ".boot": {
+          "reference_size": 371,
+          "built_size": 371,
+          "address_equal": true,
+          "bytes_and_size_equal": true,
+          "sha256": "132dac02bd99f5a4a65550dc1e75f35abf7f34273e7da8960329dfa5c4348280"
+        },
+        ".text": {
+          "reference_size": 385024,
+          "built_size": 385024,
+          "address_equal": true,
+          "bytes_and_size_equal": false,
+          "sha256": "a7f26b148b43d11208829190de1efba96e6f628735f12be75d093baf7b99d8b7"
+        },
+        ".rodata": {
+          "reference_size": 139264,
+          "built_size": 139264,
+          "address_equal": true,
+          "bytes_and_size_equal": false,
+          "sha256": "fe9cb1198445db34f8a06bed282fd115e42250f5f93a28fb26a68ac8c8c07441"
+        },
+        ".got": {
+          "reference_size": 304,
+          "built_size": 304,
+          "address_equal": true,
+          "bytes_and_size_equal": true,
+          "sha256": "2dbaa0116158c289676af511c67870bbdee6edd02e731a5f31b6834564214a18"
+        },
+        ".data": {
+          "reference_size": 3776,
+          "built_size": 3776,
+          "address_equal": true,
+          "bytes_and_size_equal": true,
+          "sha256": "4a7e88aed9d43815323d885f1421c27b04cca9c537d1b84bab735c5d63676796"
+        },
+        ".bss": {
+          "reference_size": 17448960,
+          "built_size": 17448960,
+          "address_equal": true,
+          "bytes_and_size_equal": true,
+          "sha256": null
+        }
+      }
+    }
+  }
+}

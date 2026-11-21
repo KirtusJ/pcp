@@ -1,6 +1,8 @@
 # First boot of the PCP OS 0.3.1 live CD
 
-Start with a disposable **x86-64 virtual machine using legacy PC BIOS (SeaBIOS)**. The published CD opens a graphical launcher and runs a local Surfbird demo. The guest store lasts for one boot. Attach only the virtual CD. Keep physical drives and existing virtual disks out of the VM. Leave the host computer’s firmware settings as they are.
+**Published `PCP-OS.iso` — virtual machines only. Attach only the read-only CD.** Use a disposable x86-64 VM with legacy PC BIOS (SeaBIOS). Leave hard disks, USB storage and network adapters disconnected from the guest. Leave the host firmware settings as they are.
+
+On QEMU PC and Q35, the published ISO wrote 512 bytes to sector zero of an attached disposable disk before the launcher appeared. Both final disk hashes matched the starting hashes. With the CD alone, the graphical launcher runs a local Surfbird demo and its guest store lasts one boot. [Disk test results](https://github.com/KirtusJ/pcp-os/pull/276#issuecomment-7057938081)
 
 For a workspace that keeps a typed task across power-off, use the [two-app VM workspace](../vm-workspace/README.md).
 

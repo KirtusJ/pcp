@@ -64,6 +64,7 @@ jobs:
           python3 audit/public-live-cd/history/rebuild.py compare "$RUNNER_TEMP/kernels" PCP-OS.iso "$RUNNER_TEMP/receipt"
           cat "$RUNNER_TEMP/receipt/comparison.json"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
         with:
           name: historical-kernel-comparison
           path: ${{ runner.temp }}/receipt/

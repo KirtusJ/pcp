@@ -193,7 +193,11 @@ def inspect(args):
                "results": results}
     (args.out / "comparison.json").write_text(json.dumps(receipt, indent=2) + "\n")
     for name, result in results.items():
-        print(name, result["bytes"], result["sha256"], "whole ELF equal:", result["whole_elf_equal"])
+        print(name, result["bytes"], result["sha256"], "GNU export equal:", result["whole_elf_equal"])
+    exact = results["kernel-gnu-historical"]["llvm_objcopy"]["whole_elf_equal"]
+    print("Historical Windows build and LLVM export equal:", exact)
+    if not exact:
+        raise ValueError("The complete original kernel was not reproduced; see comparison.json")
 
 
 if __name__ == "__main__":

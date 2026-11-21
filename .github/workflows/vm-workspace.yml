@@ -1,0 +1,106 @@
+name: Portable VM workspace
+on:
+  pull_request:
+    paths:
+      - 'audit/vm-workspace/**'
+      - '.github/workflows/vm-workspace.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  SOURCE_REF: 4c482cfd33c564526722a8b4e08d830da0f30164
+jobs:
+  package:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      RUSTUP_TOOLCHAIN: 1.97.0
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: KirtusJ/pcp-os
+          ref: ${{ env.SOURCE_REF }}
+          path: source
+          persist-credentials: false
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: Limine-Bootloader/Limine
+          ref: 7a9013f305de0bea1f6310e76e7baba30499fef0
+          path: loader
+          persist-credentials: false
+      - name: Build guests and opt-in kernel
+        run: |
+          sudo apt-get -qq update
+          sudo apt-get -qq install -y --no-install-recommends lld xorriso
+          rustup toolchain install 1.97.0 --profile minimal --no-self-update -c rust-src -t x86_64-unknown-none
+          python3 -B source/examples/tester-cd/build.py --queue-desk loader "$RUNNER_TEMP/optical"
+          PCPOS_KERNEL_FEATURES=vm-store sh source/PCP_OS_Rust/crates/pcpos-kernel/run.sh build
+          python3 audit/vm-workspace/build.py source "$RUNNER_TEMP/optical" \
+            audit/public-live-cd/candidates/source-bios/source-bios-tester.zip "$RUNNER_TEMP/pcp-vm-workspace.zip"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: vm-workspace-package
+          path: ${{ runner.temp }}/pcp-vm-workspace.zip
+          retention-days: 30
+  cold-boot:
+    needs: package
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-15, windows-2025]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: KirtusJ/pcp-os
+          ref: ${{ env.SOURCE_REF }}
+          path: source
+          persist-credentials: false
+          sparse-checkout: |
+            examples/vm-store
+            examples/optical-disk-check
+            store/apps/parrots-all-the-way-down/guest/src
+            store/native/guest/src
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: vm-workspace-package
+          path: built
+      - name: Install QEMU on Linux
+        if: runner.os == 'Linux'
+        run: sudo apt-get -qq update && sudo apt-get -qq install -y --no-install-recommends qemu-system-x86 seabios
+      - name: Install QEMU on macOS
+        if: runner.os == 'macOS'
+        run: brew list --versions qemu >/dev/null || brew install qemu
+      - name: Install native Windows QEMU
+        if: runner.os == 'Windows'
+        id: msys
+        uses: msys2/setup-msys2@ec48f7c5447b3140e2b088413ae3a55687bccb6e
+        with:
+          msystem: UCRT64
+          update: true
+          cache: false
+          install: mingw-w64-ucrt-x86_64-qemu
+      - name: Add the Windows emulator to the path
+        if: runner.os == 'Windows'
+        shell: pwsh
+        env:
+          MSYS_ROOT: ${{ steps.msys.outputs.msys2-location }}
+        run: (Join-Path $env:MSYS_ROOT 'ucrt64/bin') | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+      - name: Save in the native app and cold-boot the same disk
+        shell: bash
+        run: python audit/vm-workspace/check.py built/pcp-vm-workspace.zip source observations
+      - name: Retain serial, host details, data image and queue screens
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: vm-workspace-${{ matrix.os }}
+          path: observations/
+          if-no-files-found: warn
+          retention-days: 30

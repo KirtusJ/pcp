@@ -20,3 +20,9 @@ The conflict occurs at kernel placement, before the program-frame allocator sele
 | [Repeated handoff with pre-boot inventory](https://github.com/KirtusJ/pcp/actions/runs/44845184441) | [Original memory listing and SAFE result](memory-map-safe-control.zip) | `f549cbf051a937bda61c957d712ff39e6eedc2b7967c29211c6c4c234557a8e5` |
 
 The [placement workflow](../../../.github/workflows/uefi-optical-probe.yml) boots a GRUB-only diagnostic CD. The PCP kernel stays on the host. The checker validates the published ISO and kernel SHA-256, reads each ELF program header's physical address and memory size, and compares its entire load range with the live GRUB inventory. Unreported memory and overlapping reserved descriptors count as conflicts. The job passes when it reproduces the known ACPI NVS conflict. It provides a firmware diagnosis. Verified native UEFI startup, Secure Boot, physical USB and laptop support remain open.
+
+## Firmware page reservations
+
+The page-rounded ELF segments occupy 4,391 consecutive 4 KiB pages starting at `0x100000`. An EFI test application asked OVMF to reserve that complete range via `AllocatePages(AllocateAddress)` on Q35 guests with 128 and 256 MiB of RAM. Both returned `EFI_NOT_FOUND`. Asking the firmware to select an equally sized region below 1 GiB succeeded at `0x56a3000` and `0xd6a3000`, respectively. A second request for the occupied region failed. Freeing, reacquiring at the same address and freeing again all succeeded. Only the diagnostic EFI application ran. Booting the kernel at a firmware-selected address requires relocation support.
+
+[Original run](https://github.com/KirtusJ/pcp/actions/runs/44848098947) · [Firmware status records and machine commands](reservation/original.zip), SHA-256 `548709358c00ad923868b437e74d4d28035ead367efbc2d11e47c414470f569d` · [UEFI boot services §7.2](https://uefi.org/specs/UEFI/2.10/07_Services_Boot_Services.html#memory-allocation-services)

@@ -6,7 +6,7 @@ Start with a disposable **x86-64 virtual machine using legacy PC BIOS (SeaBIOS)*
 
 The published CD predates the current kernel. Its complete 733,284-byte kernel was reproduced from PCP OS commit `1cff81e4b935dc72a95a669a5214508ab8712efc` with Rust 1.91.1 and guest Ethernet enabled. The command below boots it with no network interface. The other files and the historical publishing process have separate provenance. [Byte comparison and reproduction instructions](history/README.md).
 
-For a first test with the ordinary QEMU clock, the [opt-in BIOS tester download](candidates/keyboard-01-limine-10/README.md) combines the keyboard timing fix with a bootloader that recorded zero writes on the disposable disks tested. Use the CD as the VM’s only inserted medium.
+For a first test on the ordinary QEMU clock, use the [source-built BIOS tester](candidates/source-bios/README.md). Its download includes the checked build receipt, SHA-256 values and a one-command VM launch. For comparison with the earlier patched kernel, the [keyboard-01 and Limine 10.8.5 tester](candidates/keyboard-01-limine-10/README.md) is also available.
 
 For the published version, download [PCP-OS.iso at the tested revision](https://raw.githubusercontent.com/KirtusJ/pcp/983fc4a45dbbada52b507dd0e413b9f7d3ca0c9d/PCP-OS.iso). Its size is **1,859,584 bytes** and its SHA-256 is `93ed3b599ad7be0e1e88a64813b1f2b5299d51507df2edca691aaf6189d10d15`. Run the command for your host in the download directory and compare the full digest before booting.
 

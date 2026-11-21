@@ -1,10 +1,11 @@
-"""Boot the published ISO on a desktop host with only a virtual optical disc."""
+"""Boot a pinned PCP BIOS image on a desktop host with only a virtual optical disc."""
 import argparse
 import asyncio
 import hashlib
 import json
 from pathlib import Path
 import platform
+import re
 import shutil
 import subprocess
 import sys
@@ -94,12 +95,23 @@ async def exercise(guest, output, iso, evidence, expected_kernel):
         raise RuntimeError("Missing the guest's final self-test result")
 
 
-async def main(iso, output, emulator, *, combined=False):
+def digest_arg(value):
+    if re.fullmatch(r"[0-9a-f]{64}", value):
+        return value
+    raise argparse.ArgumentTypeError("expected 64 lowercase hexadecimal digits")
+
+
+async def main(iso, output, emulator, *, combined=False, source_build=None):
     iso = iso.resolve(strict=True)
     actual = hashlib.sha256(iso.read_bytes()).hexdigest()
     expected_iso, expected_kernel = (COMBINED_ISO, COMBINED_KERNEL) if combined else (ISO_SHA, IMAGE_SHA)
+    if source_build is not None:
+        if combined:
+            raise ValueError("Choose one image profile")
+        expected_iso, expected_kernel = source_build
+    ordinary_clock = combined or source_build is not None
     if actual != expected_iso:
-        raise ValueError(f"Distributed ISO digest mismatch: {actual}")
+        raise ValueError(f"ISO digest mismatch: {actual}")
     output = output.resolve()
     output.mkdir(parents=True, exist_ok=False)
     args = [emulator, "-machine", "pc", "-accel", "tcg", "-cpu", "qemu64",
@@ -107,9 +119,9 @@ async def main(iso, output, emulator, *, combined=False):
             "-nic", "none", "-audiodev",
             "none,id=snd0", "-device", "AC97,audiodev=snd0", "-display", "none",
             "-monitor", "none", "-qmp", "stdio", "-serial", "file:serial.txt"]
-    if not combined:
+    if not ordinary_clock:
         args.extend(["-icount", "shift=3,align=off,sleep=off"])
-    evidence = {"clock": "ordinary" if combined else "instruction-counted",
+    evidence = {"clock": "ordinary" if ordinary_clock else "instruction-counted",
                 "expected_kernel_sha256": expected_kernel, "host": platform.platform(), "host_architecture": platform.machine(),
                 "iso_sha256": actual, "argv": args, "qemu_version":
                 subprocess.check_output([emulator, "--version"], text=True).splitlines()[0]}
@@ -131,8 +143,11 @@ async def main(iso, output, emulator, *, combined=False):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("media", type=Path, help="published ISO, or the pinned opt-in ZIP with --combined-zip")
-    parser.add_argument("--combined-zip", action="store_true", help="boot the combined BIOS tester archive on the ordinary clock")
+    parser.add_argument("media", type=Path, help="ISO to boot, or the pinned opt-in ZIP with --combined-zip")
+    profile = parser.add_mutually_exclusive_group()
+    profile.add_argument("--source-build", nargs=2, type=digest_arg, metavar=("ISO_SHA256", "KERNEL_MEASUREMENT"),
+                         help="boot a source-built BIOS ISO on the ordinary clock using both independently obtained digests")
+    profile.add_argument("--combined-zip", action="store_true", help="boot the combined BIOS tester archive on the ordinary clock")
     parser.add_argument("output", type=Path, help="new directory for serial, framebuffer and result")
     parser.add_argument("--qemu", default="qemu-system-x86_64")
     args = parser.parse_args()
@@ -151,4 +166,4 @@ if __name__ == "__main__":
             iso.write_bytes(archive.read(name))
             asyncio.run(main(iso, args.output, emulator, combined=True))
     else:
-        asyncio.run(main(args.media, args.output, emulator))
+        asyncio.run(main(args.media, args.output, emulator, source_build=args.source_build))

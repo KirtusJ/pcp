@@ -8,7 +8,7 @@ on:
 permissions:
   contents: read
 env:
-  SOURCE_REF: 4c482cfd33c564526722a8b4e08d830da0f30164
+  SOURCE_REF: 0a037b45bb18d6c1c61c2a207a62da5f3057933d
 jobs:
   package:
     runs-on: ubuntu-24.04

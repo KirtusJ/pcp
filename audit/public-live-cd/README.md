@@ -51,6 +51,10 @@ The published image can enter SAFE during keyboard self-tests on the ordinary wa
 
 To repeat the desktop host check, run `python3 audit/public-live-cd/check_host_boot.py PCP-OS.iso host-boot` from the repository root (use `python` on Windows). QEMU must be on PATH, or supply `--qemu` with its full path. Choose a new output directory. The check saves the original framebuffer, serial log, list of inserted media and shutdown record. [QEMU downloads for each host](https://www.qemu.org/download/)
 
+## Desktop-first candidate
+
+If your source-built image opens on a **Programs** bar with **F1 keys**, follow the [desktop candidate first-boot guide](desktop-first.md). It covers both the session-only CD and the separate VM workspace with a dedicated queue volume.
+
 ## Repeat the keyboard check
 
 On Linux with QEMU, SeaBIOS, Tesseract (English) and Python 3, run the following from the repository root. Choose a new output directory for each run.

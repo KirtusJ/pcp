@@ -37,8 +37,15 @@ def build(source, optical, companion, output):
         (work / "Third-party-notices.txt").write_bytes(notices)
         shutil.copyfile(elf, work / "kernel.elf")
         shutil.copyfile(source / "examples/vm-store/create.py", work / "create.py")
-        for name in ("start.py", "QUICKSTART.md"):
-            shutil.copyfile(HERE / name, work / name)
+        shutil.copyfile(HERE / "start.py", work / "start.py")
+        renderer = subprocess.check_output(
+            ["git", "-C", source, "show", f"{rev}:PCP_OS_Rust/crates/pcpos-kernel/src/session.rs"],
+            text=True,
+        )
+        guide = HERE / "QUICKSTART.md"
+        if "fn power_prompt(" in renderer:
+            guide = HERE.parent / "public-live-cd" / "desktop-first.md"
+        shutil.copyfile(guide, work / "QUICKSTART.md")
         hashes = {item.name: sha256(item.read_bytes()).hexdigest() for item in sorted(work.iterdir())}
         info = dict(source_commit=rev, source_tree=tree, kernel_features=["vm-store"], toolchain=receipt["rustc"],
                     kernel_measurement=measurement, optical_iso_sha256=receipt["iso_sha256"], files=hashes)

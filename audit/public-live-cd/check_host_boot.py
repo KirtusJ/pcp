@@ -13,6 +13,7 @@ import tempfile
 import zipfile
 
 from check import IMAGE_SHA, ISO_SHA
+from desktop_screens import DesktopScreens
 
 COMBINED_ZIP = "ba95de848dea3aacd2c95cfca7018c4fcd38dc859d5e0c05ad961cebf17b2174"
 COMBINED_ISO = "5264e891b70a37d66541393e1fc0b135fd301b8e2097022e9b698aacdc5b3d8d"
@@ -42,7 +43,7 @@ async def read_qmp(guest):
     return json.loads(line)
 
 
-async def exercise(guest, output, iso, evidence, expected_kernel):
+async def exercise(guest, output, iso, evidence, expected_kernel, screens):
     if "QMP" not in await read_qmp(guest):
         raise RuntimeError("Expected a QMP greeting")
     events = []
@@ -67,23 +68,117 @@ async def exercise(guest, output, iso, evidence, expected_kernel):
         raise RuntimeError("Expected exactly one inserted read-only image matching the selected ISO")
 
     serial = output / "serial.txt"
-    frame = output / "launcher.ppm"
-    while True:
-        log = serial.read_text(errors="replace") if serial.exists() else ""
-        if "it is in SAFE" in log:
-            raise RuntimeError("Guest reported SAFE; inspect serial.txt")
-        if "leaves no memory behind" in log:
-            await rpc("screendump", filename=str(frame))
-            if verified_row(frame.read_bytes()):
-                break
-        await asyncio.sleep(0.2)
+    async def wait_screen(name, matches):
+        path = output / (name + ".ppm")
+        while True:
+            log = serial.read_text(errors="replace") if serial.exists() else ""
+            if "it is in SAFE" in log:
+                raise RuntimeError("Guest reported SAFE; inspect serial.txt")
+            if "leaves no memory behind" in log:
+                await rpc("screendump", filename=str(path))
+                if matches(path.read_bytes()):
+                    return log
+            await asyncio.sleep(0.2)
+
+    async def key(code):
+        await rpc("send-key", keys=[{"type": "qcode", "data": code}], **{"hold-time": 80})
+
+    if screens is None:
+        log = await wait_screen("launcher", verified_row)
+        evidence["verified_row_sha256"] = VERIFIED_ROW_SHA256
+    else:
+        log = await wait_screen("home", lambda frame: screens.matches(frame, "home"))
+        evidence["home_form"] = screens.home_form
+        hashes = evidence["screen_sha256"] = {"home": hashlib.sha256((output / "home.ppm").read_bytes()).hexdigest()}
+
+        async def capture(name, expected):
+            await wait_screen(name, lambda frame: screens.matches(frame, expected))
+            hashes[name] = hashlib.sha256((output / (name + ".ppm")).read_bytes()).hexdigest()
+            return hashes[name]
+
+        if screens.has_verification_page:
+            await key(screens.verification_key)
+            await capture("verification", "verification")
+            await key("esc")
+            await capture("home-after-verification", "home")
+        await key("spc")
+        await capture("launcher", "surf.elf")
+        if screens.confirm_power:
+            selected = "surf.elf"
+            before = hashes["launcher"]
+            if "rdesk.elf" in screens.program_hashes:
+                await key("down")
+                selected = "rdesk.elf"
+                before = await capture("queue-selected", selected)
+            await screens.cancel_power(key, capture, "launcher", selected, before)
+        await key("esc")
+        await capture("home-after-escape", "home")
+        if screens.confirm_power:
+            await screens.cancel_power(key, capture, "home", "home", hashes["home"])
+        if any(value != hashes["home"] for name, value in hashes.items() if name.startswith("home-after-")):
+            raise ValueError("Returning to the desktop changed the initial Home frame")
 
     evidence["startup_pass_lines"] = sum(line.startswith("  pass ") for line in log.splitlines())
     if evidence["startup_pass_lines"] != 71 or expected_kernel + " (measured; equal" not in log:
         raise RuntimeError("Unexpected startup checks or kernel measurement")
-    evidence["verified_row_sha256"] = VERIFIED_ROW_SHA256
 
-    await rpc("send-key", keys=[{"type": "qcode", "data": "p"}], **{"hold-time": 80})
+    if screens is not None and screens.confirm_power:
+        # The two CD profiles exercise opposite physical keys. Repeating either Enter
+        # must leave the question open even after the other Enter is released.
+        held_key, other_key = ("kp_enter", "ret") if "rdesk.elf" in screens.program_hashes else ("ret", "kp_enter")
+
+        async def edges(record, *changes):
+            inputs = [{"type": "key", "data": {"down": down, "key": {"type": "qcode", "data": code}}}
+                      for code, down in changes]
+            await rpc("input-send-event", events=inputs)
+            record["inputs"].extend(changes)
+
+        async def check_held_enter(name, record, overlap):
+            if overlap:
+                # The first Enter dismisses verification. The second opens Programs,
+                # leaving both keys held when F10 opens the power question.
+                await key(screens.verification_key)
+                await capture(name + "-verification", "verification")
+                await edges(record, (held_key, True))
+                await capture(name + "-one-held", "home")
+                await edges(record, (other_key, True))
+            else:
+                await edges(record, (held_key, True))
+            before = await capture(name + "-launcher", selected)
+            await edges(record, ("f10", True), ("f10", False))
+            await capture(name + "-power", "power")
+            if overlap:
+                await edges(record, (other_key, False))
+                await capture(name + "-other-released", "power")
+            await edges(record, (held_key, True))
+            try:
+                await asyncio.wait_for(guest.wait(), 1)
+            except asyncio.TimeoutError:
+                pass
+            else:
+                tail = [json.loads(line) for line in (await guest.stdout.read()).splitlines()]
+                record["early_exit_code"] = guest.returncode
+                record["shutdown"] = next((msg["data"] for msg in events + tail if msg.get("event") == "SHUTDOWN"), None)
+                raise RuntimeError(f"Guest exited on a repeated {held_key} before its release ({name})")
+            await capture(name + "-after-repeat", "power")
+            await edges(record, (held_key, False))
+            await capture(name + "-after-release", "power")
+            await edges(record, ("esc", True), ("esc", False))
+            if before != await capture(name + "-after-cancel", selected):
+                raise RuntimeError("Power cancellation changed the selected launcher frame: " + name)
+            await edges(record, ("esc", True), ("esc", False))
+            if hashes["home"] != await capture("home-after-" + name, "home"):
+                raise RuntimeError("Returning from the power question changed the initial Home frame: " + name)
+
+        held = evidence["held_enter"] = {"inputs": [], "held": held_key}
+        await check_held_enter("held-enter", held, False)
+        mixed = evidence["mixed_enter"] = {"inputs": [], "held": held_key, "released_other": other_key}
+        await check_held_enter("mixed-enter", mixed, True)
+        await edges(held, ("f10", True), ("f10", False))
+        await capture("confirm-shutdown", "power")
+        await edges(held, (held_key, True), (held_key, False))
+    else:
+        await key("p")
     while not any(e.get("event") == "SHUTDOWN" for e in events):
         events.append(await read_qmp(guest))
     shutdown = next(e["data"] for e in events if e.get("event") == "SHUTDOWN")
@@ -101,7 +196,7 @@ def digest_arg(value):
     raise argparse.ArgumentTypeError("expected 64 lowercase hexadecimal digits")
 
 
-async def main(iso, output, emulator, *, combined=False, source_build=None):
+async def main(iso, output, emulator, *, combined=False, source_build=None, desktop_build=None):
     iso = iso.resolve(strict=True)
     actual = hashlib.sha256(iso.read_bytes()).hexdigest()
     expected_iso, expected_kernel = (COMBINED_ISO, COMBINED_KERNEL) if combined else (ISO_SHA, IMAGE_SHA)
@@ -109,7 +204,21 @@ async def main(iso, output, emulator, *, combined=False, source_build=None):
         if combined:
             raise ValueError("Choose one image profile")
         expected_iso, expected_kernel = source_build
-    ordinary_clock = combined or source_build is not None
+    screens = None
+    if desktop_build is not None:
+        source, receipt_path = desktop_build
+        receipt_bytes = receipt_path.read_bytes()
+        receipt = json.loads(receipt_bytes)
+        revision, tree = subprocess.check_output(
+            ["git", "-C", source, "rev-parse", "HEAD", "HEAD^{tree}"], text=True).splitlines()
+        if (receipt["format"] != "pcp-os-tester-cd/1" or receipt["uncommitted_changes"] is not False
+                or (receipt["source_commit"], receipt["source_tree"]) != (revision, tree)):
+            raise ValueError("Desktop build receipt differs from the source checkout")
+        expected_iso, expected_kernel = digest_arg(receipt["iso_sha256"]), digest_arg(receipt["kernel_measurement"])
+        program_hashes = {name: digest_arg(entry["sha256"]) for name, entry in receipt["on_disc"].items()
+                          if name.endswith(".elf")}
+        screens = DesktopScreens(source, program_hashes)
+    ordinary_clock = combined or source_build is not None or desktop_build is not None
     if actual != expected_iso:
         raise ValueError(f"ISO digest mismatch: {actual}")
     output = output.resolve()
@@ -125,6 +234,8 @@ async def main(iso, output, emulator, *, combined=False, source_build=None):
                 "expected_kernel_sha256": expected_kernel, "host": platform.platform(), "host_architecture": platform.machine(),
                 "iso_sha256": actual, "argv": args, "qemu_version":
                 subprocess.check_output([emulator, "--version"], text=True).splitlines()[0]}
+    if desktop_build is not None:
+        evidence.update(source_commit=revision, source_tree=tree, receipt_sha256=hashlib.sha256(receipt_bytes).hexdigest())
     if combined:
         evidence["source_zip_sha256"] = COMBINED_ZIP
     with (output / "qemu-stderr.txt").open("wb") as err:
@@ -132,7 +243,7 @@ async def main(iso, output, emulator, *, combined=False, source_build=None):
             *args, cwd=output, stdin=asyncio.subprocess.PIPE,
             stdout=asyncio.subprocess.PIPE, stderr=err)
         try:
-            await asyncio.wait_for(exercise(guest, output, iso, evidence, expected_kernel), timeout=120)
+            await asyncio.wait_for(exercise(guest, output, iso, evidence, expected_kernel, screens), timeout=120)
         finally:
             if guest.returncode is None:
                 guest.kill()
@@ -147,6 +258,8 @@ if __name__ == "__main__":
     profile = parser.add_mutually_exclusive_group()
     profile.add_argument("--source-build", nargs=2, type=digest_arg, metavar=("ISO_SHA256", "KERNEL_MEASUREMENT"),
                          help="boot a source-built BIOS ISO on the ordinary clock using both independently obtained digests")
+    profile.add_argument("--desktop-build", nargs=2, type=Path, metavar=("PCP_OS_SOURCE", "BUILD_RECEIPT"),
+                         help="exercise the graphical Home / launcher round trip on a source-built ISO with its matching checkout and receipt")
     profile.add_argument("--combined-zip", action="store_true", help="boot the combined BIOS tester archive on the ordinary clock")
     parser.add_argument("output", type=Path, help="new directory for serial, framebuffer and result")
     parser.add_argument("--qemu", default="qemu-system-x86_64")
@@ -166,4 +279,4 @@ if __name__ == "__main__":
             iso.write_bytes(archive.read(name))
             asyncio.run(main(iso, args.output, emulator, combined=True))
     else:
-        asyncio.run(main(args.media, args.output, emulator, source_build=args.source_build))
+        asyncio.run(main(args.media, args.output, emulator, source_build=args.source_build, desktop_build=args.desktop_build))

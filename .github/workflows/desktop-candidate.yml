@@ -7,8 +7,8 @@ on:
 permissions:
   contents: read
 env:
-  TESTER_REF: a06771688a867fe8ce477c8169a0bd3d67e7e462
-  SOURCE_REF: 34f91e5595de4bce816e652b4ed856323e33b312
+  TESTER_REF: 0977b869f9b0de8aa37f0e119bd0cb5ae375178b
+  SOURCE_REF: c9a0aaf0685187cae4ba48a7adb105a2a22758ec
 
 jobs:
   build:

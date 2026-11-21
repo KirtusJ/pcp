@@ -197,7 +197,7 @@ def main():
         screens = None
         if args.desktop_first:
             reader = Path(__file__).resolve().parents[1] / "public-live-cd/desktop_screens.py"
-            screens = runpy.run_path(str(reader))["DesktopScreens"](args.source.resolve())
+            screens = runpy.run_path(str(reader))["DesktopScreens"](args.source.resolve(), info["files"])
         volume = Path(tmp) / "data files, one"
         init = [sys.executable, str(package / "start.py"), "init", str(volume)]
         subprocess.run(init, check=True)

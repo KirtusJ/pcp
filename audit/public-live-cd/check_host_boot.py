@@ -150,7 +150,9 @@ async def main(iso, output, emulator, *, combined=False, source_build=None, desk
                 or (receipt["source_commit"], receipt["source_tree"]) != (revision, tree)):
             raise ValueError("Desktop build receipt differs from the source checkout")
         expected_iso, expected_kernel = digest_arg(receipt["iso_sha256"]), digest_arg(receipt["kernel_measurement"])
-        screens = DesktopScreens(source)
+        program_hashes = {name: digest_arg(entry["sha256"]) for name, entry in receipt["on_disc"].items()
+                          if name.endswith(".elf")}
+        screens = DesktopScreens(source, program_hashes)
     ordinary_clock = combined or source_build is not None or desktop_build is not None
     if actual != expected_iso:
         raise ValueError(f"ISO digest mismatch: {actual}")

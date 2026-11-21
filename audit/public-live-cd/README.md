@@ -2,6 +2,8 @@
 
 Start with a disposable **x86-64 virtual machine using legacy PC BIOS (SeaBIOS)**. The published CD opens a graphical launcher and runs a local Surfbird demo. The guest store lasts for one boot. Attach only the virtual CD. Keep physical drives and existing virtual disks out of the VM. Leave the host computer’s firmware settings as they are.
 
+For a workspace that keeps a typed task across power-off, use the [two-app VM workspace](../vm-workspace/README.md).
+
 ## Choose and verify the image
 
 The published CD predates the current kernel. Its complete 733,284-byte kernel was reproduced from PCP OS commit `1cff81e4b935dc72a95a669a5214508ab8712efc` with Rust 1.91.1 and guest Ethernet enabled. The command below boots it with no network interface. The other files and the historical publishing process have separate provenance. [Byte comparison and reproduction instructions](history/README.md).

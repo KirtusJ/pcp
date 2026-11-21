@@ -6,7 +6,7 @@ import unittest
 from zipfile import ZipFile
 
 from desktop_image import desktop_program_hashes
-from desktop_screens import DesktopScreens, selected_program
+from desktop_screens import DesktopScreens, complete_power_warning, selected_program
 
 
 class DesktopGrants(unittest.TestCase):
@@ -63,20 +63,16 @@ class DesktopMedia(unittest.TestCase):
 
     def test_power_requires_the_complete_warning_across_visible_rows(self):
         rows = [""] * 24
-        rows[1], rows[3] = "  POWER OFF", "  Switch PCP OS off?"
-        rows[-2] = "  Enter switch off    Esc go back"
-        reader = Mock(spec=DesktopScreens)
-        reader.glyphs = {}
-        reader.confirm_power = True
-        reader.read_screen = Mock(return_value=rows)
+        rows[1], rows[3] = "POWER OFF", "Switch PCP OS off?"
+        rows[-2] = "Enter switch off    Esc go back"
         # The 640x480 guest's first line ended partway through "session".
-        rows[5:7] = ["  The register is closed and verified first. Files of this sessi",
-                     "  not saved by a program are lost."]
-        self.assertFalse(DesktopScreens.matches(reader, b"P6\n640 480\n", "power"))
-        rows[5:8] = ["  The register is closed and verified first.",
-                     "  Files of this session that were not saved",
-                     "  by a program are lost."]
-        self.assertTrue(DesktopScreens.matches(reader, b"P6\n640 480\n", "power"))
+        rows[5:7] = ["The register is closed and verified first. Files of this sessi",
+                     "not saved by a program are lost."]
+        self.assertFalse(complete_power_warning(rows))
+        rows[5:8] = ["The register is closed and verified first.",
+                     "Files of this session that were not saved",
+                     "by a program are lost."]
+        self.assertTrue(complete_power_warning(rows))
 
     def test_verification_requires_a_positive_event_count(self):
         rows = [""] * 30

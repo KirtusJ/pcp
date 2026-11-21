@@ -43,6 +43,62 @@ def selected_program(rows, expected, program_hashes):
     return after < len(rows) and not rows[after][left:right].strip(" ?")
 
 
+def power_warning_rows(frame, glyphs):
+    """Decode the 1x power dialog, including small screens and the literal question mark."""
+    try:
+        magic, size, depth, pixels = frame.split(b"\n", 3)
+        width, height = map(int, size.split())
+    except ValueError:
+        return []
+    if (magic != b"P6" or depth != b"255" or width < 320 or height < 200
+            or len(pixels) != width * height * 3):
+        return []
+
+    # The dialog has one flat background. Refuse a non-font cell, including
+    # damage at the question mark where the general reader substitutes '?'.
+    background = pixels[:3]
+    blank = background * 200
+    stride = width * 3
+    rows = []
+    for y in range(0, height - 19, 20):
+        line = []
+        for x in range(0, width - 9, 10):
+            start = y * stride + x * 3
+            cell = b"".join(pixels[offset:offset + 30]
+                            for offset in range(start, start + 20 * stride, stride))
+            if cell == blank:
+                line.append(" ")
+                continue
+            mask = tuple(cell[i:i + 3] != background for i in range(0, len(cell), 3))
+            letter = glyphs.get(mask)
+            if letter is None:
+                return []
+            line.append(letter)
+        rows.append("".join(line).strip())
+    return rows
+
+
+def complete_power_warning(rows):
+    if len(rows) < 5:
+        return False
+    actions = "Enter switch off    Esc go back"
+    if rows[:2] == ["POWER OFF", "Switch PCP OS off?"]:
+        if rows[-1] == actions:
+            warning = rows[2:-1]
+        elif rows[-2:] == ["Enter switch off", "Esc go back"]:
+            warning = rows[2:-2]
+        else:
+            return False
+    elif (rows[:5] == ["", "POWER OFF", "", "Switch PCP OS off?", ""]
+          and rows[-2:] == [actions, ""]):
+        warning = rows[5:-2]
+    else:
+        return False
+    return " ".join(line for line in warning if line) == (
+        "The register is closed and verified first. "
+        "Files of this session that were not saved by a program are lost.")
+
+
 class DesktopScreens:
     def __init__(self, source, program_hashes):
         self.program_hashes = program_hashes
@@ -86,18 +142,13 @@ class DesktopScreens:
 
     def matches(self, frame, surface, startup_checks=71):
         """Recognize the untouched Home, the full verification page or one selected program."""
+        if surface == "power":
+            return self.confirm_power and complete_power_warning(power_warning_rows(frame, self.glyphs))
         rows = self.read_screen(frame, self.glyphs)
         if not rows:
             return False
         status = f"Verified at start: all {startup_checks} self-tests passed."
         footer = rows[-2]
-        if surface == "power":
-            warning = " ".join(row.strip() for row in rows[5:-2] if row.strip())
-            return (self.confirm_power and rows[1].strip() == "POWER OFF"
-                    and rows[3].strip() == "Switch PCP OS off?"
-                    and warning == ("The register is closed and verified first. "
-                                    "Files of this session that were not saved by a program are lost.")
-                    and footer.strip() == "Enter switch off    Esc go back")
         if self.has_verification_page:
             if rows[1].strip() == "VERIFICATION":
                 return (surface == "verification" and rows[3].strip() == status

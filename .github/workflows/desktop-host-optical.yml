@@ -21,6 +21,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 25
     env:
+      SOURCE_ISO: f904f393c9332c32ea5de8d73c5d81762717c6c31166708d6ce9ffdaa63e6f96
+      SOURCE_KERNEL: 4732843ca93272f5b553a0ba7a6fb89a96f4672044edc686d4518567651e5bf4
       COMBINED_ZIP: audit/public-live-cd/candidates/keyboard-01-limine-10/keyboard-01-limine-10.zip
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
@@ -78,8 +80,36 @@ jobs:
         run: |
           python audit/public-live-cd/candidates/source-bios/verify.py source-test.iso
           python audit/public-live-cd/check_host_boot.py source-test.iso source-boot --source-build \
-            7c1cd0d0ef7959f7dd095588106ad10bb5a87db2c3a9a0b09535f1debb6e10eb \
-            82b96a61b5e949caa63abb9e262f0c7e135de443c8a8576344687aa84f2d6cde
+            "$SOURCE_ISO" \
+            "$SOURCE_KERNEL"
+      - name: Read the pinned disposable-disk checker
+        if: runner.os == 'Linux'
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: KirtusJ/pcp-os
+          ref: 7e99b59c2d6c2af50e32459d92468ae730fbec2c
+          path: disk-check
+          sparse-checkout: examples/optical-disk-check
+          persist-credentials: false
+      - name: Check four disposable disks and their write controls
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          checker=disk-check/examples/optical-disk-check/check.py
+          mkdir source-disks
+          flags=(--kernel "$SOURCE_KERNEL" --sha256 "$SOURCE_ISO" --tester-profile --timeout 65)
+          python3 -IB "$checker" source-test.iso source-disks/ide "${flags[@]}"
+          for sector in 512 4096; do
+            python3 -IB "$checker" source-test.iso "source-disks/nvme-$sector" "${flags[@]}" --nvme-sector-size "$sector"
+          done
+      - name: Keep disposable-disk counters, serial logs and screens
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: source-optical-disks
+          path: source-disks/
+          if-no-files-found: warn
+          retention-days: 30
       - name: Keep the source CD observations
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

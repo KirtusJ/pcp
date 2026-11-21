@@ -13,6 +13,7 @@ import tempfile
 import zipfile
 
 from check import IMAGE_SHA, ISO_SHA
+from desktop_screens import DesktopScreens
 
 COMBINED_ZIP = "ba95de848dea3aacd2c95cfca7018c4fcd38dc859d5e0c05ad961cebf17b2174"
 COMBINED_ISO = "5264e891b70a37d66541393e1fc0b135fd301b8e2097022e9b698aacdc5b3d8d"
@@ -42,7 +43,7 @@ async def read_qmp(guest):
     return json.loads(line)
 
 
-async def exercise(guest, output, iso, evidence, expected_kernel):
+async def exercise(guest, output, iso, evidence, expected_kernel, screens):
     if "QMP" not in await read_qmp(guest):
         raise RuntimeError("Expected a QMP greeting")
     events = []
@@ -67,23 +68,48 @@ async def exercise(guest, output, iso, evidence, expected_kernel):
         raise RuntimeError("Expected exactly one inserted read-only image matching the selected ISO")
 
     serial = output / "serial.txt"
-    frame = output / "launcher.ppm"
-    while True:
-        log = serial.read_text(errors="replace") if serial.exists() else ""
-        if "it is in SAFE" in log:
-            raise RuntimeError("Guest reported SAFE; inspect serial.txt")
-        if "leaves no memory behind" in log:
-            await rpc("screendump", filename=str(frame))
-            if verified_row(frame.read_bytes()):
-                break
-        await asyncio.sleep(0.2)
+    async def wait_screen(name, matches):
+        path = output / (name + ".ppm")
+        while True:
+            log = serial.read_text(errors="replace") if serial.exists() else ""
+            if "it is in SAFE" in log:
+                raise RuntimeError("Guest reported SAFE; inspect serial.txt")
+            if "leaves no memory behind" in log:
+                await rpc("screendump", filename=str(path))
+                if matches(path.read_bytes()):
+                    return log
+            await asyncio.sleep(0.2)
+
+    async def key(code):
+        await rpc("send-key", keys=[{"type": "qcode", "data": code}], **{"hold-time": 80})
+
+    if screens is None:
+        log = await wait_screen("launcher", verified_row)
+        evidence["verified_row_sha256"] = VERIFIED_ROW_SHA256
+    else:
+        log = await wait_screen("home", lambda frame: screens.matches(frame, "home"))
+        captures = ["home"]
+        if screens.has_verification_page:
+            await key("v")
+            await wait_screen("verification", lambda frame: screens.matches(frame, "verification"))
+            await key("esc")
+            await wait_screen("home-after-verification", lambda frame: screens.matches(frame, "home"))
+            captures.extend(["verification", "home-after-verification"])
+        await key("spc")
+        await wait_screen("launcher", lambda frame: screens.matches(frame, "surf.elf"))
+        await key("esc")
+        await wait_screen("home-after-escape", lambda frame: screens.matches(frame, "home"))
+        captures.extend(["launcher", "home-after-escape"])
+        evidence["screen_sha256"] = {
+            name: hashlib.sha256((output / (name + ".ppm")).read_bytes()).hexdigest()
+            for name in captures
+        }
 
     evidence["startup_pass_lines"] = sum(line.startswith("  pass ") for line in log.splitlines())
     if evidence["startup_pass_lines"] != 71 or expected_kernel + " (measured; equal" not in log:
         raise RuntimeError("Unexpected startup checks or kernel measurement")
-    evidence["verified_row_sha256"] = VERIFIED_ROW_SHA256
 
-    await rpc("send-key", keys=[{"type": "qcode", "data": "p"}], **{"hold-time": 80})
+    await key("p")
     while not any(e.get("event") == "SHUTDOWN" for e in events):
         events.append(await read_qmp(guest))
     shutdown = next(e["data"] for e in events if e.get("event") == "SHUTDOWN")
@@ -101,7 +127,7 @@ def digest_arg(value):
     raise argparse.ArgumentTypeError("expected 64 lowercase hexadecimal digits")
 
 
-async def main(iso, output, emulator, *, combined=False, source_build=None):
+async def main(iso, output, emulator, *, combined=False, source_build=None, desktop_build=None):
     iso = iso.resolve(strict=True)
     actual = hashlib.sha256(iso.read_bytes()).hexdigest()
     expected_iso, expected_kernel = (COMBINED_ISO, COMBINED_KERNEL) if combined else (ISO_SHA, IMAGE_SHA)
@@ -109,7 +135,19 @@ async def main(iso, output, emulator, *, combined=False, source_build=None):
         if combined:
             raise ValueError("Choose one image profile")
         expected_iso, expected_kernel = source_build
-    ordinary_clock = combined or source_build is not None
+    screens = None
+    if desktop_build is not None:
+        source, receipt_path = desktop_build
+        receipt_bytes = receipt_path.read_bytes()
+        receipt = json.loads(receipt_bytes)
+        revision, tree = subprocess.check_output(
+            ["git", "-C", source, "rev-parse", "HEAD", "HEAD^{tree}"], text=True).splitlines()
+        if (receipt["format"] != "pcp-os-tester-cd/1" or receipt["uncommitted_changes"] is not False
+                or (receipt["source_commit"], receipt["source_tree"]) != (revision, tree)):
+            raise ValueError("Desktop build receipt differs from the source checkout")
+        expected_iso, expected_kernel = digest_arg(receipt["iso_sha256"]), digest_arg(receipt["kernel_measurement"])
+        screens = DesktopScreens(source)
+    ordinary_clock = combined or source_build is not None or desktop_build is not None
     if actual != expected_iso:
         raise ValueError(f"ISO digest mismatch: {actual}")
     output = output.resolve()
@@ -125,6 +163,8 @@ async def main(iso, output, emulator, *, combined=False, source_build=None):
                 "expected_kernel_sha256": expected_kernel, "host": platform.platform(), "host_architecture": platform.machine(),
                 "iso_sha256": actual, "argv": args, "qemu_version":
                 subprocess.check_output([emulator, "--version"], text=True).splitlines()[0]}
+    if desktop_build is not None:
+        evidence.update(source_commit=revision, source_tree=tree, receipt_sha256=hashlib.sha256(receipt_bytes).hexdigest())
     if combined:
         evidence["source_zip_sha256"] = COMBINED_ZIP
     with (output / "qemu-stderr.txt").open("wb") as err:
@@ -132,7 +172,7 @@ async def main(iso, output, emulator, *, combined=False, source_build=None):
             *args, cwd=output, stdin=asyncio.subprocess.PIPE,
             stdout=asyncio.subprocess.PIPE, stderr=err)
         try:
-            await asyncio.wait_for(exercise(guest, output, iso, evidence, expected_kernel), timeout=120)
+            await asyncio.wait_for(exercise(guest, output, iso, evidence, expected_kernel, screens), timeout=120)
         finally:
             if guest.returncode is None:
                 guest.kill()
@@ -147,6 +187,8 @@ if __name__ == "__main__":
     profile = parser.add_mutually_exclusive_group()
     profile.add_argument("--source-build", nargs=2, type=digest_arg, metavar=("ISO_SHA256", "KERNEL_MEASUREMENT"),
                          help="boot a source-built BIOS ISO on the ordinary clock using both independently obtained digests")
+    profile.add_argument("--desktop-build", nargs=2, type=Path, metavar=("PCP_OS_SOURCE", "BUILD_RECEIPT"),
+                         help="exercise the graphical Home / launcher round trip on a source-built ISO with its matching checkout and receipt")
     profile.add_argument("--combined-zip", action="store_true", help="boot the combined BIOS tester archive on the ordinary clock")
     parser.add_argument("output", type=Path, help="new directory for serial, framebuffer and result")
     parser.add_argument("--qemu", default="qemu-system-x86_64")
@@ -166,4 +208,4 @@ if __name__ == "__main__":
             iso.write_bytes(archive.read(name))
             asyncio.run(main(iso, args.output, emulator, combined=True))
     else:
-        asyncio.run(main(args.media, args.output, emulator, source_build=args.source_build))
+        asyncio.run(main(args.media, args.output, emulator, source_build=args.source_build, desktop_build=args.desktop_build))

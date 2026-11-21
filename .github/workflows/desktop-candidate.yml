@@ -7,7 +7,7 @@ on:
 permissions:
   contents: read
 env:
-  TESTER_REF: 91de48039e8a28538a0a65869dac92ac9c841033
+  TESTER_REF: 12af170170462d7175d09b42be2176e749dce43f
   SOURCE_REF: 69d3f1dbbe9a7141a7d2e1a80391fad1588c8f1a
 
 jobs:

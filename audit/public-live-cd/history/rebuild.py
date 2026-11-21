@@ -123,8 +123,9 @@ def inspect(args):
         subprocess.run(["objcopy", "-I", "elf64-x86-64", "-O", "elf32-i386", candidate, flat], check=True)
         results[mode] = compare(ref, flat.read_bytes())
         flat.unlink()
-    if len(results) != 2:
-        raise ValueError("Both independent build modes are required")
+    expected = {f"kernel-{host}-{mode}" for host in ("msvc", "gnu") for mode in ("native", "remapped")}
+    if results.keys() != expected:
+        raise ValueError("Expected both Windows toolchains and both path modes")
     receipt = {"source": SOURCE, "compiler": RUST, "compile_host": "windows-2022",
                "features": ["guest-ethernet"], "reference_iso": ISO, "reference_elf": ELF,
                "reference_measurement": compare(ref, ref)["measurement"],

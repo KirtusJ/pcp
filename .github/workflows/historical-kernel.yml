@@ -15,8 +15,9 @@ jobs:
       fail-fast: false
       matrix:
         mode: [native, remapped]
+        host: [msvc, gnu]
     env:
-      RUSTUP_TOOLCHAIN: 1.91.1
+      RUSTUP_TOOLCHAIN: 1.91.1-x86_64-pc-windows-${{ matrix.host }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
@@ -29,7 +30,7 @@ jobs:
           persist-credentials: false
       - name: Install the recorded compiler and bare-metal standard library
         run: |
-          rustup toolchain install 1.91.1 --profile minimal --target x86_64-unknown-none
+          rustup toolchain install $env:RUSTUP_TOOLCHAIN --profile minimal --target x86_64-unknown-none --force-non-host
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           ld.lld --version
       - name: Compile the historical source
@@ -38,7 +39,7 @@ jobs:
         run: python audit/public-live-cd/history/rebuild.py build surfbird-work $env:BUILD_MODE PCP-OS.iso "$env:RUNNER_TEMP/built"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: kernel-${{ matrix.mode }}
+          name: kernel-${{ matrix.host }}-${{ matrix.mode }}
           path: ${{ runner.temp }}/built/kernel.elf64
           retention-days: 1
           if-no-files-found: error

@@ -1,0 +1,56 @@
+name: Desktop host optical boot
+on:
+  pull_request:
+    paths:
+      - 'PCP-OS.iso'
+      - 'audit/public-live-cd/check.py'
+      - 'audit/public-live-cd/check_host_boot.py'
+      - '.github/workflows/desktop-host-optical.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  boot:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2025, macos-15]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Install QEMU on macOS
+        if: runner.os == 'macOS'
+        run: brew list --versions qemu >/dev/null || brew install qemu
+      - name: Install native Windows QEMU
+        if: runner.os == 'Windows'
+        id: msys
+        uses: msys2/setup-msys2@ec48f7c5447b3140e2b088413ae3a55687bccb6e
+        with:
+          msystem: UCRT64
+          update: true
+          cache: false
+          install: mingw-w64-ucrt-x86_64-qemu
+      - name: Boot the CD on Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        env:
+          MSYS_ROOT: ${{ steps.msys.outputs.msys2-location }}
+        run: |
+          $python = (Get-Command python.exe).Source
+          $bin = Join-Path $env:MSYS_ROOT 'ucrt64/bin'
+          $env:PATH = "$bin;$env:PATH"
+          & $python audit/public-live-cd/check_host_boot.py PCP-OS.iso host-boot --qemu "$bin/qemu-system-x86_64.exe"
+      - name: Boot the CD on macOS
+        if: runner.os == 'macOS'
+        run: python3 audit/public-live-cd/check_host_boot.py PCP-OS.iso host-boot
+      - name: Keep serial, launcher, host version and shutdown evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: optical-boot-${{ matrix.os }}
+          path: host-boot/
+          if-no-files-found: warn
+          retention-days: 14

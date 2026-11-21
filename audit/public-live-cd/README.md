@@ -12,6 +12,10 @@ For the published version, download [PCP-OS.iso at the tested revision](https://
 | macOS | `shasum -a 256 PCP-OS.iso` |
 | Windows PowerShell | `Get-FileHash .\PCP-OS.iso -Algorithm SHA256` |
 
+If you received the ISO separately, the same byte count and digest identify the tested image.
+
+To check the committed **Enterprise edition** from a Linux x86-64 Git checkout, run `python3 audit/enterprise-checkout/check.py HEAD`. The script checks three temporary working trees and both plugin copies. The standalone `verify_edition.py` expects the exact extracted edition inventory. The repository also carries the optical image, workflows and audit files. For a downloaded ISO alone, use the ISO checksum above.
+
 Use [keyboard-01](candidates/keyboard-01/) only when testing the keyboard timing changes. It carries a different ISO and kernel while displaying the same 0.3.1 label. Keep the two images in separate directories and record the digest of the one you ran.
 
 ## Boot and exit
@@ -26,16 +30,18 @@ qemu-system-x86_64 -machine pc -accel tcg -cpu qemu64 -m 64M -boot order=d -cdro
 2. Press **Enter** to open Surfbird and **Space** at its media menu to play the bundled clip. To stop an active app, send **Ctrl+Alt+Delete** to the *guest*. Use the emulator's send-key control if your host intercepts the chord.
 3. Press **P** at the launcher to power off. Keep the serial log outside the guest. If startup shows **SAFE**, save the screen and log, including the failed checks. The guest disables app startup in that state. Report the ISO digest, QEMU version, machine, firmware and clock settings with the result.
 
-The published image can enter SAFE during keyboard self-tests on the ordinary wall clock. The four boots reported below used the instruction-counted setting. To test audible playback where a host audio backend is configured, replace `-audiodev none,id=snd0 -device AC97,audiodev=snd0` with `-device AC97`. [QEMU system invocation](https://www.qemu.org/docs/master/system/invocation.html)
+The published image can enter SAFE during keyboard self-tests on the ordinary wall clock. The four Linux boots reported below used the instruction-counted setting. If another hypervisor reports SAFE, record the failed check and clock configuration along with the verified image digest. To test audible playback where a host audio backend is configured, replace `-audiodev none,id=snd0 -device AC97,audiodev=snd0` with `-device AC97`. [QEMU system invocation](https://www.qemu.org/docs/master/system/invocation.html)
 
 ## Firmware and desktop coverage
 
 | Target | Evidence and scope |
 | --- | --- |
 | x86-64 QEMU, SeaBIOS | On a Linux host with QEMU 10.0.13 TCG, the published ISO and keyboard-01 each reached the verified launcher and powered off with **P** on both `pc` and `q35`. Each of these four fresh instruction-counted boots showed 71 passing checks. QEMU reported a guest-requested shutdown and exited with status 0 in every case. |
-| UEFI optical boot | Both ISO boot catalogs contain one bootable x86 BIOS entry (platform ID `0x00`) and no EFI entry (`0xEF`). Select legacy BIOS **in the VM** for these images. The Q35 chipset also ran with SeaBIOS in the tests above. [UEFI optical media format, §13.3.2.1](https://uefi.org/specs/UEFI/2.10/13_Protocols_Media_Access.html) |
+| UEFI optical boot | Both ISO boot catalogs contain one bootable x86 BIOS entry (platform ID `0x00`) and no EFI entry (`0xEF`). Select legacy BIOS **in the VM** for these images. A separate GRUB/OVMF experiment reached SAFE and exposed an overlap between the kernel’s fixed load address range and firmware-reserved memory. [UEFI placement evidence](uefi-probe/README.md) [UEFI optical media format, §13.3.2.1](https://uefi.org/specs/UEFI/2.10/13_Protocols_Media_Access.html) |
 | Physical desktops and laptops | Native hardware, Secure Boot, USB boot, installation, persistent home storage, suspend/resume and device compatibility require separate qualification. These CD tests cover a temporary demo. Use the VM path for this tester round. |
-| macOS, Windows and ARM hosts | The checksum commands above identify the download. The four boot observations were made on Linux. A host of another CPU architecture would need x86-64 emulation to use this guest image. |
+| macOS and Windows hosts | The **published** ISO reached the verified launcher and shut down from **P** on macOS 15.8.2 (arm64) and Windows Server 2025 (AMD64). Both used QEMU 11.1.3, TCG, the x86-64 PC guest and only a read-only CD. Each reported 71 startup checks, the expected kernel measurement and a guest-requested shutdown with exit 0. These runs cover the headless emulated guest. Native ARM boot, interactive host keyboard capture, host audio and other hypervisors remain untested by this check. [macOS receipt](observations/desktop-hosts-20261120/optical-boot-macos-15.zip) · [Windows receipt](observations/desktop-hosts-20261120/optical-boot-windows-2025.zip) · [Original run](https://github.com/KirtusJ/pcp/actions/runs/44843127105) |
+
+To repeat the desktop host check, run `python3 audit/public-live-cd/check_host_boot.py PCP-OS.iso host-boot` from the repository root (use `python` on Windows). QEMU must be on PATH, or supply `--qemu` with its full path. Choose a new output directory. The check saves the original framebuffer, serial log, list of inserted media and shutdown record. [QEMU downloads for each host](https://www.qemu.org/download/)
 
 ## Repeat the keyboard check
 

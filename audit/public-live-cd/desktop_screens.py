@@ -42,11 +42,15 @@ class DesktopScreens:
         self.read_screen = checks["read_screen"]
         self.glyphs = checks["kernel_glyphs"]()
 
-    def only_programs_dock(self, frame):
-        # The label on the sole, centered item starts half a cell off the regular text grid.
+    def only_programs_dock(self, frame, rows):
         _, size, _, pixels = frame.split(b"\n", 3)
         width, height = map(int, size.split())
-        left = (width - 160) // 20 * 10 + 35
+        dock_left = (width - 160) // 20 * 10
+        column = (dock_left + 40) // 10
+        if rows[-3][column:column + 8] == "Programs":
+            return True
+        # The first dock revision centered the same label half a cell to the left.
+        left = dock_left + 35
         top = height // 20 * 20 - 60
         for column, letter in enumerate("Programs"):
             x = left + column * 10
@@ -76,7 +80,7 @@ class DesktopScreens:
             if footer[corner:corner + 8] != "verified":
                 return False
             if surface == "home":
-                return footer[3:9] == "K keys" and clean_home(rows) and self.only_programs_dock(frame)
+                return footer[3:9] == "K keys" and clean_home(rows) and self.only_programs_dock(frame, rows)
             return footer[3:14] == "Esc desktop" and "K keys" in footer[14:] and selected_program(rows, surface)
 
         # The earlier two-bar desktop displayed the complete verdict on its top bar.

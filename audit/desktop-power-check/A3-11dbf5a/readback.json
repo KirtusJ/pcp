@@ -1,0 +1,66 @@
+{
+  "distribution_commit": "11dbf5aeb51c4695c3a0a911d0d9fa21170f94fc",
+  "distribution_tree": "adc48f85500ad6ce62fadf2f3c09461fd0032543",
+  "public_iso_sha256": "93ed3b599ad7be0e1e88a64813b1f2b5299d51507df2edca691aaf6189d10d15",
+  "historical_kernel_source": "3e86beb1ee17fad2f3d61c95b9d5dd017fb6c755",
+  "capture_font_source": "89792700243ad5dd4efde3091993984845087e2c",
+  "original_media_run": 44899266193,
+  "original_media_artifact": 14705910212,
+  "media": {
+    "single/pcp-os-tester.iso": "a25d5f1938cb75c6df4a89a1ec320133b7e1203a581f2611bac51714ae6605d4",
+    "single/receipt.json": "0901dca47cbc3961fb29df87f358bddbb1acaed316ba2f3d45737bc98161e67a",
+    "two-app/pcp-os-tester.iso": "6f1039ff429c832e6fd46fd22738073f2a096d3319d7ebf13ad31b3e8affa651",
+    "two-app/receipt.json": "25f1996944857401180a53a8492144b6319f47432015ed91d70cf1f387ff4cc6",
+    "workspace.zip": "d6867fb04361fbec1c90f9accd02e3ffd12912993c62d6361fef86126f47ce57"
+  },
+  "guests": {
+    "landed-optical": {
+      "final_checks": 72,
+      "exit": 0,
+      "shutdown": {
+        "guest": true,
+        "reason": "guest-shutdown"
+      }
+    },
+    "master-single": {
+      "final_checks": 72,
+      "exit": 0,
+      "shutdown": {
+        "guest": true,
+        "reason": "guest-shutdown"
+      }
+    },
+    "master-two-app": {
+      "final_checks": 72,
+      "exit": 0,
+      "shutdown": {
+        "guest": true,
+        "reason": "guest-shutdown"
+      }
+    },
+    "master-vm/first": {
+      "final_checks": 72,
+      "exit": 0,
+      "shutdown": {
+        "guest": true,
+        "reason": "guest-shutdown"
+      }
+    },
+    "master-vm/cold": {
+      "final_checks": 72,
+      "exit": 0,
+      "shutdown": {
+        "guest": true,
+        "reason": "guest-shutdown"
+      }
+    }
+  },
+  "vm": {
+    "zip_sha256": "d6867fb04361fbec1c90f9accd02e3ffd12912993c62d6361fef86126f47ce57",
+    "first_disk_sha256": "b0b3af17ed3e11f01eb6cda717f484a72bd37e449e58b387352a0559ce72060a",
+    "saved_disk_sha256": "5542b51fc160a0e76a43486a0546688ccc2a33cb46904b508dd0df23fe774916",
+    "read_back_label": "cold morning"
+  },
+  "focused_tests": 4,
+  "warning_frame_verdicts": 4
+}

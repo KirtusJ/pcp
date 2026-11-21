@@ -17,18 +17,12 @@ Keep the volume's two files together. To back up the queue, copy the volume fold
 
 ## Download and source verification
 
-The ZIP is 349,404 bytes. Compare its SHA-256 with `1d60a0648ce3c03cbadc39544e8a288cca88441549b79e6d452c51d71622a5c6`. Use `sha256sum pcp-vm-workspace.zip` on Linux, `shasum -a 256 pcp-vm-workspace.zip` on macOS or `Get-FileHash pcp-vm-workspace.zip -Algorithm SHA256` in PowerShell.
+The ZIP is 349,533 bytes. Compare its SHA-256 with `671482e070add2bea6f38b159f3a28b63263045a45e8c5234412f909f3daf5fe`. Use `sha256sum pcp-vm-workspace.zip` on Linux, `shasum -a 256 pcp-vm-workspace.zip` on macOS or `Get-FileHash pcp-vm-workspace.zip -Algorithm SHA256` in PowerShell.
 
-The package uses PCP OS source `4c482cfd33c564526722a8b4e08d830da0f30164`, tree `89855dd32e4d68b06d1210ef34bb118a5ee13865`, with Rust 1.97.0 and the kernel's opt-in `vm-store` feature. The measured kernel code and read-only data hash to `f386f183029fd1a6408db99181ce1702b9930a4cbb85e94953410ba66a157b5b`. A clean build reproduced the checked-in ZIP byte for byte. File digests and toolchain details are in `build.json` inside the package. [Kernel, guests and provisioner](https://github.com/KirtusJ/pcp-os/tree/4c482cfd33c564526722a8b4e08d830da0f30164).
+This package includes the guest file-open fixes in [PCP OS #303](https://github.com/KirtusJ/pcp-os/pull/303). If an app asks to create a file exclusively and the name already exists, the kernel returns an error. If the app has no free file descriptors, a failed open preserves the existing contents and leaves a new name available.
+
+The package uses PCP OS source `0a037b45bb18d6c1c61c2a207a62da5f3057933d`, tree `e1367fbabebc1732ad3d380d47361138c61f48a2`, with Rust 1.97.0 and the kernel's opt-in `vm-store` feature. The measured kernel code and read-only data hash to `62d3a6b6c16035bec8979c9502b6dfb79c6c846bec094130cbe652141bdd247b`. File digests and toolchain details are in `build.json` inside the package. [Kernel, guests and provisioner](https://github.com/KirtusJ/pcp-os/tree/0a037b45bb18d6c1c61c2a207a62da5f3057933d).
 
 ## Host qualification
 
-The test drove the guest keyboard and read the guest framebuffer in headless QEMU. On each host, Surfbird played 33 frames and submitted 3,200 ms of audio to the silent device. The queue saved the typed label `cold morning`. A separate QEMU process reopened the same volume, drew the same label and left the disk byte-identical. Both sessions ended with guest-requested shutdowns. Host window presentation and speaker output remain untested.
-
-| Host runner | Host architecture | QEMU |
-| --- | --- | --- |
-| Ubuntu 24.04 | x86-64 | 8.2.2 |
-| macOS 15 | arm64 | 11.1.3 |
-| Windows Server 2025 | x86-64 | 11.1.3 |
-
-The 86,055-byte evidence archive has SHA-256 `8c781ae5271bb917626f1c31886c600e155b483b0308adba9ee98a6716c55605`. It preserves each original runner artifact, including serial logs, QEMU arguments and shutdown events, guest screenshots and the saved test disk. [Original observations](host-observations.zip?raw=1) · [Qualification run](https://github.com/KirtusJ/pcp/actions/runs/44862756228) · [Rebuild and boot workflow](../../.github/workflows/vm-workspace.yml).
+Host results for this package are pending. The three-host results for the previous package remain available with the [previous download and evidence](https://github.com/KirtusJ/pcp/tree/8081a5b2d5cfe5ccad6afd0bbd936c1986245fe6/audit/vm-workspace).

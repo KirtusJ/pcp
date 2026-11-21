@@ -40,16 +40,7 @@ jobs:
           PCPOS_KERNEL_FEATURES=vm-store sh source/PCP_OS_Rust/crates/pcpos-kernel/run.sh build
           python3 audit/vm-workspace/build.py source "$RUNNER_TEMP/optical" \
             audit/public-live-cd/candidates/source-bios/source-bios-tester.zip "$RUNNER_TEMP/pcp-vm-workspace.zip"
-      - name: Compare with the checked-in download
-        id: compare
-        run: cmp "$RUNNER_TEMP/pcp-vm-workspace.zip" audit/vm-workspace/pcp-vm-workspace.zip
-      - name: Retain the rebuilt candidate for inspection on a mismatch
-        if: failure() && steps.compare.outcome == 'failure'
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
-        with:
-          name: vm-workspace-comparison-candidate
-          path: ${{ runner.temp }}/pcp-vm-workspace.zip
-          retention-days: 7
+          cmp "$RUNNER_TEMP/pcp-vm-workspace.zip" audit/vm-workspace/pcp-vm-workspace.zip
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: vm-workspace-package

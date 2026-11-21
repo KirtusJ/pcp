@@ -61,6 +61,23 @@ class DesktopMedia(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "inventory differ"):
                 desktop_program_hashes(image, dict(receipt, on_disc=changed))
 
+    def test_power_requires_the_complete_warning_across_visible_rows(self):
+        rows = [""] * 24
+        rows[1], rows[3] = "  POWER OFF", "  Switch PCP OS off?"
+        rows[-2] = "  Enter switch off    Esc go back"
+        reader = Mock(spec=DesktopScreens)
+        reader.glyphs = {}
+        reader.confirm_power = True
+        reader.read_screen = Mock(return_value=rows)
+        # The 640x480 guest's first line ended partway through "session".
+        rows[5:7] = ["  The register is closed and verified first. Files of this sessi",
+                     "  not saved by a program are lost."]
+        self.assertFalse(DesktopScreens.matches(reader, b"P6\n640 480\n", "power"))
+        rows[5:8] = ["  The register is closed and verified first.",
+                     "  Files of this session that were not saved",
+                     "  by a program are lost."]
+        self.assertTrue(DesktopScreens.matches(reader, b"P6\n640 480\n", "power"))
+
     def test_verification_requires_a_positive_event_count(self):
         rows = [""] * 30
         rows[1] = "  VERIFICATION"

@@ -92,12 +92,11 @@ class DesktopScreens:
         status = f"Verified at start: all {startup_checks} self-tests passed."
         footer = rows[-2]
         if surface == "power":
-            columns = int(frame.split(b"\n", 2)[1].split()[0]) // 10
-            warning = "  The register is closed and verified first. Files of this session that were"
+            warning = " ".join(row.strip() for row in rows[5:-2] if row.strip())
             return (self.confirm_power and rows[1].strip() == "POWER OFF"
                     and rows[3].strip() == "Switch PCP OS off?"
-                    and rows[5] == warning[:columns].rstrip()
-                    and rows[6] == "  not saved by a program are lost."
+                    and warning == ("The register is closed and verified first. "
+                                    "Files of this session that were not saved by a program are lost.")
                     and footer.strip() == "Enter switch off    Esc go back")
         if self.has_verification_page:
             if rows[1].strip() == "VERIFICATION":

@@ -3,6 +3,8 @@ on:
   pull_request:
     paths:
       - 'PCP-OS.iso'
+      - 'audit/public-live-cd/candidates/source-bios/source-bios-tester.zip'
+      - 'audit/public-live-cd/candidates/source-bios/verify.py'
       - 'audit/public-live-cd/candidates/keyboard-01-limine-10/keyboard-01-limine-10.zip'
       - 'audit/public-live-cd/check.py'
       - 'audit/public-live-cd/check_host_boot.py'
@@ -15,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-2025, macos-15]
+        os: [windows-2025, macos-15, ubuntu-24.04]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 25
     env:
@@ -24,6 +26,9 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           persist-credentials: false
+      - name: Install QEMU and SeaBIOS on Linux
+        if: runner.os == 'Linux'
+        run: sudo apt-get -qq update && sudo apt-get -qq install -y --no-install-recommends qemu-system-x86 seabios
       - name: Install QEMU on macOS
         if: runner.os == 'macOS'
         run: brew list --versions qemu >/dev/null || brew install qemu
@@ -62,8 +67,29 @@ jobs:
       - name: Boot the opt-in CD on the macOS host's ordinary clock
         if: runner.os == 'macOS'
         run: python3 audit/public-live-cd/check_host_boot.py "$COMBINED_ZIP" combined-boot --combined-zip
-      - name: Keep the opt-in CD observations
+      - name: Add the Windows emulator to the path
+        if: runner.os == 'Windows'
+        shell: pwsh
+        env:
+          MSYS_ROOT: ${{ steps.msys.outputs.msys2-location }}
+        run: (Join-Path $env:MSYS_ROOT 'ucrt64/bin') | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+      - name: Verify the packaged source CD and boot the extracted image
+        shell: bash
+        run: |
+          python audit/public-live-cd/candidates/source-bios/verify.py source-test.iso
+          python audit/public-live-cd/check_host_boot.py source-test.iso source-boot --source-build \
+            7c1cd0d0ef7959f7dd095588106ad10bb5a87db2c3a9a0b09535f1debb6e10eb \
+            82b96a61b5e949caa63abb9e262f0c7e135de443c8a8576344687aa84f2d6cde
+      - name: Keep the source CD observations
         if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: source-optical-boot-${{ matrix.os }}
+          path: source-boot/
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Keep the opt-in CD observations
+        if: always() && runner.os != 'Linux'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: combined-optical-boot-${{ matrix.os }}
@@ -71,7 +97,7 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
       - name: Keep serial, launcher, host version and shutdown evidence
-        if: always()
+        if: always() && runner.os != 'Linux'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: optical-boot-${{ matrix.os }}

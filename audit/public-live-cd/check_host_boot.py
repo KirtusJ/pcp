@@ -123,9 +123,42 @@ async def exercise(guest, output, iso, evidence, expected_kernel, screens):
         raise RuntimeError("Unexpected startup checks or kernel measurement")
 
     if screens is not None and screens.confirm_power:
-        await key("f10")
+        # A held Enter opens Programs. Its next key-down while the question is visible
+        # is a repeat. Only the later press, after release, may authorize shutdown.
+        held = evidence["held_enter"] = {"inputs": []}
+
+        async def edges(*changes):
+            inputs = [{"type": "key", "data": {"down": down, "key": {"type": "qcode", "data": code}}}
+                      for code, down in changes]
+            await rpc("input-send-event", events=inputs)
+            held["inputs"].extend(changes)
+
+        await edges(("ret", True))
+        before = await capture("held-enter-launcher", selected)
+        await edges(("f10", True), ("f10", False))
+        await capture("held-enter-power", "power")
+        await edges(("ret", True))
+        try:
+            await asyncio.wait_for(guest.wait(), 1)
+        except asyncio.TimeoutError:
+            pass
+        else:
+            tail = [json.loads(line) for line in (await guest.stdout.read()).splitlines()]
+            held["early_exit_code"] = guest.returncode
+            held["shutdown"] = next((msg["data"] for msg in events + tail if msg.get("event") == "SHUTDOWN"), None)
+            raise RuntimeError("Guest exited on a repeated Enter before its release or a fresh press")
+        await edges(("ret", False))
+        await capture("held-enter-after-release", "power")
+        await edges(("esc", True), ("esc", False))
+        after = await capture("held-enter-after-cancel", selected)
+        if before != after:
+            raise RuntimeError("Power cancellation after held Enter changed the selected launcher frame")
+        await edges(("esc", True), ("esc", False))
+        if await capture("home-after-held-enter", "home") != hashes["home"]:
+            raise RuntimeError("Returning from the held-Enter check changed the initial Home frame")
+        await edges(("f10", True), ("f10", False))
         await capture("confirm-shutdown", "power")
-        await key("ret")
+        await edges(("ret", True), ("ret", False))
     else:
         await key("p")
     while not any(e.get("event") == "SHUTDOWN" for e in events):

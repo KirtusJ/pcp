@@ -13,6 +13,7 @@ import tempfile
 import zipfile
 
 from check import IMAGE_SHA, ISO_SHA
+from desktop_image import desktop_program_hashes
 from desktop_screens import DesktopScreens
 
 COMBINED_ZIP = "ba95de848dea3aacd2c95cfca7018c4fcd38dc859d5e0c05ad961cebf17b2174"
@@ -198,7 +199,8 @@ def digest_arg(value):
 
 async def main(iso, output, emulator, *, combined=False, source_build=None, desktop_build=None):
     iso = iso.resolve(strict=True)
-    actual = hashlib.sha256(iso.read_bytes()).hexdigest()
+    image = iso.read_bytes()
+    actual = hashlib.sha256(image).hexdigest()
     expected_iso, expected_kernel = (COMBINED_ISO, COMBINED_KERNEL) if combined else (ISO_SHA, IMAGE_SHA)
     if source_build is not None:
         if combined:
@@ -215,12 +217,11 @@ async def main(iso, output, emulator, *, combined=False, source_build=None, desk
                 or (receipt["source_commit"], receipt["source_tree"]) != (revision, tree)):
             raise ValueError("Desktop build receipt differs from the source checkout")
         expected_iso, expected_kernel = digest_arg(receipt["iso_sha256"]), digest_arg(receipt["kernel_measurement"])
-        program_hashes = {name: digest_arg(entry["sha256"]) for name, entry in receipt["on_disc"].items()
-                          if name.endswith(".elf")}
-        screens = DesktopScreens(source, program_hashes)
     ordinary_clock = combined or source_build is not None or desktop_build is not None
     if actual != expected_iso:
         raise ValueError(f"ISO digest mismatch: {actual}")
+    if desktop_build is not None:
+        screens = DesktopScreens(source, desktop_program_hashes(image, receipt))
     output = output.resolve()
     output.mkdir(parents=True, exist_ok=False)
     args = [emulator, "-machine", "pc", "-accel", "tcg", "-cpu", "qemu64",

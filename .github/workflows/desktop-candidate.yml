@@ -1,0 +1,156 @@
+name: Desktop-first candidate on three hosts
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/desktop-candidate.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  TESTER_REF: 2abeead177d616582db7029561df2e10c95381eb
+  SOURCE_REF: 3e86beb1ee17fad2f3d61c95b9d5dd017fb6c755
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      RUSTUP_TOOLCHAIN: 1.97.0
+    outputs:
+      media_sha256: ${{ steps.pack.outputs.sha256 }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ env.TESTER_REF }}
+          persist-credentials: false
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: KirtusJ/pcp-os
+          ref: ${{ env.SOURCE_REF }}
+          path: source
+          persist-credentials: false
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: Limine-Bootloader/Limine
+          ref: 7a9013f305de0bea1f6310e76e7baba30499fef0
+          path: loader
+          persist-credentials: false
+      - name: Build both BIOS CDs and the storage-enabled VM
+        run: |
+          sudo apt-get -qq update
+          sudo apt-get -qq install -y --no-install-recommends lld xorriso
+          rustup toolchain install 1.97.0 --profile minimal --no-self-update -c rust-src -t x86_64-unknown-none
+          mkdir media
+          python3 -B source/examples/tester-cd/build.py loader media/single
+          python3 -B source/examples/tester-cd/build.py --queue-desk loader media/two-app
+          PCPOS_KERNEL_FEATURES=vm-store sh source/PCP_OS_Rust/crates/pcpos-kernel/run.sh build
+          python3 audit/vm-workspace/build.py source media/two-app \
+            audit/public-live-cd/candidates/source-bios/source-bios-tester.zip media/workspace.zip
+      - name: Identify the exact inputs for all three hosts
+        id: pack
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          for profile, programs in (("single", {"surf.elf"}), ("two-app", {"surf.elf", "rdesk.elf"})):
+              receipt = json.loads((Path("media") / profile / "receipt.json").read_bytes())
+              actual = {name for name in receipt["on_disc"] if name.endswith(".elf")}
+              if actual != programs:
+                  raise SystemExit(f"{profile} program inventory differs: {sorted(actual)}")
+          PY
+          python3 -m zipfile -c desktop-media.zip media
+          sha256sum desktop-media.zip | tee media-sha256.txt
+          echo "sha256=$(cut -d ' ' -f 1 media-sha256.txt)" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: desktop-candidate-media
+          path: |
+            desktop-media.zip
+            media-sha256.txt
+          if-no-files-found: error
+          retention-days: 14
+
+  boot:
+    needs: build
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-15, windows-2025]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ env.TESTER_REF }}
+          persist-credentials: false
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: KirtusJ/pcp-os
+          ref: ${{ env.SOURCE_REF }}
+          path: source
+          persist-credentials: false
+      - name: Test the optical receipt, program grants and F5 register count
+        run: python -B audit/public-live-cd/test_desktop_screens.py
+      - name: Install QEMU on Linux
+        if: runner.os == 'Linux'
+        run: sudo apt-get -qq update && sudo apt-get -qq install -y --no-install-recommends qemu-system-x86 seabios
+      - name: Install QEMU on macOS
+        if: runner.os == 'macOS'
+        run: brew list --versions qemu >/dev/null || brew install qemu
+      - name: Install native Windows QEMU
+        if: runner.os == 'Windows'
+        id: msys
+        uses: msys2/setup-msys2@ec48f7c5447b3140e2b088413ae3a55687bccb6e
+        with:
+          msystem: UCRT64
+          update: true
+          cache: false
+          install: mingw-w64-ucrt-x86_64-qemu
+      - name: Add Windows QEMU to PATH
+        if: runner.os == 'Windows'
+        shell: pwsh
+        env:
+          MSYS_ROOT: ${{ steps.msys.outputs.msys2-location }}
+        run: (Join-Path $env:MSYS_ROOT 'ucrt64/bin') | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: desktop-candidate-media
+      - name: Verify and unpack the media built in this run
+        id: inputs
+        shell: bash
+        env:
+          EXPECTED_SHA256: ${{ needs.build.outputs.media_sha256 }}
+        run: |
+          python - <<'PY'
+          import hashlib, os
+          from pathlib import Path
+          actual = hashlib.sha256(Path("desktop-media.zip").read_bytes()).hexdigest()
+          if actual != os.environ["EXPECTED_SHA256"]:
+              raise SystemExit("Media SHA-256 mismatch: " + actual)
+          print("Verified desktop-media.zip", actual)
+          PY
+          python -m zipfile -e desktop-media.zip .
+          mkdir observations
+      - name: Boot the one-app optical image
+        shell: bash
+        run: |
+          python audit/public-live-cd/check_host_boot.py media/single/pcp-os-tester.iso observations/single \
+            --desktop-build source media/single/receipt.json
+      - name: Boot the two-app optical image
+        if: ${{ !cancelled() && steps.inputs.outcome == 'success' }}
+        shell: bash
+        run: |
+          python audit/public-live-cd/check_host_boot.py media/two-app/pcp-os-tester.iso observations/two-app \
+            --desktop-build source media/two-app/receipt.json
+      - name: Play Surfbird and save and reopen the queue across two processes
+        if: ${{ !cancelled() && steps.inputs.outcome == 'success' }}
+        shell: bash
+        run: python audit/vm-workspace/check.py media/workspace.zip source observations/vm --desktop-first
+      - name: Keep the original host observations
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: desktop-candidate-${{ matrix.os }}
+          path: observations/
+          if-no-files-found: warn
+          retention-days: 14

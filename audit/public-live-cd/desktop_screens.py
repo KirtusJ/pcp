@@ -102,7 +102,7 @@ class DesktopScreens:
         if self.has_verification_page:
             if rows[1].strip() == "VERIFICATION":
                 return (surface == "verification" and rows[3].strip() == status
-                        and re.fullmatch(r"Register: \d+ events, head [0-9a-f]{16}\.\.\.", rows[6].strip()) is not None
+                        and re.fullmatch(r"Register: [1-9][0-9]* events, head [0-9a-f]{16}\.\.\.", rows[6].strip()) is not None
                         and rows[7].strip() == "The register's chain is intact."
                         and footer.strip() == "Any key goes back")
             # Both graphical surfaces put their status at the same position in the right corner.

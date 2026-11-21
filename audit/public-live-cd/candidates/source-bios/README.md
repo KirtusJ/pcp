@@ -17,11 +17,13 @@ With QEMU installed, run this from the directory containing the extracted ISO. T
 qemu-system-x86_64 -machine pc -accel tcg -cpu qemu64 -m 64M -smp 1 -nic none -audiodev none,id=snd -device AC97,audiodev=snd -boot order=d,strict=on -cdrom pcp-os-tester.iso
 ```
 
-Wait for the graphical launcher to show 71 passed self-tests. Press Enter to open Surfbird and Space to play the bundled clip. The command uses a silent audio backend. After playback, open it again and send Ctrl+Alt+Delete **to the guest** to stop it. If the host intercepts the chord, use QEMU's monitor and enter `sendkey ctrl-alt-delete`. R opens the task register, Esc returns to the launcher, and P powers off.
+Wait for the graphical launcher to show 71 passed self-tests. Press Enter to open Surfbird and Space to play the bundled clip. The command uses a silent audio backend. After playback, open it again and send Ctrl+Alt+Delete **to the guest** to stop it. If the host intercepts the chord, use QEMU's monitor and enter `sendkey ctrl-alt-delete`. R opens the task register. Press Esc once to return to the launcher. On this particular CD, pressing Esc again at the launcher powers off and discards the session. P also powers off.
 
 ## What was tested
 
 The checked-in ISO is the exact output of the merged build recipe's final pull-request run. Its receipt records source commit `ac6580a649b900e537ed611521939f9eba1327b6`, Rust 1.97.0 and a default-feature kernel with guest Ethernet disabled. The kernel text and read-only data measure `82b96a61b5e949caa63abb9e262f0c7e135de443c8a8576344687aa84f2d6cde`. A fresh build can differ with toolchain paths or source revision. [Source and archived build run](https://github.com/KirtusJ/pcp-os/actions/runs/44858643525).
+
+The packaged image reached the verified launcher on Ubuntu 24.04 x86-64 (QEMU 8.2.2), macOS 15 Arm64 and Windows Server 2025 AMD64 (both QEMU 11.1.3). Each guest reported the expected measurement and 71 startup passes, then powered off with exit code zero. The [three original observation archives](desktop-observations.zip) retain the raw launcher frames, serial logs and QEMU results. Their enclosing ZIP has SHA-256 `63fb6098c8f5e42c51505f147275604b00677a56c564d1171a1c4dd3fdb60b58`. [Desktop run](https://github.com/KirtusJ/pcp/actions/runs/44859512386).
 
 Linux-hosted PC and Q35 guests each completed playback, keyboard Stop, register inspection and shutdown under both the ordinary and instruction-counted clocks. In separate tests with this ISO, four writable virtual disks reported zero guest writes. They covered PC IDE, Q35 IDE and Q35 NVMe with 512-byte and 4,096-byte sectors. Each write control changed the intended sector. [Boot verification](https://github.com/KirtusJ/pcp-os/pull/291#issuecomment-7056327472) · [Disk checks](https://github.com/KirtusJ/pcp-os/pull/291#issuecomment-7056317599).
 

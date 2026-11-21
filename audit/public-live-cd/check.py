@@ -2,7 +2,7 @@
 import argparse
 import hashlib
 import json
-import re
+import os
 from pathlib import Path
 import subprocess
 import tempfile
@@ -13,6 +13,30 @@ IMAGE_SHA = "0232c02a8946d66216da0ac65953a246ce3d41d7a966ae31aa83c3335b3259e3"
 
 
 VIDEO_MARKERS = (3, 11, 19, 27)
+
+
+# The final help line is painted after the status and file list. The words
+# "power off" also occur earlier on the screen in the temporary store notice.
+LAUNCHER_FOOTER = (12, 735, 895, 760, "445c95718b9757f556347922971f9e594a9a9982414b23d3457fe0303ac7ab41")
+REGISTER_FOOTER = (12, 714, 420, 744, "123e5fedc122fb7016cce09b51260948f16476b2be1807fdf1d6993e489dbae8")
+# Only the sequence-number column of the 32 visible rows. The independent
+# kernel-font reader checks their complete contents and both Surfbird task IDs.
+LATEST_ROWS = (20, 60, 60, 700, "eb32e563fb027748f65d9ee7436d1f818be75a969e8eabde2cae68e10b86bc44")
+EARLIER_ROWS = (20, 60, 60, 700, "947966c66dd81d61a1a53c4380860037c93f75945a5c86814dccf00c0a42c852")
+
+
+def has_regions(frame, regions):
+    header = b"P6\n1024 768\n255\n"
+    if not frame.startswith(header) or len(frame) != len(header) + 1024 * 768 * 3:
+        return False
+    pixels = memoryview(frame)[len(header):]
+    for left, top, right, bottom, expected in regions:
+        digest = hashlib.sha256()
+        for y in range(top, bottom):
+            digest.update(pixels[(y * 1024 + left) * 3:(y * 1024 + right) * 3])
+        if digest.hexdigest() != expected:
+            return False
+    return True
 
 
 class GuestSafe(RuntimeError):
@@ -101,18 +125,24 @@ def exercise(guest, monitor, serial, output, startup_only, expected_image, captu
                 rpc("send-key", keys=[{"type": "qcode", "data": k} for k in keys],
                     **{"hold-time": 70})
 
-            def screen_until(label, matches):
+            def screen_until(label, *regions, restore=None):
                 screen = output / (label + ".ppm")
+                expected = (output / (restore + ".ppm")).read_bytes() if restore else None
+
                 def visible(_):
                     rpc("screendump", filename=str(screen))
-                    result = subprocess.run(["tesseract", str(screen), "stdout", "--psm", "6"],
-                                            check=True, capture_output=True, text=True)
-                    (output / (label + ".txt")).write_text(result.stdout)
-                    return matches(result.stdout)
-                wait(visible, label, 45)
+                    frame = screen.read_bytes()
+                    return has_regions(frame, regions) and (expected is None or frame == expected)
+
+                wait(visible, label, 45, poll=0.25)
+                # Keep the readable transcript alongside the exact frame checked above.
+                result = subprocess.run(["tesseract", str(screen), "stdout", "--psm", "6"],
+                                        check=True, capture_output=True, text=True, timeout=15,
+                                        env={**os.environ, "OMP_THREAD_LIMIT": "1"})
+                (output / (label + ".txt")).write_text(result.stdout)
 
             def launcher(label):
-                screen_until(label, lambda text: "power off" in text.lower())
+                screen_until(label, LAUNCHER_FOOTER)
 
             rpc("qmp_capabilities")
             wait(lambda s: ("long mode true" in s and
@@ -138,10 +168,6 @@ def exercise(guest, monitor, serial, output, startup_only, expected_image, captu
             wait(lambda s: "surf.elf ended STOPPED" in s, "kernel Stop")
             launcher("after-stop")
             if check_register:
-                def outcomes(text):
-                    return ("surf.elf" in text and re.search(r"\boutcome\s+DONE\b", text) and
-                            re.search(r"\boutcome\s+STOPPED\b", text))
-
                 # Send each make/break pair explicitly. A timed send-key release can
                 # still be pending when an instruction-counted guest accepts the next key.
                 def tap(key):
@@ -151,18 +177,13 @@ def exercise(guest, monitor, serial, output, startup_only, expected_image, captu
                     ])
 
                 tap("r")
-                screen_until("register-latest", outcomes)
+                screen_until("register-latest", REGISTER_FOOTER, LATEST_ROWS)
                 tap("up")
-                screen_until("register-earlier", lambda text: "scroll" in text.lower() and
-                             "METHOD_PINNED" in text and "surf.elf" not in text)
+                screen_until("register-earlier", REGISTER_FOOTER, EARLIER_ROWS)
                 tap("down")
-                screen_until("register-restored", outcomes)
-                if (output / "register-latest.ppm").read_bytes() != (output / "register-restored.ppm").read_bytes():
-                    raise RuntimeError("Down did not restore the original register screen")
+                screen_until("register-restored", REGISTER_FOOTER, LATEST_ROWS, restore="register-latest")
                 tap("esc")
-                launcher("after-register")
-                if (output / "after-register.ppm").read_bytes() != (output / "after-stop.ppm").read_bytes():
-                    raise RuntimeError("Esc did not restore the launcher shown before R")
+                screen_until("after-register", LAUNCHER_FOOTER, restore="after-stop")
             events.clear()
             press("p")
             code = guest.wait(timeout=30)

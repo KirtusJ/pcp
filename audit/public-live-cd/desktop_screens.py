@@ -10,7 +10,7 @@ def clean_home(rows):
     return not any(word in row for row in rows for word in placed)
 
 
-def selected_program(rows, expected):
+def selected_program(rows, expected, program_hashes):
     # The marker, name, size and digest share a row. The grant text starts under the name.
     selected = [(i, match) for i, row in enumerate(rows)
                 for match in re.finditer(r"> ([\w.-]+\.elf) ", row)]
@@ -19,7 +19,8 @@ def selected_program(rows, expected):
     i, match = selected[0]
     if match[1] != expected or i + 1 >= len(rows):
         return False
-    if not re.match(r" +\d+(?:\.\d+)? (?:KiB|MiB) +SHA-256 [0-9a-f]{16}\.\.\.", rows[i][match.end(1):]):
+    identity = re.match(r" +\d+(?:\.\d+)? (?:KiB|MiB) +SHA-256 ([0-9a-f]{16})\.\.\.", rows[i][match.end(1):])
+    if not identity or identity[1] != program_hashes.get(expected, "")[:16]:
         return False
     grants = rows[i + 1][match.start(1):].split("?", 1)[0].rstrip()
     return re.fullmatch(r"may use: (?:console only|display, keyboard, (?:sound, )?loader files, store"
@@ -28,7 +29,8 @@ def selected_program(rows, expected):
 
 
 class DesktopScreens:
-    def __init__(self, source):
+    def __init__(self, source, program_hashes):
+        self.program_hashes = program_hashes
         reader = "examples/tester-cd/check.py"
         font = "PCP_OS_Rust/crates/pcpos-kernel/src/font.rs"
         for name in (reader, font):
@@ -87,7 +89,7 @@ class DesktopScreens:
                         and clean_home(rows))
             if surface in ("home", "home-dock"):
                 return footer[3:9] == "K keys" and clean_home(rows) and self.only_programs_dock(frame, rows)
-            return footer[3:14] == "Esc desktop" and "K keys" in footer[14:] and selected_program(rows, surface)
+            return footer[3:14] == "Esc desktop" and "K keys" in footer[14:] and selected_program(rows, surface, self.program_hashes)
 
         # The earlier two-bar desktop displayed the complete verdict on its top bar.
         if not any(status in row for row in rows):
@@ -96,4 +98,4 @@ class DesktopScreens:
         launcher_keys = all(word in footer for word in ("choose", "start", "desktop", "power off"))
         if surface == "home":
             return home_keys and not launcher_keys and clean_home(rows)
-        return launcher_keys and not home_keys and selected_program(rows, surface)
+        return launcher_keys and not home_keys and selected_program(rows, surface, self.program_hashes)

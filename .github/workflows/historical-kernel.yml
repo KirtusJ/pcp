@@ -1,0 +1,66 @@
+name: Historical Windows kernel comparison
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/historical-kernel.yml'
+      - 'audit/public-live-cd/history/rebuild.py'
+permissions:
+  contents: read
+jobs:
+  compile:
+    runs-on: windows-2022
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [native, remapped]
+    env:
+      RUSTUP_TOOLCHAIN: 1.91.1
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: KirtusJ/pcp-os
+          ref: 1cff81e4b935dc72a95a669a5214508ab8712efc
+          path: surfbird-work
+          persist-credentials: false
+      - name: Install the recorded compiler and bare-metal standard library
+        run: |
+          rustup toolchain install 1.91.1 --profile minimal --target x86_64-unknown-none
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          ld.lld --version
+      - name: Compile the historical source
+        env:
+          BUILD_MODE: ${{ matrix.mode }}
+        run: python audit/public-live-cd/history/rebuild.py build surfbird-work $env:BUILD_MODE PCP-OS.iso "$env:RUNNER_TEMP/built"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: kernel-${{ matrix.mode }}
+          path: ${{ runner.temp }}/built/kernel.elf64
+          retention-days: 1
+          if-no-files-found: error
+  compare:
+    needs: compile
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: kernel-*
+          path: ${{ runner.temp }}/kernels
+      - name: Compare whole ELF and individual loadable sections
+        run: |
+          python3 audit/public-live-cd/history/rebuild.py compare "$RUNNER_TEMP/kernels" PCP-OS.iso "$RUNNER_TEMP/receipt"
+          cat "$RUNNER_TEMP/receipt/comparison.json"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: historical-kernel-comparison
+          path: ${{ runner.temp }}/receipt/comparison.json
+          if-no-files-found: error
+          retention-days: 30

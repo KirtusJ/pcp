@@ -29,3 +29,23 @@ jobs:
           path: ${{ runner.temp }}/uefi-probe
           if-no-files-found: error
           retention-days: 14
+  reservation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Install UEFI development files and emulator
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends gnu-efi ovmf qemu-system-x86 xorriso dosfstools mtools
+      - name: Exercise UEFI page reservations in two disposable guests
+        run: python3 audit/public-live-cd/uefi-probe/reservation/check.py PCP-OS.iso "$RUNNER_TEMP/reservation"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: uefi-reservation-results
+          path: ${{ runner.temp }}/reservation
+          if-no-files-found: error
+          retention-days: 14

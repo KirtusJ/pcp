@@ -70,20 +70,68 @@ def compare(reference, candidate):
     }
 
 
-def path_flags(data, source, cargo_home):
-    # Use historical names only as compiler display strings. Never create a
-    # directory named by the binary or use any recovered string in a shell.
+def recorded_paths(data):
+    # The hash-pinned ELF supplies compiler display names and container-only mount
+    # destinations. The host never creates a path supplied by the binary.
     def prefix(suffix):
         pattern = rb'([A-Z]:[\\/][\x20-\x7e]{1,255}?)' + re.escape(suffix)
         matches = {m.group(1).decode('ascii') for m in re.finditer(pattern, data)}
         if len(matches) != 1:
             raise ValueError("Ambiguous historical compiler path")
         return matches.pop()
-    crates = source / "PCP_OS_Rust" / "crates"
     old_crates = prefix(rb'\pcpos-core\src\task.rs')
     old_cargo = prefix(rb'\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.10.9')
+    return old_crates, old_cargo
+
+
+def path_flags(data, source, cargo_home):
+    crates = source / "PCP_OS_Rust" / "crates"
+    old_crates, old_cargo = recorded_paths(data)
     return [f"--remap-path-prefix={crates}={old_crates}",
             f"--remap-path-prefix={cargo_home}={old_cargo}"]
+
+
+def container_build(source, args, kernel, env):
+    """Use recovered paths only inside a disposable, offline Windows container."""
+    old_crates, old_registry = recorded_paths(original(args.iso))
+    old_root = Path(old_crates).parent.parent
+    registry = Path(old_registry)
+    for destination in (old_root, registry):
+        if (destination.drive.upper() != "C:" or len(destination.parts) < 5
+                or destination.parts[1].lower() != "users" or ".." in destination.parts
+                or any(c in str(destination) for c in ',%"')):
+            raise ValueError("Invalid historical mount destination")
+    temp = args.out.resolve()
+    base = temp / "cargo"
+    env = {**env, "CARGO_HOME": str(base)}
+    subprocess.run(["cargo", "fetch", "--locked", "--target", "x86_64-unknown-none"], cwd=kernel, env=env, check=True)
+    sysroot = Path(subprocess.check_output(["rustc", "--print", "sysroot"], text=True).strip())
+    gcc = shutil.which("gcc.exe")
+    if not gcc:
+        raise RuntimeError("GNU host linker unavailable")
+    image = "mcr.microsoft.com/windows/servercore@sha256:f1a914079973258061ddbc95a9af579eab2ee252a6fddb254b1be5d769761acd"
+    cmd = ["docker", "run", "--rm", "--isolation=process", "--network", "none"]
+    for src, dst, writable in ((source, old_root, False), (sysroot, r"C:\rust", False),
+                               (Path(gcc).parent.parent, r"C:\mingw", False),
+                               (Path(env["CARGO_TARGET_X86_64_UNKNOWN_NONE_LINKER"]).parent, r"C:\llvmbin", False),
+                               (base, registry, True), (temp / "target", r"C:\out", True)):
+        if writable:
+            src.mkdir(parents=True, exist_ok=True)
+        cmd += ["--mount", f"type=bind,source={src},target={dst}" + ("" if writable else ",readonly")]
+    cmd += ["--workdir", str(old_root / "PCP_OS_Rust/crates/pcpos-kernel"),
+            "-e", "CARGO_HOME=" + old_registry, "-e", r"CARGO_TARGET_DIR=C:\out",
+            "-e", r"CARGO_TARGET_X86_64_UNKNOWN_NONE_LINKER=C:\llvmbin\ld.lld.exe",
+            "-e", r"PATH=C:\rust\bin;C:\mingw\bin;C:\llvmbin;C:\Windows\system32;C:\Windows",
+            image, r"C:\rust\bin\cargo.exe", "build", "--offline", "--locked", "--release", "--features", "guest-ethernet"]
+    result = subprocess.run(cmd, capture_output=True, text=True, errors="replace")
+    if result.returncode:
+        # Diagnostics can contain historical developer paths.
+        diagnostic = result.stderr
+        for private in {str(old_root), str(registry), old_registry, str(old_root.parents[-3])}:
+            diagnostic = diagnostic.replace(private, "<historical path>")
+        diagnostic = re.sub(r"(?i)[a-z]:[\\/]users[\\/][^\\/\s]+", "<profile>", diagnostic)
+        print(diagnostic[-3000:])
+        raise RuntimeError(f"Container build exited {result.returncode}")
 
 
 def build(args):
@@ -106,10 +154,13 @@ def build(args):
         # Cargo appends this array to the flags in the historical config.
         flags = path_flags(original(args.iso), source, cargo)
         command += ["--config", "target.x86_64-unknown-none.rustflags=" + json.dumps(flags)]
-    result = subprocess.run(command, env=env, cwd=kernel, capture_output=True, text=True, errors="replace")
-    if result.returncode:
-        lines = [line for line in result.stderr.splitlines() if line.startswith("error")]
-        raise RuntimeError(f"Cargo exited {result.returncode}: " + "; ".join(lines)[:500])
+    if args.mode == "historical":
+        container_build(source, args, kernel, env)
+    else:
+        result = subprocess.run(command, env=env, cwd=kernel, capture_output=True, text=True, errors="replace")
+        if result.returncode:
+            lines = [line for line in result.stderr.splitlines() if line.startswith("error")]
+            raise RuntimeError(f"Cargo exited {result.returncode}: " + "; ".join(lines)[:500])
     shutil.copyfile(target / "x86_64-unknown-none/release/pcpos-kernel", args.out / "kernel.elf64")
     print(version.strip())
 
@@ -124,6 +175,7 @@ def inspect(args):
         results[mode] = compare(ref, flat.read_bytes())
         flat.unlink()
     expected = {f"kernel-{host}-{mode}" for host in ("msvc", "gnu") for mode in ("native", "remapped")}
+    expected.add("kernel-gnu-historical")
     if results.keys() != expected:
         raise ValueError("Expected both Windows toolchains and both path modes")
     receipt = {"source": SOURCE, "compiler": RUST, "compile_host": "windows-2022",
@@ -141,7 +193,7 @@ if __name__ == "__main__":
     modes = cli.add_subparsers(dest="action", required=True)
     b = modes.add_parser("build")
     b.add_argument("source", type=Path)
-    b.add_argument("mode", choices=["native", "remapped"])
+    b.add_argument("mode", choices=["native", "remapped", "historical"])
     inspect_cli = modes.add_parser("compare")
     inspect_cli.add_argument("inputs", type=Path)
     for p in (b, inspect_cli):

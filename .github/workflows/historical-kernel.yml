@@ -16,6 +16,9 @@ jobs:
       matrix:
         mode: [native, remapped]
         host: [msvc, gnu]
+        include:
+          - host: gnu
+            mode: historical
     env:
       RUSTUP_TOOLCHAIN: 1.91.1-x86_64-pc-windows-${{ matrix.host }}
     steps:

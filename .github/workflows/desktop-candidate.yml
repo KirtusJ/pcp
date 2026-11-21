@@ -8,7 +8,7 @@ permissions:
   contents: read
 env:
   TESTER_REF: 12af170170462d7175d09b42be2176e749dce43f
-  SOURCE_REF: a5a76b6071922812ca293b07ec8b48b42a543414
+  SOURCE_REF: 3e86beb1ee17fad2f3d61c95b9d5dd017fb6c755
 
 jobs:
   build:

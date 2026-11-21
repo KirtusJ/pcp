@@ -1,0 +1,74 @@
+{
+  "tester": "6d72a9fb538222afe4dd4fe5aad65958daadf7da",
+  "tree": "be34edbd930e8e14c59d5f74c8c6bfd04ccaab7c",
+  "os_source": "3e86beb1ee17fad2f3d61c95b9d5dd017fb6c755",
+  "source_of_ci_pixel_fixtures": "89792700243ad5dd4efde3091993984845087e2c",
+  "media": {
+    "single/pcp-os-tester.iso": "a25d5f1938cb75c6df4a89a1ec320133b7e1203a581f2611bac51714ae6605d4",
+    "single/receipt.json": "0901dca47cbc3961fb29df87f358bddbb1acaed316ba2f3d45737bc98161e67a",
+    "two-app/pcp-os-tester.iso": "6f1039ff429c832e6fd46fd22738073f2a096d3319d7ebf13ad31b3e8affa651",
+    "two-app/receipt.json": "25f1996944857401180a53a8492144b6319f47432015ed91d70cf1f387ff4cc6",
+    "workspace.zip": "d6867fb04361fbec1c90f9accd02e3ffd12912993c62d6361fef86126f47ce57"
+  },
+  "live_linux": {
+    "observed-single": {
+      "startup": 71,
+      "final": 72,
+      "exit": 0,
+      "shutdown": {
+        "guest": true,
+        "reason": "guest-shutdown"
+      },
+      "checked_screen_hashes": 25,
+      "serial_sha256": "067cc5a95e2f52ee6149c266cd5a87facbf9c78480dd4e458de08ca44ab57f1b"
+    },
+    "observed-two-app": {
+      "startup": 71,
+      "final": 72,
+      "exit": 0,
+      "shutdown": {
+        "guest": true,
+        "reason": "guest-shutdown"
+      },
+      "checked_screen_hashes": 26,
+      "serial_sha256": "b185bced3032d8258d8d95a903e752ea8e930fa4a0beadc3ed40d23c96f6dc8f"
+    },
+    "observed-vm/first": {
+      "startup": 71,
+      "final": 72,
+      "exit": 0,
+      "shutdown": {
+        "guest": true,
+        "reason": "guest-shutdown"
+      },
+      "checked_screen_hashes": 13,
+      "serial_sha256": "9dde62106d3c6f0150a7a34611edace8ad59b031e3dc4cf9c7958c1aa5125a7b"
+    },
+    "observed-vm/cold": {
+      "startup": 71,
+      "final": 72,
+      "exit": 0,
+      "shutdown": {
+        "guest": true,
+        "reason": "guest-shutdown"
+      },
+      "checked_screen_hashes": 12,
+      "serial_sha256": "2c1bf1d98c7fa8abd7e542a714ab1c4124c589a79f655e793aa6a68b6b1daebc"
+    }
+  },
+  "vm": {
+    "zip_sha256": "d6867fb04361fbec1c90f9accd02e3ffd12912993c62d6361fef86126f47ce57",
+    "first_disk_sha256": "b9c56eff7cb931b03a133b1cc7b27a4160a63cd57725cf37e53710d3c6f8cb03",
+    "saved_disk_sha256": "0d79f1e35318fdb6a1fac674f661d749492e927c6e81acbfd05263fc87944bc9",
+    "read_back_label": "cold morning"
+  },
+  "public_live_cd_workflow": 44923783407,
+  "hosted_frame_job": 136905307584,
+  "bios_candidate_workflow": 44923783322,
+  "local_rehearsal_tree": "adc48f85500ad6ce62fadf2f3c09461fd0032543",
+  "withdrawn_checker_exit": 1,
+  "withdrawn_checker_wrong": [
+    "guest-640x480-clipped.ppm",
+    "reflow-640x480-complete.ppm"
+  ]
+}

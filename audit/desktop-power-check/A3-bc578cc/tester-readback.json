@@ -1,0 +1,362 @@
+{
+  "tester": "bc578ccf630a7b4f1d88954151ed07c73eec05c3",
+  "tree": "387943f624577961e1850e10a715f97433daf1cc",
+  "parent": "2abeead177d616582db7029561df2e10c95381eb",
+  "archived_workflow": 44899266193,
+  "archived_os": "3e86beb1ee17fad2f3d61c95b9d5dd017fb6c755",
+  "merged_os": "89792700243ad5dd4efde3091993984845087e2c",
+  "historical_power_frames": {
+    "ubuntu-24.04": 24,
+    "macos-15": 24,
+    "windows-2025": 24
+  },
+  "compact": {
+    "320x200": {
+      "sha256": "13c56f3502880db4b2fad32a5d662eec4f44fdf3da2801f18206996c3cb87432",
+      "base": false,
+      "candidate": false
+    },
+    "320x220": {
+      "sha256": "ba1353ec20ae1d8f99bafa4c5ad16e4c9b2ae9bfcae50ec133bbc78325fdf20a",
+      "base": false,
+      "candidate": false
+    },
+    "320x240": {
+      "sha256": "636b04415a94f44a25dd927644cfda0987614a1487c9a80e355d8b2a5d580660",
+      "base": false,
+      "candidate": false
+    },
+    "320x260": {
+      "sha256": "42ba8ec3c5d39dacb2ae6a99b418be98f6d3edeb2e567f360b7fa4c0bf9e7283",
+      "base": false,
+      "candidate": false
+    },
+    "320x280": {
+      "sha256": "37e92df9400470cc0cc9f578a5f1b4baa0385289b851db1f8879499f14f9a9b5",
+      "base": false,
+      "candidate": false
+    },
+    "640x480": {
+      "sha256": "cbb5d3ac2b6eb46c9f9cf922edbd6fbf2d6c856a13f20e40d8eb7b81f9b8f960",
+      "base": true,
+      "candidate": false
+    },
+    "800x600": {
+      "sha256": "d8644632a11cc35c7733d7cdd65b1bba196eec080042c4f7ba597a19e4f91eca",
+      "base": true,
+      "candidate": true
+    }
+  },
+  "b3": {
+    "320x200": {
+      "artifact": "B3-native-settings-8979270",
+      "sha256": "13c56f3502880db4b2fad32a5d662eec4f44fdf3da2801f18206996c3cb87432",
+      "base": false,
+      "candidate": false,
+      "text": [
+        "POWER OFF",
+        "Switch PCP OS off?",
+        "The register is closed and ver",
+        "not saved by a program are los",
+        "Enter switch off    Esc go bac"
+      ]
+    },
+    "320x220": {
+      "artifact": "B3-native-settings-8979270",
+      "sha256": "ba1353ec20ae1d8f99bafa4c5ad16e4c9b2ae9bfcae50ec133bbc78325fdf20a",
+      "base": false,
+      "candidate": false,
+      "text": [
+        "POWER OFF",
+        "Switch PCP OS off?",
+        "The register is closed and ver",
+        "not saved by a program are los",
+        "Enter switch off    Esc go bac"
+      ]
+    },
+    "320x240": {
+      "artifact": "B3-native-settings-8979270",
+      "sha256": "636b04415a94f44a25dd927644cfda0987614a1487c9a80e355d8b2a5d580660",
+      "base": false,
+      "candidate": false,
+      "text": [
+        "POWER OFF",
+        "Switch PCP OS off?",
+        "The register is closed and ver",
+        "not saved by a program are los",
+        "Enter switch off    Esc go bac"
+      ]
+    },
+    "320x260": {
+      "artifact": "B3-native-settings-8979270",
+      "sha256": "42ba8ec3c5d39dacb2ae6a99b418be98f6d3edeb2e567f360b7fa4c0bf9e7283",
+      "base": false,
+      "candidate": false,
+      "text": [
+        "POWER OFF",
+        "Switch PCP OS off?",
+        "The register is closed and ver",
+        "not saved by a program are los",
+        "Enter switch off    Esc go bac"
+      ]
+    },
+    "320x280": {
+      "artifact": "B3-native-settings-8979270",
+      "sha256": "37e92df9400470cc0cc9f578a5f1b4baa0385289b851db1f8879499f14f9a9b5",
+      "base": false,
+      "candidate": false,
+      "text": [
+        "POWER OFF",
+        "Switch PCP OS off?",
+        "The register is closed and ver",
+        "not saved by a program are los",
+        "Enter switch off    Esc go bac"
+      ]
+    },
+    "640x480": {
+      "artifact": "B3-native-settings-8979270",
+      "sha256": "cbb5d3ac2b6eb46c9f9cf922edbd6fbf2d6c856a13f20e40d8eb7b81f9b8f960",
+      "base": true,
+      "candidate": false,
+      "text": [
+        "POWER OFF",
+        "Switch PCP OS off?",
+        "The register is closed and verified first. Files of this sessi",
+        "not saved by a program are lost.",
+        "Enter switch off    Esc go back"
+      ]
+    },
+    "800x600": {
+      "artifact": "B3-native-settings-8979270",
+      "sha256": "d8644632a11cc35c7733d7cdd65b1bba196eec080042c4f7ba597a19e4f91eca",
+      "base": true,
+      "candidate": true,
+      "text": [
+        "POWER OFF",
+        "Switch PCP OS off?",
+        "The register is closed and verified first. Files of this session that were",
+        "not saved by a program are lost.",
+        "Enter switch off    Esc go back"
+      ]
+    },
+    "320x480": {
+      "artifact": "B3-Settings-width-height-8979270",
+      "sha256": "e4444f379051f90d916aa9428d99f99d4ebe8a485fec6c8c585b6cfce6a61fb4",
+      "base": false,
+      "candidate": false,
+      "text": [
+        "POWER OFF",
+        "Switch PCP OS off?",
+        "The register is closed and ver",
+        "not saved by a program are los",
+        "Enter switch off    Esc go bac"
+      ]
+    },
+    "640x220": {
+      "artifact": "B3-Settings-width-height-8979270",
+      "sha256": "98b1d72c4ab9dd06fd4ea0830fad4ee3133ae96f06b376ea7d2232727b107f72",
+      "base": false,
+      "candidate": false,
+      "text": [
+        "POWER OFF",
+        "Switch PCP OS off?",
+        "The register is closed and verified first. Files of this sessi",
+        "not saved by a program are lost.",
+        "Enter switch off    Esc go back"
+      ]
+    },
+    "640x240": {
+      "artifact": "B3-Settings-width-height-8979270",
+      "sha256": "4aac54a11e988bad3e168680ebefabf2bb92cfd13257259b92e19707eb4a3dd7",
+      "base": false,
+      "candidate": false,
+      "text": [
+        "POWER OFF",
+        "Switch PCP OS off?",
+        "The register is closed and verified first. Files of this sessi",
+        "not saved by a program are lost.",
+        "Enter switch off    Esc go back"
+      ]
+    },
+    "640x260": {
+      "artifact": "B3-Settings-width-height-8979270",
+      "sha256": "23459de8add26ac6a0dcbbf2224e236e55afda336af48d7c22479bd76bca5c11",
+      "base": false,
+      "candidate": false,
+      "text": [
+        "POWER OFF",
+        "Switch PCP OS off?",
+        "The register is closed and verified first. Files of this sessi",
+        "not saved by a program are lost.",
+        "Enter switch off    Esc go back"
+      ]
+    },
+    "640x280": {
+      "artifact": "B3-Settings-width-height-8979270",
+      "sha256": "a56c526dae3de92d906fa3cf8f402b4b251ae7f9087cc1a973bb8334cd2d59f3",
+      "base": false,
+      "candidate": false,
+      "text": [
+        "POWER OFF",
+        "Switch PCP OS off?",
+        "The register is closed and verified first. Files of this sessi",
+        "not saved by a program are lost.",
+        "Enter switch off    Esc go back"
+      ]
+    }
+  },
+  "offline_controls": {
+    "kind": "offline images made from genuine captured glyphs",
+    "complete_sha256": "2aa6eabce23af8a476c9f38aa873db6c44e7e967e46beab0665be2f4f833d030",
+    "rejected": [
+      {
+        "index": 0,
+        "removed": "The",
+        "sha256": "e1838e218e381b5af1f8eaf8338c457ba56627886accd3ae5979a6481eefad58"
+      },
+      {
+        "index": 1,
+        "removed": "register",
+        "sha256": "e59dddd8669b086d74e3933ca0590214ba35809392eaece82eff8de25db8da27"
+      },
+      {
+        "index": 2,
+        "removed": "is",
+        "sha256": "f48af627dff6f47cca6db883cf4930d32558fee2161431ba287d636c97002075"
+      },
+      {
+        "index": 3,
+        "removed": "closed",
+        "sha256": "1c0a761a255803e99b8010d821328d39206a76feefdd415719369f1fd669c0e2"
+      },
+      {
+        "index": 4,
+        "removed": "and",
+        "sha256": "b5a5f7ab3b6d4f093034aac933d11507acdc1c558df7bc19bbd038fea28c75ad"
+      },
+      {
+        "index": 5,
+        "removed": "verified",
+        "sha256": "ab2ea0abad84d487daa62f4168bfbea2cdda0240e07b4e9531913d8ef5548e67"
+      },
+      {
+        "index": 6,
+        "removed": "first.",
+        "sha256": "4c00769270279d960a682807f7b9f49a5b16147809dae3e867fc177433d6a1c6"
+      },
+      {
+        "index": 7,
+        "removed": "Files",
+        "sha256": "4ea49666c0e3448fafa39e36c9f5b8d5fa59d49888409fe77bff17fca596a7c1"
+      },
+      {
+        "index": 8,
+        "removed": "of",
+        "sha256": "46f5e0eff5fc43f053b6b8dc111f8890925822896b9a7d45f20a6fd7abcbd16d"
+      },
+      {
+        "index": 9,
+        "removed": "this",
+        "sha256": "15572a239ac706a4541be00bea54a69d42c99eaeed8fdec1da55b926c5794561"
+      },
+      {
+        "index": 10,
+        "removed": "session",
+        "sha256": "6a562e067a7824f1540e5f2c6acd3cfa28d87a8fa8a8887fa745096fb7372a53"
+      },
+      {
+        "index": 11,
+        "removed": "that",
+        "sha256": "043b65cba75028a3f669913aa2941a90f01a0826025dd17d9d172250df1fa191"
+      },
+      {
+        "index": 12,
+        "removed": "were",
+        "sha256": "c3c63670a1793b576cdf595cc13f3ac72db6cace4bfa29d96bf684dcd6a4c6f4"
+      },
+      {
+        "index": 13,
+        "removed": "not",
+        "sha256": "8db2c38069ae14c2bbad0a19900c405a378d5d8425500c6c3dd6820c17d59875"
+      },
+      {
+        "index": 14,
+        "removed": "saved",
+        "sha256": "14f388907a563a4e488ff0d912bbcc156e7dbb9c5b133b76f3701fcf147f3317"
+      },
+      {
+        "index": 15,
+        "removed": "by",
+        "sha256": "5bce1d8ec3b7baec450ada6a0c89776d308b5fc65ce0c1126a7bd902c2e027b0"
+      },
+      {
+        "index": 16,
+        "removed": "a",
+        "sha256": "bb5294e76e0bc45a3cdeabbbbd0486307d98de4ce92e349bdb597b9dd5f131db"
+      },
+      {
+        "index": 17,
+        "removed": "program",
+        "sha256": "6b5b3e157de6acaa0d9a2faf987e7daf9d5508306cb16f8281c4137685322bae"
+      },
+      {
+        "index": 18,
+        "removed": "are",
+        "sha256": "9b60a03e2d40bb110c74256d59418313040d1af1fa854888f45b834635eed611"
+      },
+      {
+        "index": 19,
+        "removed": "lost.",
+        "sha256": "0303a834354bfbcb755aad0970f20e51361868be07ce44e2a5fe175fc5883d4f"
+      }
+    ]
+  },
+  "live_linux": {
+    "observed-single": {
+      "startup": 71,
+      "final": 72,
+      "exit": 0,
+      "shutdown": {
+        "guest": true,
+        "reason": "guest-shutdown"
+      },
+      "serial_sha256": "1b7fec5026adf3fd6768eca23f56a15da390d0ed112b06f85f92f23cc7407666"
+    },
+    "observed-two-app": {
+      "startup": 71,
+      "final": 72,
+      "exit": 0,
+      "shutdown": {
+        "guest": true,
+        "reason": "guest-shutdown"
+      },
+      "serial_sha256": "f572cc7caf0947bfd68a845a989ad3c874ed2a487419a3d57f7be494083f6703"
+    },
+    "observed-vm/first": {
+      "startup": 71,
+      "final": 72,
+      "exit": 0,
+      "shutdown": {
+        "guest": true,
+        "reason": "guest-shutdown"
+      },
+      "serial_sha256": "3c17334b56a4982f7fd5658e7c0cd6796035dcc0551052ab1224e4dcc7892a6a"
+    },
+    "observed-vm/cold": {
+      "startup": 71,
+      "final": 72,
+      "exit": 0,
+      "shutdown": {
+        "guest": true,
+        "reason": "guest-shutdown"
+      },
+      "serial_sha256": "87361df92633bfbebfd59edb402564f8acffc1d3062ed974ab3e391a83e08ee4"
+    }
+  },
+  "cold_vm": {
+    "zip_sha256": "d6867fb04361fbec1c90f9accd02e3ffd12912993c62d6361fef86126f47ce57",
+    "first_disk_sha256": "8a74ef16ba7ae6a7ef8e0807a7551727a521357bae86f334d4a36cb577c1317e",
+    "saved_disk_sha256": "b83f212de3ac47041595a0a6651f057112aef958ff86261481a1e02b90cbfebe",
+    "read_back_label": "cold morning"
+  }
+}

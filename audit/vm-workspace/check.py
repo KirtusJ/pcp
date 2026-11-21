@@ -26,6 +26,41 @@ def sha(data):
     return hashlib.sha256(data).hexdigest()
 
 
+def queue_exit_notice(serial):
+    ended = re.search(r"^(rdesk\.elf ended DONE: exit 0 after \d+ s); \d+ system calls; "
+                      r"(\d+) frames shown \(([\d.]+) a second\); the processor idled (\d+)% "
+                      r"[^\r\n]*?; (\d+) frames given back,", serial, re.M)
+    require(ended, "missing Queue Desk exit statistics")
+    status, frames, rate, idle, released = ended.groups()
+    return [status + ".", f"{frames} pictures shown, {rate} a second; the processor idled {idle}% of the time.",
+            f"All {released} frames of its memory were given back."]
+
+
+def home_with_notice(frame, initial, notice, glyphs):
+    # The untouched Home is already verified. The kernel paints three notification lines
+    # on its shaded background. Compare individual glyphs against that exact background.
+    magic, size, depth, pixels = frame.split(b"\n", 3)
+    original = initial.split(b"\n", 3)
+    if original[:3] != [magic, size, depth] or len(pixels) != len(original[3]):
+        return False
+    width = int(size.split()[0])
+    baseline = original[3]
+    stride = width * 3
+    if pixels[:60 * stride] != baseline[:60 * stride] or pixels[120 * stride:] != baseline[120 * stride:]:
+        return False
+    for line, expected in enumerate(notice):
+        actual = []
+        for column in range(width // 10):
+            ink = []
+            for y in range(60 + 20 * line, 80 + 20 * line):
+                cell = y * stride + 30 * column
+                ink.extend(pixels[i:i + 3] != baseline[i:i + 3] for i in range(cell, cell + 30, 3))
+            actual.append(glyphs.get(tuple(ink), "?"))
+        if "".join(actual).rstrip() != " " * (width // 200) + expected:
+            return False
+    return True
+
+
 async def observe(package, volume, out, second, start, checks, emulator, screens=None):
     out.mkdir()
     serial = out / "serial.txt"
@@ -69,8 +104,11 @@ async def observe(package, volume, out, second, start, checks, emulator, screens
             await rpc("send-key", keys=[dict(type="qcode", data=name)], **{"hold-time": 80})
             await asyncio.sleep(.2)
 
-        async def surface(capture_name, expected):
+        async def surface(capture_name, expected, matches=None):
             capture = out / (capture_name + ".ppm")
+            if matches is None:
+                def matches(frame):
+                    return screens.matches(frame, expected)
             clock = asyncio.get_running_loop()
             deadline = clock.time() + 20
             while clock.time() < deadline:
@@ -78,7 +116,7 @@ async def observe(package, volume, out, second, start, checks, emulator, screens
                     raise RuntimeError(f"guest stopped before {capture_name}")
                 await rpc("screendump", filename=str(capture))
                 frame = capture.read_bytes()
-                if screens.matches(frame, expected):
+                if matches(frame):
                     digest = sha(frame)
                     report.setdefault("screen_checks", {})[capture.name] = {"surface": expected, "sha256": digest}
                     return digest
@@ -145,7 +183,13 @@ async def observe(package, volume, out, second, start, checks, emulator, screens
                 if screens.confirm_power:
                     await screens.cancel_power(key, surface, "launcher", "rdesk.elf", selected)
                 await key("esc")
-                await surface("home-before-shutdown", "home")
+                if screens.confirm_power:
+                    initial = (out / "home-at-start.ppm").read_bytes()
+                    notice = queue_exit_notice(log())
+                    await surface("home-before-shutdown", "home",
+                                  lambda frame: home_with_notice(frame, initial, notice, screens.glyphs))
+                else:
+                    await surface("home-before-shutdown", "home")
             if screens is not None and screens.confirm_power:
                 await key("f10")
                 await surface("confirm-shutdown", "power")

@@ -8,6 +8,28 @@ on:
 permissions:
   contents: read
 jobs:
+  desktop-power-regression:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Check desktop screen and media receipts
+        run: python3 -B audit/public-live-cd/test_desktop_screens.py -v
+      - name: Read the kernel font and decoder used for the captures
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: KirtusJ/pcp-os
+          ref: 89792700243ad5dd4efde3091993984845087e2c
+          path: capture-source
+          sparse-checkout: |
+            examples/tester-cd
+            PCP_OS_Rust/crates/pcpos-kernel/src
+          persist-credentials: false
+      - name: Replay clipped and complete power warnings
+        run: python3 -B audit/public-live-cd/check_power_frames.py capture-source
   optical-boot:
     runs-on: ubuntu-24.04
     timeout-minutes: 24

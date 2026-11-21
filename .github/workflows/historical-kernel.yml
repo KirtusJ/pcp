@@ -60,11 +60,12 @@ jobs:
           path: ${{ runner.temp }}/kernels
       - name: Compare whole ELF and individual loadable sections
         run: |
+          command -v llvm-objcopy || sudo apt-get install -y llvm
           python3 audit/public-live-cd/history/rebuild.py compare "$RUNNER_TEMP/kernels" PCP-OS.iso "$RUNNER_TEMP/receipt"
           cat "$RUNNER_TEMP/receipt/comparison.json"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: historical-kernel-comparison
-          path: ${{ runner.temp }}/receipt/comparison.json
+          path: ${{ runner.temp }}/receipt/
           if-no-files-found: error
           retention-days: 30

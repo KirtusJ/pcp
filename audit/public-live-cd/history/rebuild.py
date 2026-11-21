@@ -174,6 +174,14 @@ def inspect(args):
         subprocess.run(["objcopy", "-I", "elf64-x86-64", "-O", "elf32-i386", candidate, flat], check=True)
         results[mode] = compare(ref, flat.read_bytes())
         flat.unlink()
+        if mode == "kernel-gnu-historical":
+            subprocess.run(["llvm-objcopy", "-I", "elf64-x86-64", "-O", "elf32-i386", candidate, flat], check=True)
+            results[mode]["llvm_objcopy"] = compare(ref, flat.read_bytes())
+            results[mode]["llvm_version"] = subprocess.check_output(["llvm-objcopy", "--version"], text=True).splitlines()[:2]
+            if results[mode]["llvm_objcopy"]["whole_elf_equal"]:
+                flat.rename(args.out / "reproduced-kernel.elf32")
+            else:
+                flat.unlink()
     expected = {f"kernel-{host}-{mode}" for host in ("msvc", "gnu") for mode in ("native", "remapped")}
     expected.add("kernel-gnu-historical")
     if results.keys() != expected:

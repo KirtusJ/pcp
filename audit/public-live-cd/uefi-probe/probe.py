@@ -36,6 +36,9 @@ def make_cd(source, work):
 terminal_output serial console
 echo PCP-OPTICAL-FIRMWARE-${grub_platform}
 if [ "${grub_platform}" = "efi" ]; then
+    echo PCP-PREBOOT-MEMORY-MAP-BEGIN
+    lsmmap
+    echo PCP-PREBOOT-MEMORY-MAP-END
     multiboot /kernel.elf32 image=KERNEL_HASH
     module /surf.elf surf.elf
     module /clip.ppm clip.ppm
@@ -63,7 +66,7 @@ def run_guest(optical, code, variables, work, evidence):
             "-drive", f"if=pflash,unit=1,format=raw,file={variables_copy}",
             "-boot", "order=d,strict=on", "-cdrom", str(optical),
             "-icount", "shift=3,align=off,sleep=off"]
-    result = {"iso_sha256": sha(optical), "firmware_code_sha256": sha(code),
+    result = {"published_iso_sha256": ISO_HASH, "iso_sha256": sha(optical), "firmware_code_sha256": sha(code),
               "vars_template_sha256": sha(variables), "payloads": PAYLOADS, "argv": args}
     (evidence / "environment.txt").write_text(subprocess.check_output(
         ["dpkg-query", "-W", "ovmf", "qemu-system-x86", "grub-efi-amd64-bin",
@@ -101,6 +104,8 @@ def run_guest(optical, code, variables, work, evidence):
                 time.sleep(0.2)
             result["efi_loader_seen"] = "PCP-OPTICAL-FIRMWARE-efi" in log
             result["boot_command_seen"] = "PCP-OPTICAL-BOOT-COMMAND" in log
+            result["safe"] = "it is in SAFE" in log
+            result["failed_checks"] = [line.strip() for line in log.splitlines() if line.startswith("  FAIL ")]
             result["kernel_seen"] = "PCP OS kernel 0.3.1" in log
             result["kernel_measurement_matches"] = MEASUREMENT + " (measured; equal" in log
             result["startup_pass_lines"] = sum(s.startswith("  pass ") for s in log.splitlines())
@@ -128,6 +133,7 @@ def run_guest(optical, code, variables, work, evidence):
                     events.append(reply)
             result["guest_shutdown"] = any(e.get("event") == "SHUTDOWN" and
                 e.get("data") == {"guest": True, "reason": "guest-shutdown"} for e in events)
+            result["exit_code"] = vm.returncode
             if vm.returncode != 0 or not result["guest_shutdown"]:
                 raise RuntimeError("Guest-requested shutdown missing")
         finally:

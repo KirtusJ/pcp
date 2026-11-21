@@ -1,6 +1,6 @@
-# Parrot Council Protocol and PCP OS
+# Parrot Council Protocol and PCP OS | pre-publication build
 
-This repository contains the [PCP 1.0 Enterprise Edition](../README.md), its two assistant plugins, and bootable PCP OS media.
+This repository contains pre-publication build 19 of the [PCP 1.0 Enterprise Edition](../README.md), its two assistant plugins, and bootable PCP OS media.
 
 ## Boot PCP OS in a virtual machine
 
@@ -11,3 +11,7 @@ For a first boot, use the [source-built BIOS tester and launch instructions](../
 ## Use the Enterprise Edition
 
 The [edition overview](../README.md) lists the specifications, reader guides, tools and license. The [edition guide](../EDITION_GUIDE.md) explains how to start a review.
+
+## Verify the edition
+
+In a Linux x86-64 Git checkout, run `python3 audit/enterprise-checkout/check.py HEAD` from the repository root. It checks the committed edition in three fresh checkouts and tests both plugin copies. In an extracted, standalone edition directory, run `python3 verify_edition.py` there. [Repository check](../audit/enterprise-checkout/check.py) · [Edition identity](../EDITION.json)

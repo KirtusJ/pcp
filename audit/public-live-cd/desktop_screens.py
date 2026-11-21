@@ -22,10 +22,25 @@ def selected_program(rows, expected, program_hashes):
     identity = re.match(r" +\d+(?:\.\d+)? (?:KiB|MiB) +SHA-256 ([0-9a-f]{16})\.\.\.", rows[i][match.end(1):])
     if not identity or identity[1] != program_hashes.get(expected, "")[:16]:
         return False
-    grants = rows[i + 1][match.start(1):].split("?", 1)[0].rstrip()
-    return re.fullmatch(r"may use: (?:console only|display, keyboard, (?:sound, )?loader files, store"
-                        r"(?:, raw Ethernet frames)?(?:, second serial port)?)"
-                        r"(?: +(?:in the dock|on the desktop))?", grants) is not None
+    # Both desktop fixtures provide AC'97, loader files and a store. Neither
+    # fixture names a restricted grant or an Ethernet/second-serial image.
+    # The digest is drawn at the card's right edge on every graphical desktop.
+    name_column = match.start(1)
+    left = max(0, name_column - 3)
+    right = match.end(1) + identity.end() + 1
+    if rows[i + 1][left:name_column].strip():
+        return False
+    grants = rows[i + 1][name_column:right].rstrip()
+    if not re.fullmatch(r"may use: display, keyboard, sound, loader files, store"
+                        r"(?: +(?:in the dock|on the desktop))?", grants):
+        return False
+    # Current cards put a pin label on its own row. The plate edge (or blank
+    # background on older desktops) must follow the complete disclosure.
+    after = i + 2
+    pin = " " * (name_column - left) + "pinned to the desktop"
+    if after < len(rows) and rows[after][left:right].rstrip() == pin:
+        after += 1
+    return after < len(rows) and not rows[after][left:right].strip(" ?")
 
 
 class DesktopScreens:

@@ -4,6 +4,8 @@ Start with a disposable **x86-64 virtual machine using legacy PC BIOS (SeaBIOS)*
 
 ## Choose and verify the image
 
+The published CD predates the current kernel. Its full kernel ELF matches the SHA-256 in a historical Surfbird test record. An independent rebuild from the original source has yet to establish which exact commit produced it. The kernel includes guest Ethernet support. The boot command below gives it no network interface. [Historical kernel record](https://github.com/KirtusJ/pcp-os/blob/bf8c0bcdad8cf960a524c74954f143d858426ce6/apps/surfbird/guest/LOCAL_MEDIA.md) · [Source comparison](https://github.com/KirtusJ/pcp-os/issues/288).
+
 For a first test with the ordinary QEMU clock, the [opt-in BIOS tester download](candidates/keyboard-01-limine-10/README.md) combines the keyboard timing fix with a bootloader that recorded zero writes on the disposable disks tested. Use the CD as the VM’s only inserted medium.
 
 For the published version, download [PCP-OS.iso at the tested revision](https://raw.githubusercontent.com/KirtusJ/pcp/983fc4a45dbbada52b507dd0e413b9f7d3ca0c9d/PCP-OS.iso). Its size is **1,859,584 bytes** and its SHA-256 is `93ed3b599ad7be0e1e88a64813b1f2b5299d51507df2edca691aaf6189d10d15`. Run the command for your host in the download directory and compare the full digest before booting.

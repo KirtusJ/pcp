@@ -7,7 +7,7 @@ on:
 permissions:
   contents: read
 env:
-  TESTER_REF: f98c3ecc4dda25a04e500f2f12ffbbf9282548ff
+  TESTER_REF: 2abeead177d616582db7029561df2e10c95381eb
   SOURCE_REF: 3e86beb1ee17fad2f3d61c95b9d5dd017fb6c755
 
 jobs:
@@ -89,7 +89,7 @@ jobs:
           ref: ${{ env.SOURCE_REF }}
           path: source
           persist-credentials: false
-      - name: Test the selected program's grant disclosure
+      - name: Test the optical receipt, program grants and F5 register count
         run: python -B audit/public-live-cd/test_desktop_screens.py
       - name: Install QEMU on Linux
         if: runner.os == 'Linux'

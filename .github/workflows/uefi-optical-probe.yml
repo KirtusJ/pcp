@@ -1,0 +1,33 @@
+name: UEFI optical handoff probe
+on:
+  pull_request:
+    paths:
+      - 'PCP-OS.iso'
+      - 'audit/public-live-cd/uefi-probe/**'
+      - '.github/workflows/uefi-optical-probe.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  optical:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      OMP_THREAD_LIMIT: '1'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Install the emulator, optical authoring utilities and firmware
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ovmf qemu-system-x86 grub-common grub-efi-amd64-bin xorriso mtools dosfstools tesseract-ocr
+      - name: Boot the isolated UEFI optical experiment
+        run: python3 audit/public-live-cd/uefi-probe/probe.py PCP-OS.iso "$RUNNER_TEMP/uefi-probe"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: uefi-optical-handoff
+          path: ${{ runner.temp }}/uefi-probe
+          if-no-files-found: error
+          retention-days: 14

@@ -25,4 +25,16 @@ The package uses PCP OS source `0a037b45bb18d6c1c61c2a207a62da5f3057933d`, tree 
 
 ## Host qualification
 
-Host results for this package are pending. The three-host results for the previous package remain available with the [previous download and evidence](https://github.com/KirtusJ/pcp/tree/8081a5b2d5cfe5ccad6afd0bbd936c1986245fe6/audit/vm-workspace).
+A clean build reproduced the download byte for byte. On each host, the first guest played the local Surfbird clip and saved the typed label `cold morning`. A second QEMU process reopened the same disk and displayed the saved label. The disk remained byte-identical on reopen. All six guests reported 72 passing checks and powered off from the guest keyboard.
+
+| Host runner | Host architecture | QEMU | Frames played | Audio submitted to the silent device |
+| --- | --- | --- | ---: | ---: |
+| Ubuntu 24.04 | x86-64 | 8.2.2 | 33 | 3,200 ms |
+| macOS 15 | arm64 | 11.1.3 | 33 | 3,200 ms |
+| Windows Server 2025 | x86-64 | 11.1.3 | 33 | 3,200 ms |
+
+The 86,032-byte evidence archive has SHA-256 `5df84559a05aa4ae06546e9166730f196d8ed5b6a172053fdda024dc749a37a8`. It preserves the three original runner artifacts, including serial logs, guest screenshots, saved disks and shutdown events. These tests used headless QEMU. Host-window presentation and speaker output remain untested. [Original host observations](host-observations.zip?raw=1) · [Qualification run](https://github.com/KirtusJ/pcp/actions/runs/44865960263) · [Workflow](../../.github/workflows/vm-workspace.yml).
+
+### Reopening a previous workspace
+
+In a separate Linux test, the [previous package](https://github.com/KirtusJ/pcp/tree/8081a5b2d5cfe5ccad6afd0bbd936c1986245fe6/audit/vm-workspace) created a volume, saved `cold morning`, and powered off. The refreshed package opened the same volume and displayed the original label. The disk image and volume ID were byte-identical before and after that reopen. The receipt includes both guest frames, serial logs, disk states and volume IDs. [Upgrade observation](previous-to-refreshed.zip?raw=1).

@@ -89,31 +89,45 @@ async def exercise(guest, output, iso, evidence, expected_kernel, screens):
     else:
         log = await wait_screen("home", lambda frame: screens.matches(frame, "home"))
         evidence["home_form"] = screens.home_form
-        captures = ["home"]
+        hashes = evidence["screen_sha256"] = {"home": hashlib.sha256((output / "home.ppm").read_bytes()).hexdigest()}
+
+        async def capture(name, expected):
+            await wait_screen(name, lambda frame: screens.matches(frame, expected))
+            hashes[name] = hashlib.sha256((output / (name + ".ppm")).read_bytes()).hexdigest()
+            return hashes[name]
+
         if screens.has_verification_page:
-            await key("v")
-            await wait_screen("verification", lambda frame: screens.matches(frame, "verification"))
+            await key(screens.verification_key)
+            await capture("verification", "verification")
             await key("esc")
-            await wait_screen("home-after-verification", lambda frame: screens.matches(frame, "home"))
-            captures.extend(["verification", "home-after-verification"])
+            await capture("home-after-verification", "home")
         await key("spc")
-        await wait_screen("launcher", lambda frame: screens.matches(frame, "surf.elf"))
+        await capture("launcher", "surf.elf")
+        if screens.confirm_power:
+            selected = "surf.elf"
+            before = hashes["launcher"]
+            if "rdesk.elf" in screens.program_hashes:
+                await key("down")
+                selected = "rdesk.elf"
+                before = await capture("queue-selected", selected)
+            await screens.cancel_power(key, capture, "launcher", selected, before)
         await key("esc")
-        await wait_screen("home-after-escape", lambda frame: screens.matches(frame, "home"))
-        captures.extend(["launcher", "home-after-escape"])
-        evidence["screen_sha256"] = {
-            name: hashlib.sha256((output / (name + ".ppm")).read_bytes()).hexdigest()
-            for name in captures
-        }
-        hashes = evidence["screen_sha256"]
-        if any(hashes[name] != hashes["home"] for name in captures if name.startswith("home-after-")):
+        await capture("home-after-escape", "home")
+        if screens.confirm_power:
+            await screens.cancel_power(key, capture, "home", "home", hashes["home"])
+        if any(value != hashes["home"] for name, value in hashes.items() if name.startswith("home-after-")):
             raise ValueError("Returning to the desktop changed the initial Home frame")
 
     evidence["startup_pass_lines"] = sum(line.startswith("  pass ") for line in log.splitlines())
     if evidence["startup_pass_lines"] != 71 or expected_kernel + " (measured; equal" not in log:
         raise RuntimeError("Unexpected startup checks or kernel measurement")
 
-    await key("p")
+    if screens is not None and screens.confirm_power:
+        await key("f10")
+        await capture("confirm-shutdown", "power")
+        await key("ret")
+    else:
+        await key("p")
     while not any(e.get("event") == "SHUTDOWN" for e in events):
         events.append(await read_qmp(guest))
     shutdown = next(e["data"] for e in events if e.get("event") == "SHUTDOWN")

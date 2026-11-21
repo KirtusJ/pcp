@@ -26,7 +26,42 @@ def sha(data):
     return hashlib.sha256(data).hexdigest()
 
 
-async def observe(package, volume, out, second, start, checks, emulator):
+def queue_exit_notice(serial):
+    ended = re.search(r"^(rdesk\.elf ended DONE: exit 0 after \d+ s); \d+ system calls; "
+                      r"(\d+) frames shown \(([\d.]+) a second\); the processor idled (\d+)% "
+                      r"[^\r\n]*?; (\d+) frames given back,", serial, re.M)
+    require(ended, "missing Queue Desk exit statistics")
+    status, frames, rate, idle, released = ended.groups()
+    return [status + ".", f"{frames} pictures shown, {rate} a second; the processor idled {idle}% of the time.",
+            f"All {released} frames of its memory were given back."]
+
+
+def home_with_notice(frame, initial, notice, glyphs):
+    # The untouched Home is already verified. The kernel paints three notification lines
+    # on its shaded background. Compare individual glyphs against that exact background.
+    magic, size, depth, pixels = frame.split(b"\n", 3)
+    original = initial.split(b"\n", 3)
+    if original[:3] != [magic, size, depth] or len(pixels) != len(original[3]):
+        return False
+    width = int(size.split()[0])
+    baseline = original[3]
+    stride = width * 3
+    if pixels[:60 * stride] != baseline[:60 * stride] or pixels[120 * stride:] != baseline[120 * stride:]:
+        return False
+    for line, expected in enumerate(notice):
+        actual = []
+        for column in range(width // 10):
+            ink = []
+            for y in range(60 + 20 * line, 80 + 20 * line):
+                cell = y * stride + 30 * column
+                ink.extend(pixels[i:i + 3] != baseline[i:i + 3] for i in range(cell, cell + 30, 3))
+            actual.append(glyphs.get(tuple(ink), "?"))
+        if "".join(actual).rstrip() != " " * (width // 200) + expected:
+            return False
+    return True
+
+
+async def observe(package, volume, out, second, start, checks, emulator, screens=None):
     out.mkdir()
     serial = out / "serial.txt"
     argv = start["command"](package, volume, emulator) + [
@@ -69,6 +104,25 @@ async def observe(package, volume, out, second, start, checks, emulator):
             await rpc("send-key", keys=[dict(type="qcode", data=name)], **{"hold-time": 80})
             await asyncio.sleep(.2)
 
+        async def surface(capture_name, expected, matches=None):
+            capture = out / (capture_name + ".ppm")
+            if matches is None:
+                def matches(frame):
+                    return screens.matches(frame, expected)
+            clock = asyncio.get_running_loop()
+            deadline = clock.time() + 20
+            while clock.time() < deadline:
+                if proc.returncode is not None:
+                    raise RuntimeError(f"guest stopped before {capture_name}")
+                await rpc("screendump", filename=str(capture))
+                frame = capture.read_bytes()
+                if matches(frame):
+                    digest = sha(frame)
+                    report.setdefault("screen_checks", {})[capture.name] = {"surface": expected, "sha256": digest}
+                    return digest
+                await asyncio.sleep(.2)
+            raise TimeoutError(f"{capture_name} did not show {expected}")
+
         async def flow():
             require("QMP" in await message(), "missing QMP greeting")
             await rpc("qmp_capabilities")
@@ -78,6 +132,19 @@ async def observe(package, volume, out, second, start, checks, emulator):
             await wait("VM checkpoint store mounted: " + ("1 file(s)" if second else "0 file(s)"))
             await wait("leaves no memory behind")
             await asyncio.sleep(.5)
+            if screens is not None:
+                await surface("home-at-start", "home")
+                if screens.has_verification_page:
+                    await key(screens.verification_key)
+                    await surface("verification", "verification")
+                    await key("esc")
+                    await surface("home-after-verification", "home")
+                await key("spc")
+                await surface("launcher-first", "surf.elf")
+                await key("esc")
+                await surface("home-after-escape", "home")
+                await key("spc")
+                await surface("launcher-reopened", "surf.elf")
             if not second:
                 await key("ret")
                 await wait("SURFBIRD media ready")
@@ -90,7 +157,11 @@ async def observe(package, volume, out, second, start, checks, emulator):
                 require(frames and int(frames[1]) >= 32 and sound and int(sound[1]) >= 3000,
                         "incomplete local media playback: " + playback)
                 await asyncio.sleep(.5)
+                if screens is not None:
+                    await surface("launcher-after-surfbird", "surf.elf")
             await key("down")
+            if screens is not None:
+                await surface("queue-selected", "rdesk.elf")
             await key("ret")
             await wait("PARROTS READY")
             active = "PARROTS QUEUE total=1 active=1 selected=1 state=ACTIVE store="
@@ -107,7 +178,24 @@ async def observe(package, volume, out, second, start, checks, emulator):
             await key("esc")
             await wait("rdesk.elf ended DONE: exit 0")
             await asyncio.sleep(.5)
-            await key("p")
+            if screens is not None:
+                selected = await surface("launcher-after-queue", "rdesk.elf")
+                if screens.confirm_power:
+                    await screens.cancel_power(key, surface, "launcher", "rdesk.elf", selected)
+                await key("esc")
+                if screens.confirm_power:
+                    initial = (out / "home-at-start.ppm").read_bytes()
+                    notice = queue_exit_notice(log())
+                    await surface("home-before-shutdown", "home",
+                                  lambda frame: home_with_notice(frame, initial, notice, screens.glyphs))
+                else:
+                    await surface("home-before-shutdown", "home")
+            if screens is not None and screens.confirm_power:
+                await key("f10")
+                await surface("confirm-shutdown", "power")
+                await key("ret")
+            else:
+                await key("p")
             while not any(e.get("event") == "SHUTDOWN" for e in events):
                 events.append(await message())
             require(any(e.get("data") == {"guest": True, "reason": "guest-shutdown"} for e in events),
@@ -130,6 +218,8 @@ def main():
     for argument in ("archive", "source", "output"):
         p.add_argument(argument, type=Path)
     p.add_argument("--qemu", default="qemu-system-x86_64")
+    p.add_argument("--desktop-first", action="store_true",
+                   help="verify the Home and launcher screens for a desktop-first source package")
     args = p.parse_args()
     emulator = shutil.which(args.qemu)
     if not emulator:
@@ -156,17 +246,21 @@ def main():
         for field, revision in (("source_commit", "HEAD"), ("source_tree", "HEAD^{tree}")):
             actual = subprocess.check_output(["git", "-C", args.source, "rev-parse", revision], text=True).strip()
             require(info[field] == actual, "source checkout differs from " + field)
+        screens = None
+        if args.desktop_first:
+            reader = Path(__file__).resolve().parents[1] / "public-live-cd/desktop_screens.py"
+            screens = runpy.run_path(str(reader))["DesktopScreens"](args.source.resolve(), info["files"])
         volume = Path(tmp) / "data files, one"
         init = [sys.executable, str(package / "start.py"), "init", str(volume)]
         subprocess.run(init, check=True)
         require(subprocess.run(init, capture_output=True).returncode != 0, "provisioning accepted an existing volume")
         disk = volume / "data.raw"
         before = disk.read_bytes()
-        asyncio.run(observe(package, volume, out / "first", False, starter, checks, emulator))
+        asyncio.run(observe(package, volume, out / "first", False, starter, checks, emulator, screens))
         saved = disk.read_bytes()
         require(before != saved and saved[:512] == before[:512], "save or volume marker differs")
         checks["check_journal"](saved)
-        asyncio.run(observe(package, volume, out / "cold", True, starter, checks, emulator))
+        asyncio.run(observe(package, volume, out / "cold", True, starter, checks, emulator, screens))
         require(disk.read_bytes() == saved, "cold read changed the disk")
         (out / "fixture.raw").write_bytes(saved)
         (out / "result.json").write_text(json.dumps({"zip_sha256": sha(args.archive.read_bytes()),

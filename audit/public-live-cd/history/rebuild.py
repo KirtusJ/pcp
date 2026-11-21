@@ -97,12 +97,19 @@ def build(args):
     kernel = source / "PCP_OS_Rust/crates/pcpos-kernel"
     target = args.out.resolve() / "target"
     env = {**os.environ, "CARGO_TARGET_DIR": str(target), "CARGO_HOME": str(cargo)}
+    linker = shutil.which("ld.lld.exe")
+    if linker is None:
+        raise RuntimeError("Windows ELF linker unavailable")
+    env["CARGO_TARGET_X86_64_UNKNOWN_NONE_LINKER"] = linker
     command = ["cargo", "build", "--release", "--locked", "--features", "guest-ethernet"]
     if args.mode == "remapped":
         # Cargo appends this array to the flags in the historical config.
         flags = path_flags(original(args.iso), source, cargo)
         command += ["--config", "target.x86_64-unknown-none.rustflags=" + json.dumps(flags)]
-    subprocess.run(command, env=env, cwd=kernel, check=True)
+    result = subprocess.run(command, env=env, cwd=kernel, capture_output=True, text=True, errors="replace")
+    if result.returncode:
+        lines = [line for line in result.stderr.splitlines() if line.startswith("error")]
+        raise RuntimeError(f"Cargo exited {result.returncode}: " + "; ".join(lines)[:500])
     shutil.copyfile(target / "x86_64-unknown-none/release/pcpos-kernel", args.out / "kernel.elf64")
     print(version.strip())
 

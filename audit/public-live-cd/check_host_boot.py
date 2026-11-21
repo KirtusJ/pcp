@@ -123,42 +123,60 @@ async def exercise(guest, output, iso, evidence, expected_kernel, screens):
         raise RuntimeError("Unexpected startup checks or kernel measurement")
 
     if screens is not None and screens.confirm_power:
-        # A held Enter opens Programs. Its next key-down while the question is visible
-        # is a repeat. Only the later press, after release, may authorize shutdown.
-        held = evidence["held_enter"] = {"inputs": []}
+        # The two CD profiles exercise opposite physical keys. Repeating either Enter
+        # must leave the question open even after the other Enter is released.
+        held_key, other_key = ("kp_enter", "ret") if "rdesk.elf" in screens.program_hashes else ("ret", "kp_enter")
 
-        async def edges(*changes):
+        async def edges(record, *changes):
             inputs = [{"type": "key", "data": {"down": down, "key": {"type": "qcode", "data": code}}}
                       for code, down in changes]
             await rpc("input-send-event", events=inputs)
-            held["inputs"].extend(changes)
+            record["inputs"].extend(changes)
 
-        await edges(("ret", True))
-        before = await capture("held-enter-launcher", selected)
-        await edges(("f10", True), ("f10", False))
-        await capture("held-enter-power", "power")
-        await edges(("ret", True))
-        try:
-            await asyncio.wait_for(guest.wait(), 1)
-        except asyncio.TimeoutError:
-            pass
-        else:
-            tail = [json.loads(line) for line in (await guest.stdout.read()).splitlines()]
-            held["early_exit_code"] = guest.returncode
-            held["shutdown"] = next((msg["data"] for msg in events + tail if msg.get("event") == "SHUTDOWN"), None)
-            raise RuntimeError("Guest exited on a repeated Enter before its release or a fresh press")
-        await edges(("ret", False))
-        await capture("held-enter-after-release", "power")
-        await edges(("esc", True), ("esc", False))
-        after = await capture("held-enter-after-cancel", selected)
-        if before != after:
-            raise RuntimeError("Power cancellation after held Enter changed the selected launcher frame")
-        await edges(("esc", True), ("esc", False))
-        if await capture("home-after-held-enter", "home") != hashes["home"]:
-            raise RuntimeError("Returning from the held-Enter check changed the initial Home frame")
-        await edges(("f10", True), ("f10", False))
+        async def check_held_enter(name, record, overlap):
+            if overlap:
+                # The first Enter dismisses verification. The second opens Programs,
+                # leaving both keys held when F10 opens the power question.
+                await key(screens.verification_key)
+                await capture(name + "-verification", "verification")
+                await edges(record, (held_key, True))
+                await capture(name + "-one-held", "home")
+                await edges(record, (other_key, True))
+            else:
+                await edges(record, (held_key, True))
+            before = await capture(name + "-launcher", selected)
+            await edges(record, ("f10", True), ("f10", False))
+            await capture(name + "-power", "power")
+            if overlap:
+                await edges(record, (other_key, False))
+                await capture(name + "-other-released", "power")
+            await edges(record, (held_key, True))
+            try:
+                await asyncio.wait_for(guest.wait(), 1)
+            except asyncio.TimeoutError:
+                pass
+            else:
+                tail = [json.loads(line) for line in (await guest.stdout.read()).splitlines()]
+                record["early_exit_code"] = guest.returncode
+                record["shutdown"] = next((msg["data"] for msg in events + tail if msg.get("event") == "SHUTDOWN"), None)
+                raise RuntimeError(f"Guest exited on a repeated {held_key} before its release ({name})")
+            await capture(name + "-after-repeat", "power")
+            await edges(record, (held_key, False))
+            await capture(name + "-after-release", "power")
+            await edges(record, ("esc", True), ("esc", False))
+            if before != await capture(name + "-after-cancel", selected):
+                raise RuntimeError("Power cancellation changed the selected launcher frame: " + name)
+            await edges(record, ("esc", True), ("esc", False))
+            if hashes["home"] != await capture("home-after-" + name, "home"):
+                raise RuntimeError("Returning from the power question changed the initial Home frame: " + name)
+
+        held = evidence["held_enter"] = {"inputs": [], "held": held_key}
+        await check_held_enter("held-enter", held, False)
+        mixed = evidence["mixed_enter"] = {"inputs": [], "held": held_key, "released_other": other_key}
+        await check_held_enter("mixed-enter", mixed, True)
+        await edges(held, ("f10", True), ("f10", False))
         await capture("confirm-shutdown", "power")
-        await edges(("ret", True), ("ret", False))
+        await edges(held, (held_key, True), (held_key, False))
     else:
         await key("p")
     while not any(e.get("event") == "SHUTDOWN" for e in events):
